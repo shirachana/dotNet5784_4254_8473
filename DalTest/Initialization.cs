@@ -21,11 +21,20 @@ public static class Initialization
                 _dependentTask = s_rand.Next(1, 40);
             while (s_dalDependency!.Read(_dependentTask) != null);
             do
-                _dependsOnTask = s_rand.Next(1, 40);
+                _dependsOnTask = s_rand.Next(1, _dependentTask-1);
             while (s_dalDependency!.Read(_dependsOnTask) != null);
-            Dependency dep = new(0, _dependentTask, _dependsOnTask);
+            bool flag = true;
+            foreach(var item in s_dalDependency.ReadAll())
+            {
+                if (item.DependentTask == _dependentTask && item.DependsOnTask == _dependsOnTask)
+                    flag = false;
+            }
+            if(flag==true)
+            {
+                Dependency dep = new(0, _dependentTask, _dependsOnTask);
+                s_dalDependency!.Create(dep);
 
-            s_dalDependency!.Create(dep);
+            }
         }
 
     }

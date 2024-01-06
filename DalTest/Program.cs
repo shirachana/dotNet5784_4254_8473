@@ -41,13 +41,13 @@ namespace DalTest
             switch (choice)
             {
                 case 1:
-                    DisplayEntityMenuD(s_dalDependency, "Dependency");
+                    DisplayEntityMenuD(s_dalDependency?? throw new Exception("this Dependency does not exist"), "Dependency");
                     break;
                 case 2:
-                    DisplayEntityMenuE(s_dalEngineer, "Engineer");
+                    DisplayEntityMenuE(s_dalEngineer?? throw new Exception("this Engineer does not exist"), "Engineer");
                     break;
                 case 3:
-                    DisplayEntityMenuT(s_dalTask, "Task");
+                    DisplayEntityMenuT(s_dalTask?? throw new Exception("this Task does not exist"), "Task");
                     break;
                 case 0:
                     Environment.Exit(0);
