@@ -158,7 +158,7 @@ public static class Initialization
                 _id = s_rand.Next(1000000, 99999999);
             while (s_dalEngineer!.Read(_id) != null);
             do
-                _cost = s_rand.Next(10000, 50000);
+                _cost = s_rand.Next(20, 100);
             while (s_dalEngineer!.Read((int)_cost) != null);
             _mail = _name + "@gmail.com";
             do
