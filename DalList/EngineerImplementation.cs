@@ -5,14 +5,29 @@ using DO;
 namespace Dal;
 public class EngineerImplementation : IEngineer
 {
+    /// <summary>
+    /// a function that Adding a new object of type Engineer to a database
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int Create(Engineer item)
     {
-        //for entities with normal id (not auto id)
-        if (Read(item.Id) is not null)
-            throw new Exception($"Engineer with ID={item.Id} already exists");
+        foreach (var engineer in DataSource.Engineers)
+        {
+            if (engineer.Id == item.Id)
+            {
+                throw new Exception($"Engineer with ID={item.Id} does Not exist");
+            }
+        }
         DataSource.Engineers.Add(item);
         return item.Id;
     }
+    /// <summary>
+    /// a function that do deletion of an existing object with a certain ID, from the list of objects of type Engineer.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="Exception"></exception>
 
     public void Delete(int id)
     {
@@ -20,16 +35,30 @@ public class EngineerImplementation : IEngineer
             throw new Exception($"Engineers with ID={id} does Not exist");
     }
 
+    /// <summary>
+    /// a function that eturning a reference to a single object of type Engineer with a certain ID, if it exists in a database (in a list of data of type Engineer), or null if the object does not exist.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Engineer? Read(int id)
     {
-        return DataSource.Engineers.Find(item => item.Id == id);
+        return DataSource.Engineers.Find(item => item.Id == id) ?? throw new Exception($"Engineer with ID={id} does Not exist");
     }
 
+    /// <summary>
+    /// a function that return a copy of the list of references to all objects of type Engineer
+    /// </summary>
+    /// <returns></returns>
     public List<Engineer> ReadAll()
     {
         return new List<Engineer>(DataSource.Engineers);
     }
-
+    /// <summary>
+    /// Update of an existing object. The update will consist of deleting the existing object with the same ID number and replacing it with a new object with the same ID number and updated fields.
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="Exception"></exception>
     public void Update(Engineer item)
     {
         // Check if there is an object with the received ID
