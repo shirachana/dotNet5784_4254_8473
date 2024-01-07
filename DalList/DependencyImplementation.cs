@@ -39,7 +39,7 @@ public class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public Dependency? Read(int id)
     {
-        return DataSource.Dependencys.Find(item => item.Id == id) ?? throw new Exception($"Dependency with ID={id} does Not exist");
+        return DataSource.Dependencys.Find(item => item.Id == id);
     }
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type dependency

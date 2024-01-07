@@ -13,8 +13,8 @@ namespace DalTest
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello, World!");
-            try
-            {
+           // try
+            //{
                 // Initialize the database by calling the Do method of the Initialization class
                 Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
                 while (true)
@@ -22,12 +22,12 @@ namespace DalTest
                     DisplayMainMenu();
                 }
 
-            }
-            catch (Exception ex)
-            {
+           // }
+           // catch (Exception ex)
+           // {
                 // Print the caught exception to the screen
-                Console.WriteLine($"An exception occurred: {ex}");
-            }
+           //     Console.WriteLine($"An exception occurred: {ex}");
+           // }
         }
         static void DisplayMainMenu()
         {
