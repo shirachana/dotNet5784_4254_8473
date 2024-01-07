@@ -15,21 +15,15 @@ namespace DalTest
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello, World!");
-            // try
-            //{
-            // Initialize the database by calling the Do method of the Initialization class
+            try
+            {
             Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
-               // while (true)
-               // {
                     DisplayMainMenu();
-               // }
-
-           // }
-           // catch (Exception ex)
-           // {
-                // Print the caught exception to the screen
-           //     Console.WriteLine($"An exception occurred: {ex}");
-           // }
+            }
+           catch (Exception ex)
+            {
+               Console.WriteLine($"An exception occurred: {ex}");
+            }
         }
         static void DisplayMainMenu()
         {
@@ -116,59 +110,19 @@ namespace DalTest
                 switch (choice)
                 {
                     case 1:
-                        try
-                        {
-                            int idEng;
-                            Engineer eng = new Engineer();
-                            idEng = entityAccessE.Create(eng);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        CreatEngineer(entityAccessE);
                         break;
                     case 2:
-                        try
-                        {
-                            Engineer eng = new Engineer();
-                            entityAccessE.Read(eng.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadEngineerById(entityAccessE);
                         break;
                     case 3:
-                        try
-                        {
-                            entityAccessE.ReadAll();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadAllEngineers(entityAccessE);
                         break;
                     case 4:
-                        try
-                        {
-                            Engineer eng = new Engineer();
-                            entityAccessE.Update(eng);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        UpdateEngineer(entityAccessE);
                         break;
                     case 5:
-                        try
-                        {
-                            Engineer eng = new Engineer();
-                            entityAccessE.Delete(eng.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        DeleteEngineer(entityAccessE);
                         break;
                     case 0:
                         return;
@@ -194,59 +148,19 @@ namespace DalTest
                 switch (choice)
                 {
                     case 1:
-                        try
-                        {
-                            int idT;
-                            DO.Task tsk = new DO.Task();
-                            idT = entityAccessT.Create(tsk);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        CreatTask(entityAccessT);
                         break;
                     case 2:
-                        try
-                        {
-                            DO.Task tsk = new DO.Task();
-                            entityAccessT.Read(tsk.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadTaskById(entityAccessT);
                         break;
                     case 3:
-                        try
-                        {
-                            entityAccessT.ReadAll();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadAllTasks(entityAccessT);
                         break;
                     case 4:
-                        try
-                        {
-                            DO.Task tsk = new DO.Task();
-                            entityAccessT.Update(tsk);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        UpdateTask(entityAccessT);
                         break;
                     case 5:
-                        try
-                        {
-                            DO.Task tsk = new();
-                            entityAccessT.Delete(tsk.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        DeleteTask(entityAccessT);
                         break;
                     case 0:
                         return;
@@ -270,9 +184,9 @@ namespace DalTest
         {
             try
             {
-                int idDep;
-                Console.WriteLine("");
-                dep.Create();
+                Console.WriteLine("enter id,  id dependent Task and  id depends on task");
+                string? d = Console.ReadLine();
+                int idD= int.Parse(d!);
             }
             catch (Exception ex)
             {
@@ -318,6 +232,138 @@ namespace DalTest
             }
         }
         static void DeleteDependency(IDependency dep)
+        {
+            try
+            {
+                // Implement logic for deleting an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void CreatEngineer(IEngineer eng)
+        {
+            try
+            {
+                Console.WriteLine("enter id, cost to hour, Email name and the level experience of engineer");
+                string? d = Console.ReadLine();
+                string? c = Console.ReadLine();
+                string? l = Console.ReadLine();
+                int idD = int.Parse(d!);
+                double costForHour = double.Parse(c!);
+                string? engineerEmail = Console.ReadLine();
+                string? engineerName = Console.ReadLine();
+                DO.EngineerExperience engineerLevel=(DO.EngineerExperience)int.Parse(l!);
+                Engineer engineer = new Engineer(idD,costForHour,engineerEmail,engineerName,engineerLevel);
+                int crt = s_dalEngineer!.Create(engineer);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void ReadEngineerById(IEngineer eng)
+        {
+            try
+            {
+                // Implement logic for reading an entity by its ID and displaying it
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void ReadAllEngineers(IEngineer eng)
+        {
+            try
+            {
+                // Implement logic for reading all entities and displaying them
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        static void UpdateEngineer(IEngineer eng)
+        {
+            try
+            {
+                // Implement logic for updating an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void DeleteEngineer(IEngineer eng)
+        {
+            try
+            {
+                // Implement logic for deleting an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void CreatTask(ITask tsk)
+        {
+            try
+            {
+                Console.WriteLine("enter id,  id dependent Task and  id depends on task");
+                string? d = Console.ReadLine();
+                int idD = int.Parse(d!);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void ReadTaskById(ITask tsk)
+        {
+            try
+            {
+                // Implement logic for reading an entity by its ID and displaying it
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void ReadAllTasks(ITask tsk)
+        {
+            try
+            {
+                // Implement logic for reading all entities and displaying them
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        static void UpdateTask(ITask tsk)
+        {
+            try
+            {
+                // Implement logic for updating an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void DeleteTask(ITask tsk)
         {
             try
             {
