@@ -198,8 +198,11 @@ namespace DalTest
         {
             try
             {
-                // Implement logic for reading an entity by its ID and displaying it
-                // ...
+                Console.WriteLine("enter id");
+                string? d = Console.ReadLine();
+                int idD = int.Parse(d!);
+                dep.Read(idD);
+                Console.WriteLine(idD);
             }
             catch (Exception ex)
             {
@@ -268,8 +271,11 @@ namespace DalTest
         {
             try
             {
-                // Implement logic for reading an entity by its ID and displaying it
-                // ...
+                Console.WriteLine("enter id");
+                string? d = Console.ReadLine();
+                int idD = int.Parse(d!);
+                eng.Read(idD);
+                Console.WriteLine(idD);
             }
             catch (Exception ex)
             {
@@ -330,8 +336,11 @@ namespace DalTest
         {
             try
             {
-                // Implement logic for reading an entity by its ID and displaying it
-                // ...
+                Console.WriteLine("enter id");
+                string? d = Console.ReadLine();
+                int idD = int.Parse(d!);
+                tsk.Read(idD);
+                Console.WriteLine(idD);
             }
             catch (Exception ex)
             {
