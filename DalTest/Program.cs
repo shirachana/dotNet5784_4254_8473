@@ -1,26 +1,28 @@
 ﻿using Dal;
+using System.Collections.Generic;
 using DalApi;
 using DO;
+using System.Runtime.Intrinsics.Arm;
 
 namespace DalTest
 {
     internal class Program
     {
-        private static IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
-        private static IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
-        private static ITask? s_dalTask = new TaskImplementation(); //stage 1
-
+        private static readonly IDependency? s_dalDependency = new DependencyImplementation(); //stage 1
+        private static readonly IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
+        private static readonly ITask? s_dalTask = new TaskImplementation(); //stage 1 
+       
         static void Main(string[] args)
         {
             //Console.WriteLine("Hello, World!");
-           // try
+            // try
             //{
-                // Initialize the database by calling the Do method of the Initialization class
-                Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
-                while (true)
-                {
+            // Initialize the database by calling the Do method of the Initialization class
+            Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+               // while (true)
+               // {
                     DisplayMainMenu();
-                }
+               // }
 
            // }
            // catch (Exception ex)
@@ -31,6 +33,7 @@ namespace DalTest
         }
         static void DisplayMainMenu()
         {
+
             Console.WriteLine("Main Menu - Select an entity you want to check:");
             Console.WriteLine("1. Dependency");
             Console.WriteLine("2. Engineer");
@@ -41,13 +44,13 @@ namespace DalTest
             switch (choice)
             {
                 case 1:
-                    DisplayEntityMenuD(s_dalDependency?? throw new Exception("this Dependency does not exist"), "Dependency");
+                    DisplayEntityMenuD(s_dalDependency! , "Dependency");
                     break;
                 case 2:
-                    DisplayEntityMenuE(s_dalEngineer?? throw new Exception("this Engineer does not exist"), "Engineer");
+                    DisplayEntityMenuE(s_dalEngineer! , "Engineer");
                     break;
                 case 3:
-                    DisplayEntityMenuT(s_dalTask?? throw new Exception("this Task does not exist"), "Task");
+                    DisplayEntityMenuT(s_dalTask! , "Task");
                     break;
                 case 0:
                     Environment.Exit(0);
@@ -74,65 +77,26 @@ namespace DalTest
                 switch (choice)
                 {
                     case 1:
-                        try
-                        {
-                            int idDep;
-                            Dependency dep = new Dependency();
-                            idDep = entityAccessD.Create(dep);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        CreatDependency(entityAccessD);
                         break;
                     case 2:
-                        try
-                        {
-                            Dependency dep = new Dependency();
-                            entityAccessD.Read(dep.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadDependencyById(entityAccessD);
                         break;
                     case 3:
-                        try
-                        {
-                            entityAccessD.ReadAll();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        ReadAllDependencies(entityAccessD);
                         break;
                     case 4:
-                        try
-                        {
-                            Dependency dep = new Dependency();
-                            entityAccessD.Update(dep);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        UpdateDependency(entityAccessD);
                         break;
                     case 5:
-                        try
-                        {
-                            Dependency dep = new Dependency();
-                            entityAccessD.Delete(dep.Id);
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine($"Error: {ex.Message}");
-                        }
+                        DeleteDependency(entityAccessD);
                         break;
                     case 0:
                         return;
                     default:
                         Console.WriteLine("Invalid choice. Please try again.");
                         break;
+
                 }
             }
         }
@@ -276,7 +240,7 @@ namespace DalTest
                     case 5:
                         try
                         {
-                            DO.Task tsk = new DO.Task();
+                            DO.Task tsk = new();
                             entityAccessT.Delete(tsk.Id);
                         }
                         catch (Exception ex)
@@ -302,6 +266,73 @@ namespace DalTest
             }
             return choice;
         }
+        static void CreatDependency(IDependency dep)
+        {
+            try
+            {
+                int idDep;
+                Console.WriteLine("");
+                dep.Create();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        static void ReadDependencyById(IDependency dep)
+        {
+            try
+            {
+                // Implement logic for reading an entity by its ID and displaying it
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void ReadAllDependencies(IDependency dep)
+        {
+            try
+            {
+                // Implement logic for reading all entities and displaying them
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        static void UpdateDependency(IDependency dep)
+        {
+            try
+            {
+                // Implement logic for updating an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        static void DeleteDependency(IDependency dep)
+        {
+            try
+            {
+                // Implement logic for deleting an existing entity
+                // ...
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+
+
+
     }
 }
       

@@ -1,6 +1,7 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 
@@ -10,7 +11,7 @@ public static class Initialization
     private static IEngineer? s_dalEngineer; //stage 1
     private static ITask? s_dalTask; //stage 1
     private static readonly Random s_rand = new();
-    private static void creatDependency()
+    /*private static void CreatDependency()
     {
         int _dependentTask;
         int _dependsOnTask;
@@ -26,7 +27,7 @@ public static class Initialization
             bool flag = true;
             foreach(var item in s_dalDependency.ReadAll())
             {
-                if (item.DependentTask == _dependentTask && item.DependsOnTask == _dependsOnTask)
+                if ((item.DependentTask == _dependentTask )&& (item.DependsOnTask == _dependsOnTask))
                     flag = false;
             }
             if(flag==true)
@@ -37,27 +38,68 @@ public static class Initialization
             }
         }
 
-    }
-    private static void creatTask()
+    }*/
+    private static void CreateDependencies()
     {
-        string[] _alias = { "recipe-design", 
-            "ingredient-sourcing", 
+        int dependentTask;
+        int dependsOnTask;
+
+        // Create 40 dependencies
+        for (int i = 0; i < 40; i++)
+        {
+            do
+            {
+                dependentTask = s_rand.Next(1, 41);
+            } while (s_dalDependency!.Read(dependentTask) != null);
+
+            do
+            {
+               dependsOnTask = s_rand.Next(1, dependentTask);
+            } while (s_dalDependency!.Read(dependentTask) != null);
+
+            bool flag = true;
+            foreach (var item in s_dalDependency.ReadAll())
+            {
+                if (item.DependentTask == dependentTask && item.DependsOnTask == dependsOnTask)
+                {
+                    flag = false;
+                    break; // exit the loop as soon as a match is found
+                }
+            }
+
+            if (flag)
+            {
+                Dependency dep = new(0, dependentTask, dependsOnTask);
+                s_dalDependency!.Create(dep);
+                
+            }
+     
+            
+        }
+
+    }
+
+
+    private static void CreatTask()
+    {
+        string[] _alias = { "recipe-design",
+            "ingredient-sourcing",
             "cost-analysis",
-            "quality-control", 
+            "quality-control",
             "production-scheduling",
-            "batch-tracking", 
-            "equipment-maintenance", 
+            "batch-tracking",
+            "equipment-maintenance",
             "regulatory-compliance",
-            "new-ingredient-evaluation", 
-            "allergen-management", 
+            "new-ingredient-evaluation",
+            "allergen-management",
             "packaging-design",
             "supplier-performance",
-            "shelf-life-testing", 
-            "sustainability-assessment", 
+            "shelf-life-testing",
+            "sustainability-assessment",
             "recipe-scaling",
-            "traceability-system", 
+            "traceability-system",
             "food-safety-training",
-            "inventory-management", 
+            "inventory-management",
             "product-launch-planning",
             "market-trend-analysis" };
         string[] _dedcription = { "Design a new recipe for a food product.",
@@ -99,7 +141,7 @@ public static class Initialization
         "Keep staff informed about hygiene, sanitation, and safety protocols",
         "Minimize waste, prevent shortages, and track expiration dates.",
         "Consider marketing, distribution, and customer feedback.",
-        "Stay ahead of consumer preferences and industry developments."};
+        "Stay ahead of consumer preferences and industry developments." };
         string[] _deliverables = { "Recipe Design Software",
         "Ingredient Sourcing Tool",
         "Cost Analysis Software",
@@ -130,7 +172,7 @@ public static class Initialization
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
-            Random random = new Random();
+            Random random = new();
             int randomDays = random.Next(range);
 
             DateTime _scheduledDate = start.AddDays(randomDays);
@@ -144,9 +186,9 @@ public static class Initialization
             s_dalTask!.Create(tsk);
         }
     }
-    private static void creatEngineer()
+    private static void CreatEngineer()
     {
-        string[] namesOfEng= { "Shira", "Efrat", "Adi", "Moti", "Israel" };
+        string[] namesOfEng= ["Shira", "Efrat", "Adi", "Moti", "Israel"];
 
         foreach (var _name in namesOfEng)
         {
@@ -176,9 +218,9 @@ public static class Initialization
         s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
         s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
         s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        creatDependency();
-        creatEngineer();
-        creatTask();
+        CreateDependencies();
+        CreatEngineer();
+        CreatTask();
 
 
     }
