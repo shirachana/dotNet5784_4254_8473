@@ -28,32 +28,36 @@ namespace DalTest
         }
         static void DisplayMainMenu()
         {
-
-            Console.WriteLine("Main Menu - Select an entity you want to check:");
-            Console.WriteLine("1. Dependency");
-            Console.WriteLine("2. Engineer");
-            Console.WriteLine("3. Task");
-            Console.WriteLine("0. Exit");
-            int choice = GetUserChoice();
-
-            switch (choice)
+            do
             {
-                case 1:
-                    DisplayEntityMenuD( "Dependency");
-                    break;
-                case 2:
-                    DisplayEntityMenuE( "Engineer");
-                    break;
-                case 3:
-                    DisplayEntityMenuT( "Task");
-                    break;
-                case 0:
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
+                Console.WriteLine("Main Menu - Select an entity you want to check:");
+                Console.WriteLine("1. Dependency");
+                Console.WriteLine("2. Engineer");
+                Console.WriteLine("3. Task");
+                Console.WriteLine("0. Exit");
+                int choice = GetUserChoice();
+
+                switch (choice)
+                {
+                    case 1:
+                        DisplayEntityMenuD("Dependency");
+                        break;
+                    case 2:
+                        DisplayEntityMenuE("Engineer");
+                        break;
+                    case 3:
+                        DisplayEntityMenuT("Task");
+                        break;
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
             }
+            while (true);
+            
         }
 
         static void DisplayEntityMenuD( string entityName)
