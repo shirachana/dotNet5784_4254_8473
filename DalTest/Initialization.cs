@@ -15,22 +15,19 @@ public static class Initialization
     {
         int dependentTask;
         int dependsOnTask;
+        int[] ids = new int[40];
 
         // Create 40 dependencies
         for (int i = 0; i < 40; i++)
         {
-            do
-            {
-                dependentTask = s_rand.Next(1, 41);
-            } while (s_dalDependency!.Read(dependentTask) != null);
-
-            do
-            {
-               dependsOnTask = s_rand.Next(1, dependentTask);
-            } while (s_dalDependency!.Read(dependentTask) != null);
-
+            ids[i] = i;
+        }
+        foreach (var id in ids)
+        {
+            dependentTask = s_rand.Next(1, 41);
+            dependsOnTask = s_rand.Next(1, dependentTask);
             bool flag = true;
-            foreach (var item in s_dalDependency.ReadAll())
+            foreach (var item in s_dalDependency!.ReadAll())
             {
                 if (item.DependentTask == dependentTask && item.DependsOnTask == dependsOnTask)
                 {
@@ -42,13 +39,10 @@ public static class Initialization
             if (flag)
             {
                 Dependency dep = new(0, dependentTask, dependsOnTask);
-                s_dalDependency!.Create(dep);
-                
-            }
-     
-            
-        }
+                s_dalDependency?.Create(dep);
 
+            }
+        }
     }
     private static void CreatTask()
     {
@@ -136,9 +130,9 @@ public static class Initialization
         int _engId;
         for (int i = 0; i < lev.Length; i++)
         {
-            do
+           do
                 _engId = s_rand.Next(1000000, 99999999);
-            while (s_dalTask!.Read(_engId) != null);
+           while (s_dalTask!.Read(_engId) != null);
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
@@ -166,9 +160,9 @@ public static class Initialization
             double _cost;
             string? _mail;
             EngineerExperience? _experience;
-            do
+           do
                 _id = s_rand.Next(1000000, 99999999);
-            while (s_dalEngineer!.Read(_id) != null);
+          while (s_dalEngineer!.Read(_id) != null);
             do
                 _cost = s_rand.Next(20, 100);
             while (s_dalEngineer!.Read((int)_cost) != null);

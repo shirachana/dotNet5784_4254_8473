@@ -39,30 +39,7 @@ public class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public Dependency? Read(int id)
     {
-            Dependency? foundDependency = DataSource.Dependencys.Find(item => item.Id == id);
-
-
-             //if (foundDependency == null)
-             //{
-             //   throw new Exception($"Dependency with ID {id} not found.");
-             //}
-
-            return foundDependency;
-        
-
-        //if (DataSource.Dependencys.FirstOrDefault(x => x.Id == item.Id)==null)
-
-        //throw new Exception($"Student with ID={item.Id} already exists");
-        //var dependency = DataSource.Dependencys.Find(item => item.Id == id);
-
-        //if (dependency == null)
-        //{
-        //    throw new ArgumentException($"Dependency with ID {id} not found");
-        //}
-
-        // Continue processing with the found dependency
-
-        //return DataSource.Dependencys.Find(item => item.Id==id);
+            return DataSource.Dependencys.Find(item => item.Id == id)??throw new Exception($"Dependency with ID={id} does Not exist");
     }
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type dependency
