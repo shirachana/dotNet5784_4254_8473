@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DalApi;
 using DO;
 using System.Runtime.Intrinsics.Arm;
+using System.ComponentModel;
 
 namespace DalTest
 {
@@ -15,15 +16,15 @@ namespace DalTest
 
         static void Main(string[] args)
         {
-            //Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello, World!");
             try
             {
-            Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
-                    DisplayMainMenu();
+                Initialization.Do(s_dalDependency, s_dalEngineer, s_dalTask);
+                DisplayMainMenu();
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
-               Console.WriteLine($"An exception occurred: {ex}");
+                Console.WriteLine($"An exception occurred: {ex}");
             }
         }
         static void DisplayMainMenu()
@@ -212,14 +213,28 @@ namespace DalTest
                 Console.WriteLine(@"Enter id of Dependency: ");
                 string? d = Console.ReadLine();
                 int idDep = int.Parse(d!);
-                Dependency? dpcy = new Dependency();
-                dpcy = s_dalDependency!.Read(idDep);
+                Dependency? dpcy = s_dalDependency!.Read(idDep);
                 Console.WriteLine(dpcy);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
+
+
+            //try
+            //{
+            //    Console.WriteLine(@"Enter id of Dependency: ");
+            //    string? d = Console.ReadLine();
+            //    int idDep = int.Parse(d!);
+            //    Dependency? dpcy = new Dependency();
+            //    dpcy = s_dalDependency!.Read(idDep);
+            //    Console.WriteLine(dpcy);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine($"Error: {ex.Message}");
+            //}
         }
         static void ReadAllDependencies()
         {
