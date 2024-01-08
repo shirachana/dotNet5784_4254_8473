@@ -173,7 +173,7 @@ public static class Initialization
 
             Engineer eng = new(_id, _cost, _mail, _name, _experience);
 
-            s_dalEngineer!.Create(eng);
+            s_dalEngineer?.Create(eng);
         }
 
     }
