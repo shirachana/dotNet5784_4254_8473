@@ -39,7 +39,7 @@ public class TaskImplementation : ITask
     /// <exception cref="Exception"></exception>
     public Task? Read(int id)
     {
-        return DataSource.Tasks.Find(item => item.Id == id);
+        return DataSource.Tasks.Find(item => item.Id == id)?? throw new Exception($"Task with ID={id} does Not exist");
     }
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type task

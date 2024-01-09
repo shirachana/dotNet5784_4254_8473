@@ -43,7 +43,7 @@ public class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public Engineer? Read(int id)
     {
-        return DataSource.Engineers.Find(item => item.Id == id);
+        return DataSource.Engineers.Find(item => item.Id == id)??throw new Exception($"Engineers with ID={id} does Not exist"); ;
     }
 
     /// <summary>

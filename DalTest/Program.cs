@@ -220,21 +220,6 @@ namespace DalTest
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-
-
-            //try
-            //{
-            //    Console.WriteLine(@"Enter id of Dependency: ");
-            //    string? d = Console.ReadLine();
-            //    int idDep = int.Parse(d!);
-            //    Dependency? dpcy = new Dependency();
-            //    dpcy = s_dalDependency!.Read(idDep);
-            //    Console.WriteLine(dpcy);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
         }
         static void ReadAllDependencies()
         {

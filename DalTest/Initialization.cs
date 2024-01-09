@@ -130,9 +130,7 @@ public static class Initialization
         int _engId;
         for (int i = 0; i < lev.Length; i++)
         {
-           do
-                _engId = s_rand.Next(1000000, 99999999);
-           while (s_dalTask!.Read(_engId) != null);
+             _engId = s_rand.Next(1000000, 99999999);
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
@@ -160,15 +158,10 @@ public static class Initialization
             double _cost;
             string? _mail;
             EngineerExperience? _experience;
-           do
-                _id = s_rand.Next(1000000, 99999999);
-          while (s_dalEngineer!.Read(_id) != null);
-            do
-                _cost = s_rand.Next(20, 100);
-            while (s_dalEngineer!.Read((int)_cost) != null);
+            _id = s_rand.Next(1000000, 99999999);
+            _cost = s_rand.Next(20, 100);
             _mail = _name + "@gmail.com";
-            do
-                _experience = (EngineerExperience?)s_rand.Next(0, 5);
+            _experience = (EngineerExperience?)s_rand.Next(0, 5);
             while (s_dalEngineer!.Read((int)_experience) != null);
 
             Engineer eng = new(_id, _cost, _mail, _name, _experience);
