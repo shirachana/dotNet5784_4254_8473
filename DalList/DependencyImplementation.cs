@@ -5,7 +5,7 @@ using DO;
 namespace Dal;
 using System.Collections.Generic;
 
-public class DependencyImplementation : IDependency
+internal class DependencyImplementation : IDependency
 {
     /// <summary>
     /// a function that Adding a new object of type Dependency to a database
@@ -29,7 +29,7 @@ public class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         if(DataSource.Dependencys.RemoveAll(item => item.Id == id) == 0)
-            throw new Exception($"Dependency with ID={id} does Not exist");
+            throw new DalDoesNotExistException($"Dependency with ID={id} does Not exist");
     }
     /// <summary>
     /// a function that eturning a reference to a single object of type Dependency with a certain ID, if it exists in a database (in a list of data of type Dependency), or null if the object does not exist.
@@ -39,15 +39,22 @@ public class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public Dependency? Read(int id)
     {
-            return DataSource.Dependencys.Find(item => item.Id == id)??throw new Exception($"Dependency with ID={id} does Not exist");
+        return DataSource.Dependencys.FirstOrDefault(item=> item.Id==id) ?? throw new DalDoesNotExistException($"Dependency with {id} does Not exist");
+    }
+    public Dependency? Read(Func<Dependency, bool> filter)
+    {
+        return DataSource.Dependencys.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Dependency with {filter} does Not exist");
     }
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type dependency
     /// </summary>
     /// <returns></returns>
-    public List<Dependency> ReadAll()
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null)
     {
-        return new List<Dependency>(DataSource.Dependencys);
+        if (filter == null)
+            return DataSource.Dependencys.Select(item => item);
+        else
+            return DataSource.Dependencys.Where(filter);
     }
     /// <summary>
     /// Update of an existing object. The update will consist of deleting the existing object with the same ID number and replacing it with a new object with the same ID number and updated fields.
@@ -61,7 +68,7 @@ public class DependencyImplementation : IDependency
         if (existingItem == null)
         {
             // If not present, throw an exception
-            throw new Exception($"Dependency with ID={item.Id} does Not exist");
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} does Not exist");
         }
         else
         {

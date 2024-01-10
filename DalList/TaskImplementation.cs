@@ -5,7 +5,7 @@ using DalApi;
 using DO;
 using System.Collections.Generic;
 
-public class TaskImplementation : ITask
+internal class TaskImplementation : ITask 
 {
     /// <summary>
     /// a function that Adding a new object of type task to a database
@@ -29,7 +29,7 @@ public class TaskImplementation : ITask
     public void Delete(int id)
     {
         if (DataSource.Tasks.RemoveAll(item => item.Id == id) == 0)
-            throw new Exception($"Task with ID={id} does Not exist");
+            throw new DalDoesNotExistException($"Task with ID={id} does Not exist");
     }
     /// <summary>
     /// a function that eturning a reference to a single object of type task with a certain ID, if it exists in a database (in a list of data of type task), or null if the object does not exist.
@@ -39,15 +39,22 @@ public class TaskImplementation : ITask
     /// <exception cref="Exception"></exception>
     public Task? Read(int id)
     {
-        return DataSource.Tasks.Find(item => item.Id == id)?? throw new Exception($"Task with ID={id} does Not exist");
+        return DataSource.Tasks.FirstOrDefault(item => item.Id == id) ?? throw new DalDoesNotExistException($"task  with {id} does Not exist");
+    }
+    public Task? Read(Func<Task, bool> filter)
+    {
+        return DataSource.Tasks.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Task with {filter} does Not exist");
     }
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type task
     /// </summary>
     /// <returns></returns>
-    public List<Task> ReadAll()
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)
     {
-        return new List<Task>(DataSource.Tasks);
+        if (filter == null)
+            return DataSource.Tasks.Select(item => item);
+        else
+            return DataSource.Tasks.Where(filter);
     }
     /// <summary>
     /// Update of an existing object. The update will consist of deleting the existing object with the same ID number and replacing it with a new object with the same ID number and updated fields.
@@ -61,7 +68,7 @@ public class TaskImplementation : ITask
         if (existingItem == null)
         {
             // If not present, throw an exception
-            throw new Exception($"Task with ID={item.Id} does Not exist");
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does Not exist");
         }
         else
         {

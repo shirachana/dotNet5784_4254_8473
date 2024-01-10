@@ -7,9 +7,10 @@ using System.Xml.Linq;
 
 public static class Initialization
 {
-    private static IDependency? s_dalDependency; //stage 1
-    private static IEngineer? s_dalEngineer; //stage 1
-    private static ITask? s_dalTask; //stage 1
+    //private static IDependency? s_dalDependency; //stage 1
+    //private static IEngineer? s_dalEngineer; //stage 1
+    //private static ITask? s_dalTask; //stage 1
+    private static IDal? s_dal;
     private static readonly Random s_rand = new();
     private static void CreateDependencies()
     {
@@ -27,9 +28,9 @@ public static class Initialization
             dependentTask = s_rand.Next(1, 41);
             dependsOnTask = s_rand.Next(1, dependentTask);
             bool flag = true;
-            foreach (var item in s_dalDependency!.ReadAll())
+            foreach (var item in s_dal!.Dependency.ReadAll())
             {
-                if (item.DependentTask == dependentTask && item.DependsOnTask == dependsOnTask)
+                if (item?.DependentTask == dependentTask && item.DependsOnTask == dependsOnTask)
                 {
                     flag = false;
                     break; // exit the loop as soon as a match is found
@@ -39,7 +40,7 @@ public static class Initialization
             if (flag)
             {
                 Dependency dep = new(0, dependentTask, dependsOnTask);
-                s_dalDependency?.Create(dep);
+                s_dal?.Dependency.Create(dep);
 
             }
         }
@@ -145,7 +146,7 @@ public static class Initialization
 
             Task tsk = new(0, _engId, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], _startDate, _scheduledDate, _deadLine, _endDate, _deliverables[i], _remarks[i]);
 
-            s_dalTask!.Create(tsk);
+            s_dal!.Task.Create(tsk);
         }
     }
     private static void CreatEngineer()
@@ -162,19 +163,19 @@ public static class Initialization
             _cost = s_rand.Next(20, 100);
             _mail = _name + "@gmail.com";
             _experience = (EngineerExperience?)s_rand.Next(0, 5);
-            while (s_dalEngineer!.Read((int)_experience) != null);
 
             Engineer eng = new(_id, _cost, _mail, _name, _experience);
 
-            s_dalEngineer?.Create(eng);
+            s_dal?.Engineer.Create(eng);
         }
 
     }
-    public static void Do(IDependency? dalDependency, IEngineer? dalEngineer, ITask? dalTask )
+    public static void Do(IDal dal )
     {
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!");
         CreateDependencies();
         CreatEngineer();
         CreatTask();

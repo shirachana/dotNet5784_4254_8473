@@ -3,7 +3,7 @@ using DalApi;
 using DO;
 
 namespace Dal;
-public class EngineerImplementation : IEngineer
+internal class EngineerImplementation : IEngineer
 {
     /// <summary>
     /// a function that Adding a new object of type Engineer to a database
@@ -17,7 +17,7 @@ public class EngineerImplementation : IEngineer
         {
             if (engineer.Id == item.Id)
             {
-                throw new Exception($"Engineer with ID={item.Id} does Not exist");
+                throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exist");
             }
         }
         DataSource.Engineers.Add(item);
@@ -32,7 +32,7 @@ public class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
         if (DataSource.Engineers.RemoveAll(item => item.Id == id) == 0)
-            throw new Exception($"Engineers with ID={id} does Not exist");
+            throw new DalDoesNotExistException($"Engineers with ID={id} does Not exist");
     }
 
     /// <summary>
@@ -43,16 +43,23 @@ public class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public Engineer? Read(int id)
     {
-        return DataSource.Engineers.Find(item => item.Id == id)??throw new Exception($"Engineers with ID={id} does Not exist"); ;
+        return DataSource.Engineers.FirstOrDefault(item => item.Id == id) ?? throw new DalDoesNotExistException($"Engineer with {id} does Not exist");
+    }
+    public Engineer? Read(Func<Engineer, bool> filter)
+    {
+        return DataSource.Engineers.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineers with {filter} does Not exist"); ;
     }
 
     /// <summary>
     /// a function that return a copy of the list of references to all objects of type Engineer
     /// </summary>
     /// <returns></returns>
-    public List<Engineer> ReadAll()
+    public IEnumerable<Engineer> ReadAll(Func<Engineer, bool>? filter = null)
     {
-        return new List<Engineer>(DataSource.Engineers);
+        if (filter == null)
+            return DataSource.Engineers.Select(item => item);
+        else
+            return DataSource.Engineers.Where(filter);
     }
     /// <summary>
     /// Update of an existing object. The update will consist of deleting the existing object with the same ID number and replacing it with a new object with the same ID number and updated fields.
@@ -66,7 +73,7 @@ public class EngineerImplementation : IEngineer
         if (existingItem == null)
         {
             // If not present, throw an exception
-            throw new Exception($"Engineer with ID={item.Id} does Not exist");
+            throw new DalDoesNotExistException($"Engineer with ID={item.Id} does Not exist");
         }
         else
         {
