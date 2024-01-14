@@ -22,7 +22,7 @@ namespace DalTest
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+           // Console.WriteLine("Hello, World!");
             try
             {
                 Initialization.Do(s_dal);
@@ -195,8 +195,7 @@ namespace DalTest
         }
         static void CreatDependency()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id dependent Task: ");
                 string? d = Console.ReadLine();
                 int idDTsk= int.Parse(d!);
@@ -206,46 +205,31 @@ namespace DalTest
                 Dependency dependency = new Dependency(0, idDTsk,idDOnTsk);
                 int dpncy = s_dal!.Dependency.Create(dependency);
                 Console.WriteLine(dpncy);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
 
         static void ReadDependencyById()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Dependency: ");
                 string? d = Console.ReadLine();
                 int idDep = int.Parse(d!);
                 Dependency? dpcy = s_dal!.Dependency.Read(idDep);
                 Console.WriteLine(dpcy);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void ReadAllDependencies()
         {
-            //try
-            //{
+
                 IEnumerable<Dependency?> dependencies;
                 dependencies = s_dal!.Dependency.ReadAll();
                 foreach (Dependency? dependency in dependencies) { Console.WriteLine(dependency); }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
 
         static void UpdateDependency()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Dependency: ");
                 string? d = Console.ReadLine();
                 int idDep = int.Parse(d!);
@@ -263,30 +247,20 @@ namespace DalTest
                     Dependency dependencyNew = new Dependency(0, idDepenT, idDepenedOnTsk);
                     s_dal!.Dependency.Update(dependencyNew);
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void DeleteDependency()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Dependency to delete: ");
                 string? d = Console.ReadLine();
                 int idDepn = int.Parse(d!);
                 s_dal?.Dependency.Delete(idDepn);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void CreatEngineer()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id: ");
                 string? d = Console.ReadLine();
                 int idD = int.Parse(d!);
@@ -303,46 +277,31 @@ namespace DalTest
                 Engineer engineer = new Engineer(idD,costForHour,engineerEmail,engineerName,engineerLevel);
                 int crt = s_dal!.Engineer.Create(engineer);
                  Console.WriteLine(crt);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void ReadEngineerById()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Engineer: ");
                 string? d = Console.ReadLine();
                 int idD = int.Parse(d!);
                 Engineer? eng = new Engineer();
                 eng=s_dal!.Engineer.Read(idD);
                 Console.WriteLine(eng);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void ReadAllEngineers()
         {
-            //try
-            //{
+
                 IEnumerable<Engineer?> engineers;
                 engineers = s_dal!.Engineer.ReadAll();
                 foreach(Engineer? engineer in engineers) { Console.WriteLine(engineer); }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
 
         static void UpdateEngineer()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Engineer: ");
                 string? d = Console.ReadLine();
                 int idD = int.Parse(d!);
@@ -364,30 +323,20 @@ namespace DalTest
                     Engineer engineer = new Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
                     s_dal!.Engineer.Update(engineer);
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void DeleteEngineer()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Engineer to delete: ");
                 string? d = Console.ReadLine();
                 int idD = int.Parse(d!);
                 s_dal!.Engineer.Delete(idD);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void CreatTask()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter the engineer ID of the task: ");
                 string? d = Console.ReadLine();
                 int idT = int.Parse(d!);
@@ -416,46 +365,30 @@ namespace DalTest
                 int? tk = s_dal!.Task.Create(tsk);
                 Console.WriteLine(tk);
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
         }
         static void ReadTaskById()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of task: ");
                 string? d = Console.ReadLine();
                 int idT = int.Parse(d!);
                 DO.Task? tsk = new DO.Task();
                 tsk= s_dal!.Task.Read(idT);
                 Console.WriteLine(tsk);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void ReadAllTasks()
         {
-            //try
-            //{
+
                 IEnumerable<DO.Task?> tasks;
                 tasks = s_dal!.Task.ReadAll();
                 foreach (DO.Task? task in tasks) { Console.WriteLine(task); }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
 
         static void UpdateTask()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of task: ");
                 string? d = Console.ReadLine();
                 int idT = int.Parse(d!);
@@ -491,25 +424,15 @@ namespace DalTest
                     DO.Task tskUp = new DO.Task(0, idTsk, aliasTask, discTask, null, null, false, taskLevel, null, null, null, null, deliTask, taskRemark);
                     s_dal!.Task.Update(tskUp);
                 }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
+
         }
         static void DeleteTask()
         {
-            //try
-            //{
+
                 Console.WriteLine(@"Enter id of Task to delete: ");
                 string? d = Console.ReadLine();
                 int idT = int.Parse(d!);
                 s_dal?.Task.Delete(idT);
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine($"Error: {ex.Message}");
-            //}
         }
 
 
