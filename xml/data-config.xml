@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <NextTaskId>1008</NextTaskId>
+  <NextDependencyd>41</NextDependencyId>
+</config>
+/*int nextId=Config.NextTaskId;
+int nextId=Config.NextDependencyId;*/
