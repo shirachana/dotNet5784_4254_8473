@@ -1,0 +1,99 @@
+﻿namespace Dal;
+using DalApi;
+using DO;
+using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
+
+internal class DependencyImplementation : IDependency
+{
+    readonly string s_dependencys_xml = "dependencys";
+
+    public int Create(Dependency item)
+    {
+        List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
+        int nextId = Config.NextTaskId;
+        Dependency copy = item with { Id = nextId };
+        Dependencys.Add(copy);
+        XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+        return nextId;
+    }
+
+    public void Delete(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Dependency? Read(int id)
+    {
+        XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().FirstOrDefault(dep => (int?)dep.Element("Id") == id);
+
+        return dependencyElem != null
+            ? new Dependency
+            {
+                Id = (int)dependencyElem.Element("Id")!,
+                DependentTask = (int)dependencyElem.Element("DependentTask")!,
+                DependsOnTask = (int)dependencyElem.Element("DependsOnTask")!
+            }
+     : null;
+    }
+
+    public Dependency? Read(Func<Dependency, bool> filter)
+    {
+        XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml)
+      .Elements()
+      .Where(s => filter(new Dependency
+      {
+          Id = (int)s.Element("Id")!,
+          DependentTask = (int)s.Element("DependentTask")!,
+          DependsOnTask = (int)s.Element("DependsOnTask")!
+      }))
+      .FirstOrDefault();
+
+        return dependencyElem != null
+            ? new Dependency
+            {
+                Id = (int)dependencyElem.Element("Id")!,
+                DependentTask = (int)dependencyElem.Element("DependentTask")!,
+                DependsOnTask = (int)dependencyElem.Element("DependsOnTask")!
+            }
+     : null;
+
+    }
+
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    {
+
+            var dependencies = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements();
+
+            if (filter == null)
+            {
+                return dependencies.Select(s => new Dependency
+                {
+                    Id = (int)s.Element("Id")!,
+                    DependentTask = (int)s.Element("DependentTask")!,
+                    DependsOnTask = (int)s.Element("DependsOnTask")!
+                });
+            }
+            else
+            {
+                return dependencies.Select(s => new Dependency
+                {
+                    Id = (int)s.Element("Id")!,
+                    DependentTask = (int)s.Element("DependentTask")!,
+                    DependsOnTask = (int)s.Element("DependsOnTask")!
+                }).Where(filter);
+            }
+        
+
+    }
+
+    public void Update(Dependency item)
+    {
+        List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
+        if (Dependencys.RemoveAll(item => item.Id == item.Id) == 0)
+            throw new DalDoesNotExistException($"Dependency with ID={item.Id} does Not exist");
+        Dependencys.Add(item);
+        XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+    }
+}
