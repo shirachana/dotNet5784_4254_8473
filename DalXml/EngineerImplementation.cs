@@ -12,7 +12,11 @@ internal class EngineerImplementation : IEngineer
 
     public int Create(Engineer item)
     {
+        //if (File.Exists(filePath) && new FileInfo(filePath).Length > 0)
+        //{
+        //    List<MyClass> result = LoadListFromXMLSerializer<MyClass>(entity);
         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+            
 
         // Check if an engineer with the same ID already exists
         if (engineers.Any(e => e.Id == item.Id))
@@ -24,7 +28,9 @@ internal class EngineerImplementation : IEngineer
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
 
         return item.Id;
+        //}
     }
+
 
     public void Delete(int id)
     {
@@ -50,12 +56,44 @@ internal class EngineerImplementation : IEngineer
 
     }
 
-    public Engineer? Read(Func<Engineer, bool> filter)
-    {
-        List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-        return EngineerElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineer with ID={filter} does Not exist");
+    //public Engineer? Read(Func<Engineer, bool> filter)
+    //{
+    //    List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+    //    return EngineerElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineer with ID={filter} does Not exist");
 
-    }
+    //}
+    //public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
+    //{
+    //    string filePath = "path/to/your/engineers.xml"; // Replace with your actual file path
+
+    //    try
+    //    {
+    //        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(filePath);
+
+    //        // Check if the loaded engineers list is empty (no records in the XML file)
+    //        if (!engineers.Any())
+    //        {
+    //            Console.WriteLine("No engineers found.");
+    //            return Enumerable.Empty<Engineer>();
+    //        }
+
+    //        if (filter == null)
+    //        {
+    //            return engineers;
+    //        }
+    //        else
+    //        {
+    //            return engineers.Where(filter);
+    //        }
+    //    }
+    //    catch (DalXMLFileLoadCreateException ex)
+    //    {
+    //        // Handle the specific exception for XML file loading error
+    //        Console.WriteLine($"Error loading engineers: {ex.Message}");
+    //        return Enumerable.Empty<Engineer>();
+    //    }
+    //}
+
 
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {

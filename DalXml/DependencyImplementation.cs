@@ -12,7 +12,7 @@ internal class DependencyImplementation : IDependency
     public int Create(Dependency item)
     {
         XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
-        int nextId = Config.NextTaskId;
+        int nextId = Config.NextDependencyId;
         Dependency copy = item with { Id = nextId };
         dependencyElem.Add(copy);
         XMLTools.SaveListToXMLElement(dependencyElem, s_dependencys_xml);
