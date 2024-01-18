@@ -79,4 +79,10 @@ internal class EngineerImplementation : IEngineer
         Engineers.Add(item);
         XMLTools.SaveListToXMLSerializer(Engineers, s_engineers_xml);
     }
+    public void Clear()
+    {
+        List<Engineer> Engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        Engineers.Clear();
+        XMLTools.SaveListToXMLSerializer(Engineers, s_engineers_xml);
+    }
 }

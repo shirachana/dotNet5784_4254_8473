@@ -77,4 +77,11 @@ internal class DependencyImplementation : IDependency
             DataSource.Dependencys.Add(item);
         }
     }
+    /// <summary>
+    /// clear all the dependencies
+    /// </summary>
+    public void Clear()
+    {
+        DataSource.Dependencys.Clear();
+    }
 }

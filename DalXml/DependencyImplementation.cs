@@ -100,4 +100,10 @@ internal class DependencyImplementation : IDependency
         dependencyElem.Element("DependsOnTask")!.Value = item.DependsOnTask.ToString();
         XMLTools.SaveListToXMLElement(dependencyElem!, s_dependencys_xml);
     }
+    public void Clear()
+    {
+        List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
+        Dependencys.Clear();
+        XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+    }
 }

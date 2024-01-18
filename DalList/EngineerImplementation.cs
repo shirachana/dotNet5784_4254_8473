@@ -82,5 +82,12 @@ internal class EngineerImplementation : IEngineer
             DataSource.Engineers.Add(item);
         }
     }
+    /// <summary>
+    /// clear all the engineers
+    /// </summary>
+    public void Clear()
+    {
+        DataSource.Engineers.Clear();
+    }
 }
 
