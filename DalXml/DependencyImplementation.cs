@@ -34,7 +34,7 @@ internal class DependencyImplementation : IDependency
         return dependencyElem != null
             ? new Dependency
             {
-                Id = (int)dependencyElem.Element("Id")!,
+                //Id = (int)dependencyElem.Element("Id")!,
                 DependentTask = (int)dependencyElem.Element("DependentTask")!,
                 DependsOnTask = (int)dependencyElem.Element("DependsOnTask")!
             }
@@ -56,7 +56,7 @@ internal class DependencyImplementation : IDependency
         return dependencyElem != null
             ? new Dependency
             {
-                Id = (int)dependencyElem.Element("Id")!,
+                //Id = (int)dependencyElem.Element("Id")!,
                 DependentTask = (int)dependencyElem.Element("DependentTask")!,
                 DependsOnTask = (int)dependencyElem.Element("DependsOnTask")!
             }
@@ -73,7 +73,7 @@ internal class DependencyImplementation : IDependency
             {
                 return dependencies.Select(s => new Dependency
                 {
-                    Id = (int)s.Element("Id")!,
+                    //Id = (int)s.Element("Id")!,
                     DependentTask = (int)s.Element("DependentTask")!,
                     DependsOnTask = (int)s.Element("DependsOnTask")!
                 });
@@ -82,7 +82,7 @@ internal class DependencyImplementation : IDependency
             {
                 return dependencies.Select(s => new Dependency
                 {
-                    Id = (int)s.Element("Id")!,
+                    //Id = (int)s.Element("Id")!,
                     DependentTask = (int)s.Element("DependentTask")!,
                     DependsOnTask = (int)s.Element("DependsOnTask")!
                 }).Where(filter);

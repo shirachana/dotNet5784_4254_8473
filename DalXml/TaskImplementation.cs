@@ -19,142 +19,47 @@ internal class TaskImplementation:ITask
         XMLTools.SaveListToXMLSerializer(Tasks, s_tasks_xml);
         return nextId;
     }
-    
+
     public void Delete(int id)
     {
         List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
 
-        // Find the engineer with the specified ID
-        Task taskToDelete = tasks.FirstOrDefault(t => t.Id == id)!;
-
-        // Check if an engineer with the specified ID exists
-        if (taskToDelete == null)
+        foreach (Task taskToDelete in tasks)
         {
-            throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+            if (taskToDelete.Id == id)
+            {
+                tasks.Remove(taskToDelete);
+                XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
+                return;
+            }
         }
-
-        // Remove the engineer from the list
-        tasks.Remove(taskToDelete);
-
-        // Save the updated list to the XML file
-        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
+        throw new DalDoesNotExistException($"Task with ID={id} does Not exist");
     }
    
     public Task? Read(int id)
     {
-        XElement? taskElem = XMLTools.LoadListFromXMLElement(s_tasks_xml).Elements().FirstOrDefault(st => (int?)st.Element("Id") == id);
-        return taskElem is null? null : new Task
-        {
-            Id = (int)taskElem!.Element("Id")!,
-            Engineerld = (int)taskElem!.Element("EngineerId")!,
-            Alias = (string?)taskElem.Element("Alias"),
-            Description = (string?)taskElem.Element("Description"),
-            CreatedAtDate = (DateTime?)taskElem.Element("CreatedAtDate"),
-            RequiredEffortTime = (TimeSpan?)taskElem.Element("RequiredEffortTime"),
-            IsMilestone = (bool)taskElem!.Element("IsMilestone")!,
-            Copmlexity = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)taskElem!.Element("Complexity")!),
-            StartDate = (DateTime?)taskElem.Element("StartDate"),
-            ScheduledDate = (DateTime?)taskElem.Element("ScheduledDate"),
-            DeadlineDate = (DateTime?)taskElem.Element("DeadlineDate"),
-            CompleteDate = (DateTime?)taskElem.Element("CompleteDate"),
-            Deliverables = (string?)taskElem.Element("Deliverables"),
-            Remarks = (string?)taskElem.Element("Remarks")
-        };
+        List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        return taskElem.FirstOrDefault(it => it.Id == id) ?? throw new DalDoesNotExistException($"Task with ID={id} does Not exist");
     }
 
     public Task? Read(Func<Task, bool> filter)
     {
-       
-            XElement? taskElem = XMLTools.LoadListFromXMLElement(s_tasks_xml)
-                .Elements()
-                .Where(s => filter(new Task
-                {
-                    Id = (int)s.Element("Id")!,
-                    Engineerld = (int)s.Element("EngineerId")!,
-                    Alias = (string?)s.Element("Alias"),
-                    Description = (string?)s.Element("Description"),
-                    CreatedAtDate = (DateTime?)s.Element("CreatedAtDate"),
-                    RequiredEffortTime = (TimeSpan?)s.Element("RequiredEffortTime"),
-                    IsMilestone = (bool)s.Element("IsMilestone")!,
-                    Copmlexity = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Complexity")!),
-                    StartDate = (DateTime?)s.Element("StartDate"),
-                    ScheduledDate = (DateTime?)s.Element("ScheduledDate"),
-                    DeadlineDate = (DateTime?)s.Element("DeadlineDate"),
-                    CompleteDate = (DateTime?)s.Element("CompleteDate"),
-                    Deliverables = (string?)s.Element("Deliverables"),
-                    Remarks = (string?)s.Element("Remarks")
-
-                }))
-                .FirstOrDefault();
-
-            return taskElem != null
-                ? new Task
-                {
-                    Id = (int)taskElem!.Element("Id")!,
-                    Engineerld = (int)taskElem!.Element("EngineerId")!,
-                    Alias = (string?)taskElem.Element("Alias"),
-                    Description = (string?)taskElem.Element("Description"),
-                    CreatedAtDate = (DateTime?)taskElem.Element("CreatedAtDate"),
-                    RequiredEffortTime = (TimeSpan?)taskElem.Element("RequiredEffortTime"),
-                    IsMilestone = (bool)taskElem!.Element("IsMilestone")!,
-                    Copmlexity = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)taskElem!.Element("Complexity")!),
-                    StartDate = (DateTime?)taskElem.Element("StartDate"),
-                    ScheduledDate = (DateTime?)taskElem.Element("ScheduledDate"),
-                    DeadlineDate = (DateTime?)taskElem.Element("DeadlineDate"),
-                    CompleteDate = (DateTime?)taskElem.Element("CompleteDate"),
-                    Deliverables = (string?)taskElem.Element("Deliverables"),
-                    Remarks = (string?)taskElem.Element("Remarks")
-                }
-         : null;
-        
-
+        List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        return taskElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Task with ID={filter} does Not exist");
     }
 
 
 
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
     {
-            var tasks = XMLTools.LoadListFromXMLElement(s_tasks_xml).Elements();
-
-            if (filter == null)
-            {
-                return tasks.Select(s => new Task
-                {
-                    Id = (int)s.Element("Id")!,
-                    Engineerld = (int)s.Element("EngineerId")!,
-                    Alias = (string?)s.Element("Alias"),
-                    Description = (string?)s.Element("Description"),
-                    CreatedAtDate = (DateTime?)s.Element("CreatedAtDate"),
-                    RequiredEffortTime = (TimeSpan?)s.Element("RequiredEffortTime"),
-                    IsMilestone = (bool)s.Element("IsMilestone")!,
-                    Copmlexity = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Complexity")!),
-                    StartDate = (DateTime?)s.Element("StartDate"),
-                    ScheduledDate = (DateTime?)s.Element("ScheduledDate"),
-                    DeadlineDate = (DateTime?)s.Element("DeadlineDate"),
-                    CompleteDate = (DateTime?)s.Element("CompleteDate"),
-                    Deliverables = (string?)s.Element("Deliverables"),
-                    Remarks = (string?)s.Element("Remarks")
-                });
-            }
-            else
-            {
-            return tasks.Select(s => new Task
-            {
-                Id = (int)s.Element("Id")!,
-                Engineerld = (int)s.Element("EngineerId")!,
-                Alias = (string?)s.Element("Alias"),
-                Description = (string?)s.Element("Description"),
-                CreatedAtDate = (DateTime?)s.Element("CreatedAtDate"),
-                RequiredEffortTime = (TimeSpan?)s.Element("RequiredEffortTime"),
-                IsMilestone = (bool)s.Element("IsMilestone")!,
-                Copmlexity = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Complexity")!),
-                StartDate = (DateTime?)s.Element("StartDate"),
-                ScheduledDate = (DateTime?)s.Element("ScheduledDate"),
-                DeadlineDate = (DateTime?)s.Element("DeadlineDate"),
-                CompleteDate = (DateTime?)s.Element("CompleteDate"),
-                Deliverables = (string?)s.Element("Deliverables"),
-                Remarks = (string?)s.Element("Remarks")
-            }).Where(filter) ;
+        List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        if (filter == null)
+        {
+            return taskElem.Select(item => item);      
+        }
+        else
+        {
+            return taskElem.Where(filter);
         }
     }
 

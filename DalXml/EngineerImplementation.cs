@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 
 internal class EngineerImplementation : IEngineer
@@ -27,97 +28,47 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
 
-        // Find the engineer with the specified ID
-        Engineer engineerToDelete = engineers.FirstOrDefault(e => e.Id == id)!;
-
-        // Check if an engineer with the specified ID exists
-        if (engineerToDelete == null)
+        foreach (Engineer EngineerToDelete in engineers)
         {
-            throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+             if (EngineerToDelete.Id == id)
+             {
+                engineers.Remove(EngineerToDelete);
+                XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+                return;
+             }
         }
-
-        // Remove the engineer from the list
-        engineers.Remove(engineerToDelete);
-
-        // Save the updated list to the XML file
-        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+        throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+        
     }
 
     public Engineer? Read(int id)
     {
-        XElement? engineerElem = XMLTools.LoadListFromXMLElement(s_engineers_xml).Elements().FirstOrDefault(eng => (int?)eng.Element("Id") == id);
-
-        return engineerElem != null
-            ? new Engineer
-            {
-                Id = (int)engineerElem.Element("Id")!,
-                cost = (double)engineerElem.Element("Cost")!,
-                Email = (string?)engineerElem.Element("Email"),
-                Name = (string?)engineerElem.Element("Name"),
-                Level = engineerElem.Element("Level") != null
-                    ? (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)engineerElem.Element("Level")!)
-                    : null
-            }
-     : null;
+        List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        return EngineerElem.FirstOrDefault(it => it.Id == id) ?? throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
 
     }
 
     public Engineer? Read(Func<Engineer, bool> filter)
     {
-        XElement? engineerElem = XMLTools.LoadListFromXMLElement(s_engineers_xml)
-       .Elements()
-       .Where(s => filter(new Engineer
-       {
-           Id = (int)s.Element("Id")!,
-           cost = (double)s.Element("cost")!,
-           Email = (string?)s.Element("Email"),
-           Name = (string?)s.Element("Name"),
-           Level = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Level")!)
-       }))
-       .FirstOrDefault();
-
-        return engineerElem != null
-            ? new Engineer
-            {
-                Id = (int)engineerElem.Element("Id")!,
-                cost = (double)engineerElem.Element("cost")!,
-                Email = (string?)engineerElem.Element("Email"),
-                Name = (string?)engineerElem.Element("Name"),
-                Level = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)engineerElem.Element("Level")!)
-            }
-     : null;
+        List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        return EngineerElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineer with ID={filter} does Not exist");
 
     }
 
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {
-            var engineers = XMLTools.LoadListFromXMLElement(s_engineers_xml).Elements();
+        List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        if (filter == null)
+        {
+            return EngineerElem.Select(item => item);
+        }
+        else
+        {
+            return EngineerElem.Where(filter);
+        }
 
-            if (filter == null)
-            {
-                return engineers.Select(s => new Engineer
-                {
-                    Id = (int)s.Element("Id")!,
-                    cost = (double)s.Element("Cost")!,
-                    Email = (string?)s.Element("Email"),
-                    Name = (string?)s.Element("Name"),
-                    Level = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Level")!)
-                });
-            }
-            else
-            {
-                return engineers.Select(s => new Engineer
-                {
-                    Id = (int)s.Element("Id")!,
-                    cost = (double)s.Element("Cost")!,
-                    Email = (string?)s.Element("Email"),
-                    Name = (string?)s.Element("Name"),
-                    Level = (DO.EngineerExperience?)Enum.Parse(typeof(DO.EngineerExperience), (string)s.Element("Level")!)
-                }).Where(filter);
-            }
-        
     }
 
     public void Update(Engineer item)
