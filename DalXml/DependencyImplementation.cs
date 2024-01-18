@@ -71,7 +71,7 @@ internal class DependencyImplementation : IDependency
 
             if (filter == null)
             {
-                return dependencies.Select(s => new Dependency
+                return dependencys.Select(s => new Dependency
                 {
                     //Id = (int)s.Element("Id")!,
                     DependentTask = (int)s.Element("DependentTask")!,
@@ -80,7 +80,7 @@ internal class DependencyImplementation : IDependency
             }
             else
             {
-                return dependencies.Select(s => new Dependency
+                return dependencys.Select(s => new Dependency
                 {
                     //Id = (int)s.Element("Id")!,
                     DependentTask = (int)s.Element("DependentTask")!,
