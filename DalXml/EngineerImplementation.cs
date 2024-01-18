@@ -11,12 +11,38 @@ internal class EngineerImplementation : IEngineer
 
     public int Create(Engineer item)
     {
-        throw new NotImplementedException();
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+
+        // Check if an engineer with the same ID already exists
+        if (engineers.Any(e => e.Id == item.Id))
+        {
+            throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exists");
+        }
+
+        engineers.Add(item);
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+
+        return item.Id;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+
+        // Find the engineer with the specified ID
+        Engineer engineerToDelete = engineers.FirstOrDefault(e => e.Id == id)!;
+
+        // Check if an engineer with the specified ID exists
+        if (engineerToDelete == null)
+        {
+            throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+        }
+
+        // Remove the engineer from the list
+        engineers.Remove(engineerToDelete);
+
+        // Save the updated list to the XML file
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
     }
 
     public Engineer? Read(int id)

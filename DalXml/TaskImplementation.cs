@@ -22,7 +22,22 @@ internal class TaskImplementation:ITask
     
     public void Delete(int id)
     {
-    
+        List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+
+        // Find the engineer with the specified ID
+        Task taskToDelete = tasks.FirstOrDefault(t => t.Id == id)!;
+
+        // Check if an engineer with the specified ID exists
+        if (taskToDelete == null)
+        {
+            throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+        }
+
+        // Remove the engineer from the list
+        tasks.Remove(taskToDelete);
+
+        // Save the updated list to the XML file
+        XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
     }
    
     public Task? Read(int id)

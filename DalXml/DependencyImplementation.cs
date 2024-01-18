@@ -11,22 +11,25 @@ internal class DependencyImplementation : IDependency
 
     public int Create(Dependency item)
     {
-        List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
+        XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
         int nextId = Config.NextTaskId;
         Dependency copy = item with { Id = nextId };
-        Dependencys.Add(copy);
-        XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+        dependencyElem.Add(copy);
+        XMLTools.SaveListToXMLElement(dependencyElem, s_dependencys_xml);
         return nextId;
     }
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        XElement? dependencyElem=(from p in XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements()
+                                  where Convert.ToInt32(p.Element("id")?.Value)==id select p).FirstOrDefault()?? throw new DalDoesNotExistException($"Dependency with ID={id} does Not exist");
+        dependencyElem?.Remove();
+        XMLTools.SaveListToXMLElement(dependencyElem!, s_dependencys_xml);
     }
 
     public Dependency? Read(int id)
     {
-        XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().FirstOrDefault(dep => (int?)dep.Element("Id") == id);
+        XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements().FirstOrDefault(dep => (int?)dep.Element("Id") == id) ?? throw new DalDoesNotExistException($"Dependency with ID={id} does Not exist");
 
         return dependencyElem != null
             ? new Dependency
@@ -48,7 +51,7 @@ internal class DependencyImplementation : IDependency
           DependentTask = (int)s.Element("DependentTask")!,
           DependsOnTask = (int)s.Element("DependsOnTask")!
       }))
-      .FirstOrDefault();
+      .FirstOrDefault() ?? throw new DalDoesNotExistException($"Dependency with ID={filter} does Not exist"); ;
 
         return dependencyElem != null
             ? new Dependency
@@ -90,10 +93,11 @@ internal class DependencyImplementation : IDependency
 
     public void Update(Dependency item)
     {
-        List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
-        if (Dependencys.RemoveAll(item => item.Id == item.Id) == 0)
-            throw new DalDoesNotExistException($"Dependency with ID={item.Id} does Not exist");
-        Dependencys.Add(item);
-        XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+        XElement? dependencyElem = (from p in XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements()
+                                    where Convert.ToInt32(p.Element("id")?.Value) == item.Id
+                                    select p).FirstOrDefault() ?? throw new DalDoesNotExistException($"Dependency with ID={item.Id} does Not exist");
+        dependencyElem.Element("DependentTask")!.Value=item.DependentTask.ToString();
+        dependencyElem.Element("DependsOnTask")!.Value = item.DependsOnTask.ToString();
+        XMLTools.SaveListToXMLElement(dependencyElem!, s_dependencys_xml);
     }
 }

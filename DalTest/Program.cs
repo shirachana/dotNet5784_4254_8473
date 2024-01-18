@@ -13,19 +13,15 @@ namespace DalTest
         //private static readonly IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
         //private static readonly ITask? s_dalTask = new TaskImplementation(); //stage 1 
         private static readonly Random s_rand=new();
-        static readonly IDal s_dal = new Dal.DalList();
-        //internal static class PrintExtension
-        //{
-        //    internal static void PrintList<Entity>(this IEnumerable<Entity> entities) =>
-        //        string.Join(Environment.NewLine, entities);
-        //}
+        //static readonly IDal s_dal = new Dal.DalList();
+        static readonly IDal s_dal = new DalXml(); //stage 3
 
         static void Main(string[] args)
         {
            // Console.WriteLine("Hello, World!");
             try
             {
-                Initialization.Do(s_dal);
+                //Initialization.Do(s_dal);
                 DisplayMainMenu();
             }
             catch (Exception ex)
@@ -36,6 +32,11 @@ namespace DalTest
         }
         static void DisplayMainMenu()
         {
+            Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
+            if (ans == "Y") //stage 3
+                Initialization.Do(s_dal); //stage 2
+
             do
             {
                 Console.WriteLine("Main Menu - Select an entity you want to check:");
