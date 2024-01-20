@@ -13,7 +13,11 @@ internal class DependencyImplementation : IDependency
     {
         XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
         int nextId = Config.NextDependencyId;
-        Dependency copy = item with { Id = nextId };
+       
+        var copy = new XElement ( "Dependency",
+                                 new XElement ( "Id",nextId),
+                                new XElement ( "DependentTask", item.DependentTask ),
+                                new XElement ( "DependsOnTask", item.DependsOnTask ) );
         dependencyElem.Add(copy);
         XMLTools.SaveListToXMLElement(dependencyElem, s_dependencys_xml);
         return nextId;
@@ -67,26 +71,27 @@ internal class DependencyImplementation : IDependency
     public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
     {
 
-            var dependencies = XMLTools.LoadListFromXMLElement(s_dependencys_xml).Elements();
+        var x = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
+        var dependencys = x.Elements();
 
-            if (filter == null)
+        if (filter == null)
+        {
+            return dependencys.Select(s => new Dependency
             {
-                return dependencys.Select(s => new Dependency
-                {
-                    //Id = (int)s.Element("Id")!,
-                    DependentTask = (int)s.Element("DependentTask")!,
-                    DependsOnTask = (int)s.Element("DependsOnTask")!
-                });
-            }
-            else
+                Id = (int)s.Element("Id")!,
+                DependentTask = (int)s.Element("DependentTask")!,
+                DependsOnTask = (int)s.Element("DependsOnTask")!
+            });
+        }
+        else
+        {
+            return dependencys.Select(s => new Dependency
             {
-                return dependencys.Select(s => new Dependency
-                {
-                    //Id = (int)s.Element("Id")!,
-                    DependentTask = (int)s.Element("DependentTask")!,
-                    DependsOnTask = (int)s.Element("DependsOnTask")!
-                }).Where(filter);
-            }
+                Id = (int)s.Element("Id")!,
+                DependentTask = (int)s.Element("DependentTask")!,
+                DependsOnTask = (int)s.Element("DependsOnTask")!
+            }).Where(filter);
+        }
         
 
     }

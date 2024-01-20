@@ -56,12 +56,12 @@ internal class EngineerImplementation : IEngineer
 
     }
 
-    //public Engineer? Read(Func<Engineer, bool> filter)
-    //{
-    //    List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-    //    return EngineerElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineer with ID={filter} does Not exist");
+    public Engineer? Read(Func<Engineer, bool> filter)
+    {
+        List<Engineer> EngineerElem = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        return EngineerElem.FirstOrDefault(filter) ?? throw new DalDoesNotExistException($"Engineer with ID={filter} does Not exist");
 
-    //}
+    }
     //public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     //{
     //    string filePath = "path/to/your/engineers.xml"; // Replace with your actual file path
