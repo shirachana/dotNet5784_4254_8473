@@ -180,4 +180,9 @@
     <DependentTask>18</DependentTask>
     <DependsOnTask>4</DependsOnTask>
   </Dependency>
+  <Dependency>
+    <Id>111</Id>
+    <DependentTask>12</DependentTask>
+    <DependsOnTask>23</DependsOnTask>
+  </Dependency>
 </ArrayOfDependency>

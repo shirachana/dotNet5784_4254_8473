@@ -22,13 +22,6 @@
     <Level>AdvancedBeginner</Level>
   </Engineer>
   <Engineer>
-    <Id>41502904</Id>
-    <cost>80</cost>
-    <Email>Moti@gmail.com</Email>
-    <Name>Moti</Name>
-    <Level>Expert</Level>
-  </Engineer>
-  <Engineer>
     <Id>28525433</Id>
     <cost>69</cost>
     <Email>Israel@gmail.com</Email>
