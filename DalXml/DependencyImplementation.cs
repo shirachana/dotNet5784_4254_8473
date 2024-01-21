@@ -13,11 +13,11 @@ internal class DependencyImplementation : IDependency
     {
         XElement? dependencyElem = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
         int nextId = Config.NextDependencyId;
-
-        var copy = new XElement("Dependency",
-                                 new XElement("Id", nextId),
-                                new XElement("DependentTask", item.DependentTask),
-                                new XElement("DependsOnTask", item.DependsOnTask));
+       
+        var copy = new XElement ( "Dependency",
+                                 new XElement ( "Id",nextId),
+                                new XElement ( "DependentTask", item.DependentTask ),
+                                new XElement ( "DependsOnTask", item.DependsOnTask ) );
         dependencyElem.Add(copy);
         XMLTools.SaveListToXMLElement(dependencyElem, s_dependencys_xml);
         return nextId;
@@ -95,7 +95,7 @@ internal class DependencyImplementation : IDependency
                 DependsOnTask = (int)s.Element("DependsOnTask")!
             }).Where(filter);
         }
-
+        
 
     }
 
