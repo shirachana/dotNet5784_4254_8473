@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-internal class TaskImplementation:ITask
+internal class TaskImplementation : ITask
 {
     readonly string s_tasks_xml = "tasks";
 
@@ -14,7 +14,7 @@ internal class TaskImplementation:ITask
     {
         List<Task> Tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
         int nextId = Config.NextTaskId;
-        Task copy = item with { Id=nextId };
+        Task copy = item with { Id = nextId };
         Tasks.Add(copy);
         XMLTools.SaveListToXMLSerializer(Tasks, s_tasks_xml);
         return nextId;
@@ -55,7 +55,7 @@ internal class TaskImplementation:ITask
         List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
         if (filter == null)
         {
-            return taskElem.Select(item => item);      
+            return taskElem.Select(item => item);
         }
         else
         {

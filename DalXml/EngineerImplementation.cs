@@ -30,19 +30,19 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+        List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
 
         foreach (Engineer EngineerToDelete in engineers)
         {
-             if (EngineerToDelete.Id == id)
-             {
+            if (EngineerToDelete.Id == id)
+            {
                 engineers.Remove(EngineerToDelete);
                 XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
                 return;
-             }
+            }
         }
         throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
-        
+
     }
 
     public Engineer? Read(int id)
