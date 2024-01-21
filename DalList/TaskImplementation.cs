@@ -77,9 +77,7 @@ internal class TaskImplementation : ITask
             DataSource.Tasks.Add(item);
         }
     }
-    /// <summary>
-    /// clear all the tasks
-    /// </summary>
+
     public void Clear()
     { 
         DataSource.Tasks.Clear();

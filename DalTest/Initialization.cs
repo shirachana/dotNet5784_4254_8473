@@ -131,7 +131,7 @@ public static class Initialization
         int _engId;
         for (int i = 0; i < lev.Length; i++)
         {
-             _engId = s_rand.Next(1000000, 99999999);
+            _engId = s_rand.Next(1000000, 99999999);
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
@@ -151,7 +151,7 @@ public static class Initialization
     }
     private static void CreatEngineer()
     {
-        string[] namesOfEng= ["Shira", "Efrat", "Adi", "Moti", "Israel"];
+        string[] namesOfEng = ["Shira", "Efrat", "Adi", "Moti", "Israel"];
 
         foreach (var _name in namesOfEng)
         {
@@ -170,7 +170,7 @@ public static class Initialization
         }
 
     }
-    public static void Do(IDal dal )
+    public static void Do(IDal dal)
     {
         //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
         //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
