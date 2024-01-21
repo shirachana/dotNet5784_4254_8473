@@ -35,7 +35,7 @@ internal class TaskImplementation:ITask
         }
         throw new DalDoesNotExistException($"Task with ID={id} does Not exist");
     }
-   
+
     public Task? Read(int id)
     {
         List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
@@ -63,14 +63,23 @@ internal class TaskImplementation:ITask
         }
     }
 
+    
     public void Update(Task item)
     {
-        List<Task> Tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
-        if(Tasks.RemoveAll(item=>item.Id==item.Id)==0)
-            throw new DalDoesNotExistException($"Task with ID={item.Id} does Not exist");
-        Tasks.Add(item);
-        XMLTools.SaveListToXMLSerializer(Tasks,s_tasks_xml);
+        List<Task> tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
+        Task existingTask = tasks.FirstOrDefault(x => x.Id == item.Id)!;
+        if (existingTask == null)
+        {
+            throw new DalDoesNotExistException($"Task with ID={item.Id} does not exist");
+        }
+        else
+        {
+            tasks.Remove(existingTask);
+            tasks.Add(item);
+            XMLTools.SaveListToXMLSerializer(tasks, s_tasks_xml);
+        }
     }
+          
     public void Clear()
     {
         List<Task> Tasks = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
