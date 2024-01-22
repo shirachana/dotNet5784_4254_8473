@@ -18,10 +18,9 @@ namespace DalTest
 
         static void Main(string[] args)
         {
-            // Console.WriteLine("Hello, World!");
+            
             try
             {
-                //Initialization.Do(s_dal);
                 DisplayMainMenu();
             }
             catch (Exception ex)
@@ -32,54 +31,65 @@ namespace DalTest
         }
         static void DisplayMainMenu()
         {
-            Console.Write("Would you like to create Initial data? (Y/N)"); //stage 3
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input"); //stage 3
-            if (ans == "Y") //stage 3
-            {
-                s_dal!.Dependency.Clear();
-                s_dal!.Task.Clear();
-                s_dal!.Engineer.Clear();
-                Initialization.Do(s_dal); //stage 2
-            }
-            if (ans == "Y" || ans == "N")
-            {
-                do
-                {
-                    Console.WriteLine("Main Menu - Select an entity you want to check:");
-                    Console.WriteLine("1. Dependency");
-                    Console.WriteLine("2. Engineer");
-                    Console.WriteLine("3. Task");
-                    Console.WriteLine("0. Exit");
-                    int choice = GetUserChoice();
+            bool validInput = false;
 
-                    switch (choice)
-                    {
-                        case 1:
-                            DisplayEntityMenuD("Dependency");
-                            break;
-                        case 2:
-                            DisplayEntityMenuE("Engineer");
-                            break;
-                        case 3:
-                            DisplayEntityMenuT("Task");
-                            break;
-                        case 0:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            Console.WriteLine("Invalid choice. Please try again.");
-                            break;
-                    }
+            do
+            {
+                Console.Write("Would you like to create Initial data? (Y/N): ");
+                string? ans = Console.ReadLine();
+
+                if (ans == "Y")
+                {
+                    s_dal!.Dependency.Clear();
+                    s_dal!.Task.Clear();
+                    s_dal!.Engineer.Clear();
+                    Initialization.Do(s_dal);
+                    validInput = true;
+                }
+                else if (ans == "N")
+                {
+                    validInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong input. Please enter 'Y' or 'N'.");
                 }
 
-                while (true);
-            }
-            else
-            {
-                throw new FormatException("Wrong input");
-            }
+            } while (!validInput);
 
+            do
+            {
+                Console.WriteLine("Main Menu - Select an entity you want to check:");
+                Console.WriteLine("1. Dependency");
+                Console.WriteLine("2. Engineer");
+                Console.WriteLine("3. Task");
+                Console.WriteLine("0. Exit");
+                int choice = GetUserChoice();
+
+                switch (choice)
+                {
+                    case 1:
+                        DisplayEntityMenuD("Dependency");
+                        break;
+                    case 2:
+                        DisplayEntityMenuE("Engineer");
+                        break;
+                    case 3:
+                        DisplayEntityMenuT("Task");
+                        break;
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            } while (true);
         }
+
+
+
+
 
         static void DisplayEntityMenuD(string entityName)
         {
