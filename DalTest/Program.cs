@@ -74,7 +74,10 @@ namespace DalTest
 
                 while (true);
             }
+            else
+            {
                 throw new FormatException("Wrong input");
+            }
 
         }
 
