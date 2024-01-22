@@ -28,21 +28,37 @@ internal class EngineerImplementation : IEngineer
     }
 
 
+    //public void Delete(int id)
+    //{
+    //    List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
+
+    //    foreach (Engineer EngineerToDelete in engineers)
+    //    {
+    //        if (EngineerToDelete.Id == id)
+    //        {
+    //            engineers.Remove(EngineerToDelete);
+    //            XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+    //            return;
+    //        }
+    //    }
+    //    throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+
+    //}
     public void Delete(int id)
     {
         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
 
-        foreach (Engineer EngineerToDelete in engineers)
-        {
-            if (EngineerToDelete.Id == id)
-            {
-                engineers.Remove(EngineerToDelete);
-                XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
-                return;
-            }
-        }
-        throw new DalDoesNotExistException($"Engineer with ID={id} does Not exist");
+        Engineer engineerToDelete = engineers.FirstOrDefault(e => e.Id == id)!;
 
+        if (engineerToDelete != null)
+        {
+            engineers.Remove(engineerToDelete);
+            XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+        }
+        else
+        {
+            throw new DalDoesNotExistException($"Engineer with ID={id} does not exist");
+        }
     }
 
     public Engineer? Read(int id)
