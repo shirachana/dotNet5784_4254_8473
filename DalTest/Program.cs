@@ -13,8 +13,9 @@ namespace DalTest
         //private static readonly IEngineer? s_dalEngineer = new EngineerImplementation(); //stage 1
         //private static readonly ITask? s_dalTask = new TaskImplementation(); //stage 1 
         private static readonly Random s_rand = new();
-        //static readonly IDal s_dal = new Dal.DalList();
-        static readonly IDal s_dal = new DalXml(); //stage 3
+        //static readonly IDal s_dal = new DalList(); //stage 2
+        //static readonly IDal s_dal = new DalXml(); //stage 3
+        static readonly IDal s_dal = Factory.Get; //stage 4
 
         static void Main(string[] args)
         {
@@ -43,7 +44,7 @@ namespace DalTest
                     s_dal!.Dependency.Clear();
                     s_dal!.Task.Clear();
                     s_dal!.Engineer.Clear();
-                    Initialization.Do(s_dal);
+                    Initialization.Do();
                     validInput = true;
                 }
                 else if (ans == "N")
