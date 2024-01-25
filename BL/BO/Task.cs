@@ -8,7 +8,7 @@ namespace BO;
 /// <param name="Description"></Description>
 /// <param name="CreatedAtDate"></Task creation date>
 /// <param name="RequiredEffortTime"></The amount of time required to perform the task>
-/// <param name="IsMilestone"></Milestone (Boolean) - will be expressed later>
+///// <param name="IsMilestone"></Milestone (Boolean) - will be expressed later>
 /// <param name="Copmlexity"></The difficulty level of the taskram>
 /// <param name="StartDate"></Planned date for the start of work>
 /// <param name="ScheduledDate"></Date of commencement of work on the assignment>
@@ -19,7 +19,7 @@ namespace BO;
 /// <param name="Engineerld"></The engineer ID assigned to the task>
 /// <param name="Status"></Enum the status of the task>
 /// <param name="Dependencies"><</list>list of dependencies
-/// <param name="Milestone"><</Milestone>
+///// <param name="Milestone"><</Milestone>
 /// <param name="ForecastDate"><</Date>
 ///  <param name="Engineer"><</EngineerInTask>engineer that do the task
 /// </summary>
@@ -31,12 +31,12 @@ public class Task
     public DateTime CreatedAtDate { get; init; }
     public BO.Status Status { get; set; }
     public List<BO.TaskInList>? Dependencies{ get; init; }
-    public BO.MilestonelnList? Milestone{ get; init; }
+   // public BO.MilestonelnList? Milestone{ get; init; }
     public TimeSpan RequiredEffortTime{ get; init; }
     public DateTime StartDate{ get; set; }
     public DateTime ScheduledDate{ get; init; }
     public DateTime ForecastDate { get; init; }
-    public DateTime DeadlineDate { get; set; }
+    //public DateTime DeadlineDate { get; set; }
     public DateTime CompleteDate { get; init; }
     public string? Deliverables { get; set; }
     public string? Remarks { get; set; }
