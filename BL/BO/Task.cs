@@ -1,4 +1,5 @@
 ﻿
+
 namespace BO;
 /// <summary>
 /// /// Task to BO
@@ -25,6 +26,43 @@ namespace BO;
 /// </summary>
 public class Task
 {
+    private int v1;
+    private int idT;
+    private string? aliasTask;
+    private string? discTask;
+    private object value1;
+    private object value2;
+    private bool v2;
+    private DO.EngineerExperience taskLevel;
+    private object value3;
+    private object value4;
+    private object value5;
+    private object value6;
+    private string? deliTask;
+    private string? taskRemark;
+
+    public Task()
+    {
+    }
+
+    public Task(int v1, int idT, string? aliasTask, string? discTask, object value1, object value2, bool v2, DO.EngineerExperience taskLevel, object value3, object value4, object value5, object value6, string? deliTask, string? taskRemark)
+    {
+        this.v1 = v1;
+        this.idT = idT;
+        this.aliasTask = aliasTask;
+        this.discTask = discTask;
+        this.value1 = value1;
+        this.value2 = value2;
+        this.v2 = v2;
+        this.taskLevel = taskLevel;
+        this.value3 = value3;
+        this.value4 = value4;
+        this.value5 = value5;
+        this.value6 = value6;
+        this.deliTask = deliTask;
+        this.taskRemark = taskRemark;
+    }
+
     public int Id { get; init;}
     public string? Description { get; set; }
     public string? Alias {  get; set; }    

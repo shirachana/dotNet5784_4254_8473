@@ -41,9 +41,12 @@ internal class EngineerImplementation : IEngineer
         {
             throw new Exception($"Engineer with ID={id} does not exist");
         }
+        
+        
         var eng = from BO.TaskInEngineer? tmp in engineerToDelete.Task
-                  where tmp.Status == (BO.Status.Unscheduled) || tmp.Status == (BO.Status.Done)
+                  where tmp != null && (tmp.Status == BO.Status.Unscheduled || tmp.Status == BO.Status.Done)
                   select tmp;
+
 
         //if (/*_dal.Task.Equals(engineerToDelete.Id)*/engineerToDelete.Id==)
         //{

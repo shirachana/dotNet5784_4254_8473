@@ -6,45 +6,46 @@ namespace BO;
 
 public static class Tools
 {
-    //// Static extension method for ToStringProperty
-    //public static string ToStringProperty<T>(this T obj)
-    //{
-    //    if (obj == null)
-    //        return "null";
+    // Static extension method for ToStringProperty
 
-    //    Type type = obj.GetType();
-    //    PropertyInfo[] properties = type.GetProperties();
+    public static string ToStringProperty<T>(this T obj)
+    {
+        if (obj == null)
+            return "null";
 
-    //    StringBuilder sb = new StringBuilder();
-    //    sb.AppendLine($"Type: {type.Name}");
+        Type type = obj.GetType();
+        PropertyInfo[] properties = type.GetProperties();
 
-    //    foreach (PropertyInfo property in properties)
-    //    {
-    //        sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
-    //    }
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine($"Type: {type.Name}");
 
-    //    return sb.ToString();
-    //}
+        foreach (PropertyInfo property in properties)
+        {
+            sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
+        }
 
-    //// Helper method to get string representation of property value
-    //private static string GetValueString(object value)
-    //{
-    //    if (value == null)
-    //        return "null";
+        return sb.ToString();
+    }
 
-    //    if (value is IEnumerable enumerable)
-    //    {
-    //        // Handle collections
-    //        StringBuilder sb = new StringBuilder();
-    //        foreach (var item in enumerable)
-    //        {
-    //            sb.Append($"{GetValueString(item)}, ");
-    //        }
-    //        // Remove the trailing comma and space
-    //        return $"[{sb.ToString().TrimEnd(',', ' ')}]";
-    //    }
+    // Helper method to get string representation of property value
+    private static string GetValueString(object value)
+    {
+        if (value == null)
+            return "null";
 
-    //    // For other types, use ToString
-    //    return value.ToString()!;
-    //}
+        if (value is IEnumerable<object> enumerable)
+        {
+            // Handle collections
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in enumerable)
+            {
+                sb.Append($"{GetValueString(item)}, ");
+            }
+            // Remove the trailing comma and space
+            return $"[{sb.ToString().TrimEnd(',', ' ')}]";
+        }
+
+        // For other types, use ToString
+        return value.ToString()!;
+    }
 }
