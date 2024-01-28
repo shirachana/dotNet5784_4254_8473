@@ -22,9 +22,16 @@ internal class TaskImplementation : ITask
         throw new NotImplementedException();
     }
 
-    public IEnumerable<TaskInList> ReadAll()
+    public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        return (from DO.Task doTask in _dal.Task.ReadAll((Func<DO.Task, bool>?)filter)
+                select new BO.TaskInList
+                {
+                    Id = doTask.Id,
+                    Description = doTask.Description,
+                    Alias = doTask.Alias,
+                    Status=Status.Done
+                });
     }
 
     public void Update(Task item)

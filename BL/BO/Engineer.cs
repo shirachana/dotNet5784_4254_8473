@@ -15,6 +15,6 @@ public class Engineer
     public string? Email { get; set; }
     public string? Name { get; set; }
     public BO.EngineerExperience? Level { get; set; }
-    public BO.TaskInEngineer? Task {  get; init; }
-   // public override string ToString() => this.ToStringProperty();
+    public BO.TaskInEngineer? Task { get; init; }
+    // public override string ToString() => this.ToStringProperty();
 }
