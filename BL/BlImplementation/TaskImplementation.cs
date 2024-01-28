@@ -77,8 +77,36 @@ internal class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        // Check if the task exists
+        var task = Read(id);
+        if (task == null)
+        {
+            throw new Exception($"Task with ID={id} does not exist");
+        }
+
+        // Check if the task has dependencies
+        if (task.Dependencies != null && task.Dependencies.Any())
+        {
+            throw new Exception($"Task with ID={id} has dependencies and cannot be deleted");
+        }
+
+        // Check if the task has been scheduled
+        if (task.Status != BO.Status.Unscheduled)
+        {
+            throw new Exception($"Task with ID={id} has been scheduled and cannot be deleted");
+        }
+
+        // Attempt to delete the task
+        try
+        {
+            _dal.Task.Delete(id);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to delete task with ID={id}. {ex.Message}");
+        }
     }
+
 
     public Task? Read(int id)
     {
@@ -121,12 +149,81 @@ internal class TaskImplementation : ITask
 
     public void Update(Task item)
     {
-        throw new NotImplementedException();
+        // Check if the task object is null
+        if (item == null)
+        {
+            throw new Exception("Task object cannot be null");
+        }
+        // Check the validity of the task's data
+        if (item.Id <= 0)
+        {
+            throw new Exception("Task ID must be a positive number");
+        }
+        if (!string.IsNullOrEmpty(item?.Alias))
+        {
+            throw new Exception("Task alias cannot be empty");
+        }
+        try
+        {
+            // Update the task in the data layer
+            var taskToUpdate = new DO.Task
+            {
+                Id = item!.Id,
+                Alias = item.Alias,
+                Description = item.Description,
+                CreatedAtDate = item.CreatedAtDate,
+                /*Dependencies = dependencies,*/
+                IsMilestone = false,
+                RequiredEffortTime = item.RequiredEffortTime,
+                StartDate = item.StartDate,
+                ScheduledDate = item.ScheduledDate,
+                DeadlineDate = item.DeadlineDate,
+                CompleteDate = item.CompleteDate,
+                Deliverables = item.Deliverables,
+                Remarks = item.Remarks,
+                Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                Copmlexity = (DO.EngineerExperience)item.Copmlexity
+            };
+
+            _dal.Task.Update(taskToUpdate);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to update task with ID={item!.Id}. {ex.Message}");
+        }
     }
 
     public void UpdateStartDate(int id, DateTime startDate)
     {
-        throw new NotImplementedException();
+        // Check if the task with the given ID exists
+        var task = Read(id);
+        if (task == null)
+        {
+            throw new Exception($"Task with ID={id} does not exist");
+        }
+
+        // Check if the scheduled start date for the task is not earlier than the end dates of its preceding tasks
+        if (task.Dependencies != null && task.Dependencies.Any())
+        {
+            var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
+            if (precedingTasks.Any(t => t!.CompleteDate != null && startDate < t.CompleteDate))
+            {
+                throw new Exception($"Scheduled start date cannot be earlier than the end dates of preceding tasks");
+            }
+        }
+
+        // Update or add the scheduled start date for the task
+        task.StartDate = startDate;
+
+        // Attempt to update the task in the data layer
+        try
+        {
+            Update(task);
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
+        }
     }
 }
 
