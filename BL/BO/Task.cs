@@ -43,9 +43,24 @@ public class Task
 
     public Task()
     {
+        this.v1 = 0;
+        this.idT = 0;
+        this.aliasTask = null;
+        this.discTask = null;
+        this.value1 = "";
+        this.value2 = "";
+        this.v2 = false;
+        this.taskLevel = 0;
+        this.value3 = "";
+        this.value4 = "";
+        this.value5 = "";
+        this.value6 = "";
+        this.deliTask = null;
+        this.taskRemark = null;
     }
 
-    public Task(int v1, int idT, string? aliasTask, string? discTask, object value1, object value2, bool v2, DO.EngineerExperience taskLevel, object value3, object value4, object value5, object value6, string? deliTask, string? taskRemark)
+    public Task(int v1, int idT, string? aliasTask, string? discTask, object value1, object value2, bool v2, 
+        DO.EngineerExperience taskLevel, object value3, object value4, object value5, object value6, string? deliTask, string? taskRemark)
     {
         this.v1 = v1;
         this.idT = idT;
@@ -69,16 +84,16 @@ public class Task
     public DateTime? CreatedAtDate { get; init; }
     public BO.Status Status { get; set; }
     public List<BO.TaskInList>? Dependencies{ get; init; }
-   // public BO.MilestonelnList? Milestone{ get; init; }
+    //public BO.MilestonelnList? Milestone{ get; init; }
     public TimeSpan? RequiredEffortTime{ get; init; }
     public DateTime? StartDate{ get; set; }
     public DateTime? ScheduledDate{ get; init; }
-   // public DateTime? ForecastDate { get; init; }
+    public DateTime? ForecastDate { get; init; }
     public DateTime? DeadlineDate { get; set; }
     public DateTime? CompleteDate { get; init; }
     public string? Deliverables { get; set; }
     public string? Remarks { get; set; }
     public BO.EngineerInTask? Engineer { get; init; }
     public BO.EngineerExperience Copmlexity { get; set; }
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
 }
