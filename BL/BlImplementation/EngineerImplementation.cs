@@ -34,8 +34,12 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
+        
        DO.Engineer engineerToDelete = _dal.Engineer.Read(id)!;
-        if (engineerToDelete == null)
+        var eng = from BO.TaskInList tmp in engineerToDelete.Task
+                  where tmp.Status == (BO.Status)3 || tmp.Status == (BO.Status)4
+                  select tmp;
+        if (eng.id==null)
         {
             throw new Exception($"Engineer with ID={id} does not exist");
         }
