@@ -34,16 +34,15 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        DO.Engineer engineerToDelete = _dal.Engineer.Read(id)!;
+       DO.Engineer engineerToDelete = _dal.Engineer.Read(id)!;
         if (engineerToDelete == null)
         {
             throw new Exception($"Engineer with ID={id} does not exist");
         }
-        if (_dal.Task.Equals(engineerToDelete.Id))
-        {
-            throw new Exception($"Engineer with ID={id} cannot be deleted because they are assigned to a task");
-        }
-
+        //if (/*_dal.Task.Equals(engineerToDelete.Id)*/engineerToDelete.Id==)
+        //{
+        //    throw new Exception($"Engineer with ID={id} cannot be deleted because they are assigned to a task");
+        //}
         try
         {
             _dal.Engineer.Delete(id);
@@ -52,18 +51,13 @@ internal class EngineerImplementation : IEngineer
         {
             throw new Exception($"Failed to delete engineer with ID={id}. {ex.Message}");
         }
-        catch (Exception ex)
-        {
-            // Handle any other operation exceptions from the data layer
-            throw new Exception($"Failed to delete engineer with ID={id}. {ex.Message}");
-        }
     }
 
     public BO.Engineer? Read(int id)
     {
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
         if (doEngineer == null)
-            throw new Exception($"Student with ID={id} does Not exist");
+            throw new Exception($"Engineer with ID={id} does Not exist");
 
         return new BO.Engineer()
         {
@@ -77,14 +71,19 @@ internal class EngineerImplementation : IEngineer
 
     }
 
-    public IEnumerable<EngineerInTask> ReadAll()
+    public IEnumerable<EngineerInTask> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll((Func<DO.Engineer, bool>?)filter)
+                select new BO.EngineerInTask
+                {
+                  Id= doEngineer.Id,
+                  Name= doEngineer.Name,
+                });
     }
 
-    public void Update(Engineer item)
+    public void Update(BO.Engineer item)
     {
-        throw new NotImplementedException();
+        
     }
 }
 
