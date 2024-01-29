@@ -24,8 +24,7 @@ internal class TaskImplementation : ITask
             throw new Exception("Task alias cannot be empty");
         }
 
-        try
-        {
+       
             // Add dependencies for previous tasks from the existing task list
             List<TaskInList> dependencies = new List<TaskInList>();
             if (item?.Dependencies != null)
@@ -40,7 +39,8 @@ internal class TaskImplementation : ITask
                     dependencies.Add(dependency);
                 }
             }
-
+        try
+        {
             // Create a new DO.Task object
             DO.Task doTask = new DO.Task
             {
@@ -67,12 +67,9 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new Exception($"Failed to create task. {ex.Message}");
+            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
-        catch (Exception ex)
-        {
-            throw new Exception($"Failed to create task. {ex.Message}");
-        }
+       
     }
 
     public void Delete(int id)
@@ -101,9 +98,9 @@ internal class TaskImplementation : ITask
         {
             _dal.Task.Delete(id);
         }
-        catch (Exception ex)
+        catch (DO.DalDoesNotExistException ex)
         {
-            throw new Exception($"Failed to delete task with ID={id}. {ex.Message}");
+            throw new BlDoesNotExistException($"Failed to delete task with ID={id}. {ex.Message}");
         }
     }
 
@@ -120,7 +117,7 @@ internal class TaskImplementation : ITask
             Alias = doTask.Alias,
             Description = doTask.Description,
             CreatedAtDate = doTask.DeadlineDate,
-            /*Status=(BO.Status)doTask.Copmlexity!,*/
+            //Status=(BO.Status)doTask.Copmlexity!,
             /*Dependencies=*/
             RequiredEffortTime = doTask.RequiredEffortTime,
             StartDate = doTask.StartDate,
