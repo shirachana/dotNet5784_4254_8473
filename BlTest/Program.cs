@@ -221,6 +221,7 @@ namespace BlTest
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
 
+
             Console.WriteLine(@"Enter the engineer ID of the task: ");
             tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the discription of the task if there: ");
@@ -249,6 +250,26 @@ namespace BlTest
             Console.WriteLine(tk);
 
         }
+        private DateTime GetEarliestStartDate(List<BO.Task>previousTasks)
+        {
+            DateTime earliestStartDate = DateTime.MaxValue;
+
+            foreach (var task in previousTasks)
+            {
+                if (!task.ScheduledDate.HasValue)
+                {
+                    throw new Exception($"Task {task.Id} does not have a scheduled start date.");
+                }
+
+                earliestStartDate = DateTime.Compare(task.ScheduledDate.Value, earliestStartDate) < 0
+                    ? task.ScheduledDate.Value
+                    : earliestStartDate;
+            }
+
+            return earliestStartDate;
+        }
+
+
         static void ReadTaskById()
         {
 

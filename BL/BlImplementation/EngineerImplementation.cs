@@ -11,13 +11,13 @@ internal class EngineerImplementation : IEngineer
     public int Create(BO.Engineer? item)
     {
         if (item!.Id < 0)
-            throw new Exception("Engineer ID must be a positive number");
+            throw new BlArgumentOutOfRangeException("Engineer ID must be a positive number");
         if (string.IsNullOrEmpty(item.Name))
-            throw new Exception("Engineer name cannot be empty");
+            throw new BlArgumentOutOfRangeException("Engineer name cannot be empty");
         if (item.Cost < 0)
-            throw new Exception("Engineer cost must be a positive number");
+            throw new BlArgumentOutOfRangeException("Engineer cost must be a positive number");
         if (string.IsNullOrEmpty(item.Email))
-            throw new Exception("Engineer email cannot be empty");
+            throw new BlArgumentOutOfRangeException("Engineer email cannot be empty");
         try
         {
             DO.Engineer doEngineer = new DO.Engineer
@@ -88,7 +88,7 @@ internal class EngineerImplementation : IEngineer
     {
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
         if (doEngineer == null)
-            throw new Exception($"Engineer with ID={id} does Not exist");
+            throw new BlDoesNotExistException($"Engineer with ID={id} does Not exist");
         DO.Task? tsk= _dal.Task.ReadAll(t=> t.Engineerld==id).Where(t=> t!.StartDate!= null && t.CompleteDate == null).FirstOrDefault();
         return new BO.Engineer()
         {
@@ -130,17 +130,17 @@ internal class EngineerImplementation : IEngineer
     public void Update(BO.Engineer item)
     {
         if (item!.Id < 0)
-            throw new Exception("Engineer ID must be a positive number");
+            throw new BlArgumentOutOfRangeException("Engineer ID must be a positive number");
         if (string.IsNullOrEmpty(item.Name))
-            throw new Exception("Engineer name cannot be empty");
+            throw new BlArgumentOutOfRangeException("Engineer name cannot be empty");
         if (item.Cost < 0)
-            throw new Exception("Engineer cost must be a positive number");
+            throw new BlArgumentOutOfRangeException("Engineer cost must be a positive number");
         if (string.IsNullOrEmpty(item.Email))
-            throw new Exception("Engineer email cannot be empty");
+            throw new BlArgumentOutOfRangeException("Engineer email cannot be empty");
         DO.Engineer existingEngineer = _dal.Engineer.Read(item!.Id)!;
         if (existingEngineer!.Level < (DO.EngineerExperience)item.Level!)
         {
-                throw new Exception($"Engineer level it's not Upwards ");
+                throw new BlArgumentOutOfRangeException($"Engineer level it's not Upwards ");
         }
         try 
         { 

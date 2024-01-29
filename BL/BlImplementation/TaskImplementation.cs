@@ -3,6 +3,7 @@ using BlApi;
 using BO;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 internal class TaskImplementation : ITask
 {
@@ -12,33 +13,59 @@ internal class TaskImplementation : ITask
         // Check if the task object is null
         if (item == null)
         {
-            throw new Exception("Task object cannot be null");
+            throw new BlDoesNotExistException("Task object cannot be null");
         }
         // Check the validity of the task's data
         if (item.Id <= 0)
         {
-            throw new Exception("Task ID must be a positive number");
+            throw new BlCantBeDeletedException("Task ID must be a positive number");
         }
         if (!string.IsNullOrEmpty(item?.Alias))
         {
-            throw new Exception("Task alias cannot be empty");
+            throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
         }
 
 
         // Add dependencies for previous tasks from the existing task list
-        List<TaskInList> dependencies = new List<TaskInList>();
-        if (item?.Dependencies != null)
+        //List<TaskInList> dependencies = new List<TaskInList>();
+        //if (item?.Dependencies != null)
+        //{
+        //    foreach (var dependency in item.Dependencies)
+        //    {
+        //        var existingDependency = _dal.Task.Read(dependency.Id);
+        //        if (existingDependency == null)
+        //        {
+        //            throw new Exception($"Dependency with ID={dependency.Id} does not exist");
+        //        }
+        //        dependencies.Add(dependency);
+        //    }
+        //}
+
+        List<TaskInList> dependencies = item!.Dependencies!
+         .Select(dependency => _dal.Task.Read(dependency.Id))
+         .Where(existingDependency => existingDependency != null)
+         .Select(existingDependency =>
+         {
+             // Call getStatus outside the LINQ query
+             Status status = getStatus(existingDependency!);
+
+             // Create TaskInList using the mapped properties and the status obtained from getStatus
+             return new TaskInList
+             {
+                 Id = existingDependency!.Id,
+                 Description = existingDependency.Description,
+                 Alias = existingDependency.Alias,
+                 Status = status,
+             };
+         })
+         .ToList();
+
+
+        if (dependencies.Count != item?.Dependencies?.Count)
         {
-            foreach (var dependency in item.Dependencies)
-            {
-                var existingDependency = _dal.Task.Read(dependency.Id);
-                if (existingDependency == null)
-                {
-                    throw new Exception($"Dependency with ID={dependency.Id} does not exist");
-                }
-                dependencies.Add(dependency);
-            }
+            throw new BlDoesNotExistException("One or more dependencies do not exist");
         }
+
         try
         {
             // Create a new DO.Task object
@@ -67,7 +94,7 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new Exception($"Failed to create task. {ex.Message}");
+            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
 
     }
@@ -81,19 +108,19 @@ internal class TaskImplementation : ITask
 
             if (task == null)
             {
-                throw new Exception($"Task with ID={id} does not exist");
+                throw new BlDoesNotExistException($"Task with ID={id} does not exist");
             }
 
             // Check if the task has dependencies
             if (task.Dependencies != null && task.Dependencies.Any())
             {
-                throw new Exception($"Task with ID={id} has dependencies and cannot be deleted");
+                throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
             }
 
             // Check if the task has been scheduled
             if (task.Status != BO.Status.Unscheduled)
             {
-                throw new Exception($"Task with ID={id} has been scheduled and cannot be deleted");
+                throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
             }
 
             bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
@@ -103,7 +130,8 @@ internal class TaskImplementation : ITask
                 _dal.Task.Delete(id);
             throw new Exception();
         }
-        catch (DO.DalDoesNotExistException ex)
+        
+        catch (DO.DalDeleteionImpossible ex)
         {
             throw new BlDoesNotExistException($"Failed to delete task with ID={id}. {ex.Message}");
         }
@@ -171,16 +199,16 @@ internal class TaskImplementation : ITask
         // Check if the task object is null
         if (item == null)
         {
-            throw new Exception("Task object cannot be null");
+            throw new BlDoesNotExistException("Task object cannot be null");
         }
         // Check the validity of the task's data
         if (item.Id <= 0)
         {
-            throw new Exception("Task ID must be a positive number");
+            throw new BlArgumentOutOfRangeException("Task ID must be a positive number");
         }
         if (!string.IsNullOrEmpty(item?.Alias))
         {
-            throw new Exception("Task alias cannot be empty");
+            throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
         }
 
         try
@@ -227,10 +255,11 @@ internal class TaskImplementation : ITask
 
             }
         }
-        catch (Exception ex)
+        catch (DO.DalDoesNotExistException ex)
         {
             throw new Exception($"Failed to update task with ID={item!.Id}. {ex.Message}");
         }
+        
     }
 
     public void UpdateStartDate(int id, DateTime startDate)
@@ -239,7 +268,7 @@ internal class TaskImplementation : ITask
         var task = Read(id);
         if (task == null)
         {
-            throw new Exception($"Task with ID={id} does not exist");
+            throw new BlDoesNotExistException($"Task with ID={id} does not exist");
         }
 
         // Check if the scheduled start date for the task is not earlier than the end dates of its preceding tasks
@@ -248,7 +277,7 @@ internal class TaskImplementation : ITask
             var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
             if (precedingTasks.Any(t => t!.CompleteDate != null && startDate < t.CompleteDate))
             {
-                throw new Exception($"Scheduled start date cannot be earlier than the end dates of preceding tasks");
+                throw new BlArgumentOutOfRangeException($"Scheduled start date cannot be earlier than the end dates of preceding tasks");
             }
         }
 
@@ -260,7 +289,7 @@ internal class TaskImplementation : ITask
         {
             Update(task);
         }
-        catch (Exception ex)
+        catch (DO.DalDoesNotExistException ex)
         {
             throw new Exception($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
         }

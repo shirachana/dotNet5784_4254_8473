@@ -9,6 +9,13 @@ public class BlDoesNotExistException : Exception
                 : base(message, innerException) { }
 }
 [Serializable]
+public class BlArgumentOutOfRangeException : Exception
+{
+    public BlArgumentOutOfRangeException(string? message) : base(message) { }
+    public BlArgumentOutOfRangeException(string message, Exception innerException)
+                : base(message, innerException) { }
+}
+[Serializable]
 public class BlAlreadyExistException : Exception
 {
     public BlAlreadyExistException(string? message) : base(message) { }
