@@ -67,7 +67,7 @@ internal class TaskImplementation : ITask
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
+            throw new Exception($"Failed to create task. {ex.Message}");
         }
 
     }
@@ -213,7 +213,7 @@ internal class TaskImplementation : ITask
             }
             else
             {
-                DO.Task? dtask = _dal.Task.Read(item.Id);
+                DO.Task? dtask = _dal.Task.Read(item!.Id);
                 dtask = dtask! with
                 {
                     Engineerld = item.Engineer!.Id,

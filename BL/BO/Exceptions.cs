@@ -21,3 +21,10 @@ public class BlNullPropertyException : Exception
 {
     public BlNullPropertyException(string? message) : base(message) { }
 }
+[Serializable]
+public class BlCantBeDeletedException : Exception
+{
+    public BlCantBeDeletedException(string? message) : base(message) { }
+    public BlCantBeDeletedException(string message, Exception innerException)
+                : base(message, innerException) { }
+}

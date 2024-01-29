@@ -10,27 +10,24 @@ internal class EngineerImplementation : IEngineer
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(BO.Engineer? item)
     {
-        DO.Engineer doEngineer = new DO.Engineer
-        (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
-
-        
-            if (item.Id < 0)
-                throw new Exception("Engineer ID must be a positive number");
-            if (!string.IsNullOrEmpty(item.Name))
-                throw new Exception("Engineer name cannot be empty");
-            if (item.Cost < 0)
-                throw new Exception("Engineer cost must be a positive number");
-            if (!string.IsNullOrEmpty(item.Email))
-                throw new Exception("Engineer email cannot be empty");
+        if (item!.Id < 0)
+            throw new Exception("Engineer ID must be a positive number");
+        if (string.IsNullOrEmpty(item.Name))
+            throw new Exception("Engineer name cannot be empty");
+        if (item.Cost < 0)
+            throw new Exception("Engineer cost must be a positive number");
+        if (string.IsNullOrEmpty(item.Email))
+            throw new Exception("Engineer email cannot be empty");
         try
         {
-        int idEng = _dal.Engineer.Create(doEngineer);
-        return idEng;
-           
+            DO.Engineer doEngineer = new DO.Engineer
+            (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
+            int idCrt= _dal.Engineer.Create(doEngineer);
+            return idCrt;   
         }
         catch(DO.DalAlreadyExistsException ex)
         {
-            throw new BlAlreadyExistException($"Student with ID={item.Id} already exists", ex);
+            throw new BO.BlAlreadyExistException($"Student with ID={item!.Id} already exists", ex);
         }
     }
 
@@ -38,21 +35,18 @@ internal class EngineerImplementation : IEngineer
     {
         
        BO.Engineer engineerToDelete = Read(id)!;
-        if(engineerToDelete.Task?.Id is int idTask)
-        { 
-            var engineerTask =_dal.Task.Read(idTask);
-            if (idTask is not 0)
-            {
-                if (getStatus(engineerTask!) == BO.Status.OnTrack || getStatus(engineerTask!) == BO.Status.Done)
-                    throw new Exception($"Engineer with ID={id} can't be deleted");
-                _dal.Task.Update(engineerTask! with { Id = 0 });
-            }
-        }
-        if (engineerToDelete == null)
-        {
-            throw new Exception($"Engineer with ID={id} does not exist");
-        }
-        
+        //if(engineerToDelete.Task?.Id is int idTask)
+        //{ 
+        //    var engineerTask =_dal.Task.Read(idTask);
+        //    if (idTask is not 0)
+        //    {
+        //        if (getStatus(engineerTask!) == BO.Status.OnTrack || getStatus(engineerTask!) == BO.Status.Done)
+        //            throw new Exception($"Engineer with ID={id} can't be deleted");
+        //        _dal.Task.Update(engineerTask! with { Id = 0 });
+        //    }
+        //}  
+        if(_dal.Task.ReadAll(e=> e.Engineerld==id).Where(e=>e!.StartDate is not null).Any())
+            throw new BlCantBeDeletedException($"Engineer with ID={id} can't be deleted");
         try
         {
             _dal.Engineer.Delete(id);
@@ -62,7 +56,7 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Failed to delete engineer with ID={id}", ex);
         }
     }
-    public  BO.Status getStatus(DO.Task delTask)
+    private  BO.Status getStatus(DO.Task delTask)
     {
         var dateTimeNow = DateTime.Now;
 
@@ -95,7 +89,7 @@ internal class EngineerImplementation : IEngineer
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
         if (doEngineer == null)
             throw new Exception($"Engineer with ID={id} does Not exist");
-
+        DO.Task? tsk= _dal.Task.ReadAll(t=> t.Engineerld==id).Where(t=> t!.StartDate!= null && t.CompleteDate == null).FirstOrDefault();
         return new BO.Engineer()
         {
             Id = id,
@@ -103,87 +97,59 @@ internal class EngineerImplementation : IEngineer
             Email = doEngineer.Email,
             Name = doEngineer.Name,
             Level = (BO.EngineerExperience?)(doEngineer.Level),
-            Task = (BO.TaskInEngineer)(_dal.Task)
+            Task = new BO.EngineerInTask
+            {
+                Id = tsk!.Id,
+                Name = tsk.Alias,
+            }
         };
 
     }
 
-    public IEnumerable<EngineerInTask> ReadAll(Func<BO.Engineer, bool>? filter = null)
+    public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
-        return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll((Func<DO.Engineer, bool>?)filter)
-                select new BO.EngineerInTask
+        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+        //IEnumerable<DO.Engineer?> engineers = _dal.Engineer.ReadAll();
+        return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
+                let tsk=tasks.FirstOrDefault(t => t!.Engineerld== doEngineer.Id)
+                select new BO.Engineer()
                 {
                   Id= doEngineer.Id,
                   Name= doEngineer.Name,
+                  Cost = doEngineer.Cost,
+                  Email = doEngineer.Email, 
+                  Level= (BO.EngineerExperience?)(doEngineer?.Level),
+                  Task = new BO.EngineerInTask
+                  {
+                      Id=doEngineer.Id,
+                      Name= doEngineer.Name,
+                  }
                 });
     }
 
     public void Update(BO.Engineer item)
     {
-        //    DO.Engineer doEngineer = new DO.Engineer(item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
-        //    try
-        //    {
-        //        if (item?.Id < 0)
-        //            throw new Exception("Engineer ID must be a positive number");
-        //        if (!string.IsNullOrEmpty(item?.Name))
-        //            throw new Exception("Engineer name cannot be empty");
-        //        if (item?.Cost < 0)
-        //            throw new Exception("Engineer cost must be a positive number");
-        //        if (!string.IsNullOrEmpty(item?.Email))
-        //            throw new Exception("Engineer email cannot be empty");
-        //        _dal.Engineer.Update(doEngineer);
-        //    }
-        //    catch (DO.DalDoesNotExistException ex)
-        //    {
-        //        throw new Exception($"Failed to update engineer with ID={item.Id}. {ex.Message}");
-        //    }
-        // Check if the engineer object is null
-        if (item == null)
-        {
-            throw new Exception("Engineer object cannot be null");
-        }
-
-        if (item.Id <= 0)
-        {
+        if (item!.Id < 0)
             throw new Exception("Engineer ID must be a positive number");
-        }
-        if (!string.IsNullOrEmpty(item?.Name))
-        {
+        if (string.IsNullOrEmpty(item.Name))
             throw new Exception("Engineer name cannot be empty");
-        }
-        if (item?.Cost < 0)
-        {
-            throw new Exception("Engineer cost must be a non-negative number");
-        }
-        if (!string.IsNullOrEmpty(item?.Email))
-        {
+        if (item.Cost < 0)
+            throw new Exception("Engineer cost must be a positive number");
+        if (string.IsNullOrEmpty(item.Email))
             throw new Exception("Engineer email cannot be empty");
-        }
-
-       
-            DO.Engineer existingEngineer = _dal.Engineer.Read(item!.Id)!;
-            if (existingEngineer == null)
-            {
-                throw new Exception($"Engineer with ID={item.Id} does not exist");
-            }
-
-             existingEngineer = new DO.Engineer
-            (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
-            if (item.Task != null)
-            {
-                DO.Task existingTask = _dal.Task.Read(item.Task.Id)!;
-                if (existingTask == null)
-                {
-                    throw new Exception($"Task with ID={item.Task.Id} does not exist");
-                }
-
-                existingTask = new DO.Task(item.Task.Id,item.Id,item.Task.Alias);
-              
-                _dal.Task.Update(existingTask);
-            }
-        try
+        DO.Engineer existingEngineer = _dal.Engineer.Read(item!.Id)!;
+        if (existingEngineer!.Level < (DO.EngineerExperience)item.Level!)
         {
-            _dal.Engineer.Update(existingEngineer);
+                throw new Exception($"Engineer level it's not Upwards ");
+        }
+        try 
+        { 
+         existingEngineer = new DO.Engineer
+         (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
+         _dal.Engineer.Update(existingEngineer);
+         DO.Task? existingTask = _dal.Task.Read(item.Task!.Id)!;
+         DO.Task newTask = new DO.Task(existingTask.Id, item.Id, existingTask.Alias, existingTask.Description, existingTask.CreatedAtDate, existingTask.RequiredEffortTime, existingTask.IsMilestone, existingTask.Copmlexity, existingTask.StartDate, existingTask.ScheduledDate, existingTask.DeadlineDate, existingTask.CompleteDate, existingTask.Deliverables, existingTask.Remarks);
+         _dal.Task.Update(newTask);  
         }
         catch (DO.DalDoesNotExistException ex)
         {

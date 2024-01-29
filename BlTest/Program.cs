@@ -142,7 +142,7 @@ namespace BlTest
 
         static void CreatEngineer()
         {
-
+            BO.Engineer engineer = new BO.Engineer();
             Console.WriteLine(@"Enter id: ");
             string? d = Console.ReadLine();
             int idD = int.Parse(d!);
@@ -156,8 +156,8 @@ namespace BlTest
             Console.WriteLine(@"Enter the the level experience of engineer: ");
             string? l = Console.ReadLine();
             BO.EngineerExperience? engineerLevel = (BO.EngineerExperience?)int.Parse(l!);
-            BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
-            int crt = s_bl!.Engineer.Create(engineer);
+            //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
+            int crt =s_bl!.Engineer.Create(engineer);
             Console.WriteLine(crt);
 
         }
@@ -183,7 +183,7 @@ namespace BlTest
 
         static void UpdateEngineer()
         {
-
+            BO.Engineer engineer = new BO.Engineer();
             Console.WriteLine(@"Enter id of Engineer: ");
             string? d = Console.ReadLine();
             int idD = int.Parse(d!);
@@ -202,7 +202,7 @@ namespace BlTest
                 Console.WriteLine(@"Enter the the level experience of engineer: ");
                 string? l = Console.ReadLine();
                 BO.EngineerExperience engineerLevel = (BO.EngineerExperience)int.Parse(l!);
-               BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
+                //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
                 s_bl!.Engineer.Update(engineer);
             }
 
