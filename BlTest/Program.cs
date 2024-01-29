@@ -1,11 +1,5 @@
 ﻿
-using System.Collections.Generic;
-using DalApi;
-
-using System.Runtime.Intrinsics.Arm;
-using System.ComponentModel;
-
-
+using BO;
 namespace BlTest
 {
     internal class Program
@@ -224,11 +218,11 @@ namespace BlTest
         }
         static void CreatTask()
         {
+            BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
 
             Console.WriteLine(@"Enter the engineer ID of the task: ");
-            string? d = Console.ReadLine();
-            int idT = int.Parse(d!);
+            tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the alias of the task");
             string? aliasTask = Console.ReadLine();
             Console.WriteLine(@"Enter the discription of the task if there: ");
@@ -250,7 +244,7 @@ namespace BlTest
             TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
             DateTime _endDate = start.AddDays(randomDays);
             DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
-            BO.Task? tsk = new BO.Task(0, idT, aliasTask, discTask, null!, null!, false, taskLevel, null!, null!, null!, null!, deliTask, taskRemark);
+            
             int? tk = s_bl!.Task.Create(tsk);
             Console.WriteLine(tk);
 
@@ -278,7 +272,7 @@ namespace BlTest
         static void UpdateTask()
         {
             Random s_rand = new Random();
-
+            BO.Task tskUp = new BO.Task();
 
             Console.WriteLine(@"Enter id of task: ");
             string? d = Console.ReadLine();
@@ -312,7 +306,6 @@ namespace BlTest
                 TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
                 DateTime _endDate = start.AddDays(randomDays);
                 DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
-                BO.Task tskUp = new BO.Task(idT, idTsk, aliasTask, discTask, null!, null!, false, taskLevel, null!, null!, null!, null!, deliTask, taskRemark);
                 s_bl!.Task.Update(tskUp);
             }
 
