@@ -223,13 +223,13 @@ namespace BlTest
 
             Console.WriteLine(@"Enter the engineer ID of the task: ");
             tsk.Id = int.Parse(Console.ReadLine()!);
-            Console.WriteLine(@"Enter the alias of the task");
-            string? aliasTask = Console.ReadLine();
             Console.WriteLine(@"Enter the discription of the task if there: ");
-            string? discTask = Console.ReadLine();
+            tsk.Description = Console.ReadLine();
+            Console.WriteLine(@"Enter the alias of the task");
+            tsk.Alias  = Console.ReadLine();
             Console.WriteLine(@"Enter the level of the task: ");
-            string? l = Console.ReadLine();
-            DO.EngineerExperience taskLevel = (DO.EngineerExperience)int.Parse(l!);
+            tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
+
             Console.WriteLine(@"Enter the deliverables of the task: ");
             string? deliTask = Console.ReadLine();
             Console.WriteLine(@"Enter the remark of the task: ");

@@ -113,7 +113,7 @@ internal class TaskImplementation : ITask
     public Task? Read(int id)
     {
         DO.Task? doTask = _dal.Task.Read(id);
-        DO.Engineer? eng = _dal.Engineer.Read(doTask.Engineerld);
+        DO.Engineer? eng = _dal.Engineer.Read(doTask!.Engineerld);
         if (doTask is null || eng is null)
             throw new Exception($"Task with ID={id} does Not exist");
 
@@ -185,7 +185,7 @@ internal class TaskImplementation : ITask
 
         try
         {
-            if (item.StartDate <= DateTime.MinValue)
+            if (item?.StartDate <= DateTime.MinValue)
             {
 
                 // Update the task in the data layer
@@ -205,7 +205,8 @@ internal class TaskImplementation : ITask
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
                     Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-                    Copmlexity = (DO.EngineerExperience)item.Copmlexity
+                    Copmlexity = (DO.EngineerExperience)item.Copmlexity,
+
                 };
 
                 _dal.Task.Update(taskToUpdate);
