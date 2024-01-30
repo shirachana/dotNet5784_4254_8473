@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -20,7 +21,12 @@ public static class Tools
         sb.AppendLine($"Type: {type.Name}");
 
         foreach (PropertyInfo property in properties)
+
         {
+            if(property is IEnumerable)
+            {
+
+            }
             sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
         }
 
@@ -47,5 +53,32 @@ public static class Tools
 
         // For other types, use ToString
         return value.ToString()!;
+    }
+    public static BO.Status GetStatus(DO.Task delTask)
+    {
+        var dateTimeNow = DateTime.Now;
+
+        BO.Status status;
+
+        switch (delTask)
+        {
+            case DO.Task tmp when tmp.Id is 0:
+                status = BO.Status.Unscheduled;
+                break;
+
+            case DO.Task tmp when tmp.StartDate > dateTimeNow:
+                status = BO.Status.Scheduled;
+                break;
+
+            case DO.Task tmp when tmp.CompleteDate > dateTimeNow:
+                status = BO.Status.OnTrack;
+                break;
+
+            default:
+                status = BO.Status.Done;
+                break;
+        }
+
+        return status;
     }
 }

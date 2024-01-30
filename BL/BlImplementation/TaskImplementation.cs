@@ -4,6 +4,7 @@ using BO;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using System.Security.Cryptography;
 
 internal class TaskImplementation : ITask
 {
@@ -47,7 +48,7 @@ internal class TaskImplementation : ITask
          .Select(existingDependency =>
          {
              // Call getStatus outside the LINQ query
-             Status status = getStatus(existingDependency!);
+             Status status = Tools.GetStatus(existingDependency!);
 
              // Create TaskInList using the mapped properties and the status obtained from getStatus
              return new TaskInList
@@ -145,8 +146,12 @@ internal class TaskImplementation : ITask
         if (doTask is null || eng is null)
             throw new Exception($"Task with ID={id} does Not exist");
 
-        IEnumerable<DO.Dependency?> dependencies = _dal.Dependency.ReadAll(x => x.DependentTask == id);
-        Status status = getStatus(doTask);
+        var dependencies = from item in _dal.Dependency.ReadAll()
+                           where item.DependentTask==id
+                           group item by item.DependentTask into g
+                           select new { DepOnTask = g.Select(x => x.DependsOnTask) };
+        var depIds = dependencies.Select(x => x.DepOnTask).FirstOrDefault();
+        Status status = Tools.GetStatus(doTask);
         return new BO.Task()
         {
             Id = id,
@@ -190,7 +195,7 @@ internal class TaskImplementation : ITask
                    Id = doTask.Id,
                    Description = doTask.Description,
                    Alias = doTask.Alias,
-                   Status = getStatus(doTask)
+                   Status = Tools.GetStatus(doTask)
                };
     }
 
@@ -293,34 +298,6 @@ internal class TaskImplementation : ITask
         {
             throw new Exception($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
         }
-    }
-
-    private BO.Status getStatus(DO.Task delTask)
-    {
-        var dateTimeNow = DateTime.Now;
-
-        BO.Status status;
-
-        switch (delTask)
-        {
-            case DO.Task tmp when tmp.Id is 0:
-                status = BO.Status.Unscheduled;
-                break;
-
-            case DO.Task tmp when tmp.StartDate > dateTimeNow:
-                status = BO.Status.Scheduled;
-                break;
-
-            case DO.Task tmp when tmp.CompleteDate > dateTimeNow:
-                status = BO.Status.OnTrack;
-                break;
-
-            default:
-                status = BO.Status.Done;
-                break;
-        }
-
-        return status;
     }
 }
 
