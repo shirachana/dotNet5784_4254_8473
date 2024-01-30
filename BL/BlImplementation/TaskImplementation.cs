@@ -9,94 +9,62 @@ using System.Security.Cryptography;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
-    public int Create(Task? item)
+    public void Create(Task? item)
     {
-        // Check if the task object is null
-        if (item == null)
-        {
-            throw new BlDoesNotExistException("Task object cannot be null");
-        }
-        // Check the validity of the task's data
-        if (item.Id <= 0)
-        {
-            throw new BlCantBeDeletedException("Task ID must be a positive number");
-        }
-        if (!string.IsNullOrEmpty(item?.Alias))
-        {
-            throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
-        }
-
-
-        // Add dependencies for previous tasks from the existing task list
-        //List<TaskInList> dependencies = new List<TaskInList>();
-        //if (item?.Dependencies != null)
-        //{
-        //    foreach (var dependency in item.Dependencies)
-        //    {
-        //        var existingDependency = _dal.Task.Read(dependency.Id);
-        //        if (existingDependency == null)
-        //        {
-        //            throw new Exception($"Dependency with ID={dependency.Id} does not exist");
-        //        }
-        //        dependencies.Add(dependency);
-        //    }
-        //}
-
-        List<TaskInList> dependencies = item!.Dependencies!
-         .Select(dependency => _dal.Task.Read(dependency.Id))
-         .Where(existingDependency => existingDependency != null)
-         .Select(existingDependency =>
-         {
-             // Call getStatus outside the LINQ query
-             Status status = Tools.GetStatus(existingDependency!);
-
-             // Create TaskInList using the mapped properties and the status obtained from getStatus
-             return new TaskInList
-             {
-                 Id = existingDependency!.Id,
-                 Description = existingDependency.Description,
-                 Alias = existingDependency.Alias,
-                 Status = status,
-             };
-         })
-         .ToList();
-
-
-        if (dependencies.Count != item?.Dependencies?.Count)
-        {
-            throw new BlDoesNotExistException("One or more dependencies do not exist");
-        }
-
         try
         {
-            // Create a new DO.Task object
-            DO.Task doTask = new DO.Task
-            {
-                Id = item!.Id,
-                Alias = item.Alias,
-                Description = item.Description,
-                CreatedAtDate = item.CreatedAtDate,
-                /*Dependencies = dependencies,*/
-                IsMilestone = false,
-                RequiredEffortTime = item.RequiredEffortTime,
-                StartDate = item.StartDate,
-                ScheduledDate = item.ScheduledDate,
-                DeadlineDate = item.DeadlineDate,
-                CompleteDate = item.CompleteDate,
-                Deliverables = item.Deliverables,
-                Remarks = item.Remarks,
-                Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-                Copmlexity = (DO.EngineerExperience)item.Copmlexity
-            };
+              if (Tools.IsProjectStartDateSet(item!)&&Tools.CheckTaskHealth(item!))
+              {
+                List<TaskInList> dependencies = item!.Dependencies!
+               .Select(dependency => _dal.Task.Read(dependency.Id))
+               .Where(existingDependency => existingDependency != null)
+               .Select(existingDependency =>
+                {
+                    // Call getStatus outside the LINQ query
+                    Status status = Tools.GetStatus(existingDependency!);
 
-            // Attempt to add the task to the data layer
-            int taskId = _dal.Task.Create(doTask);
-            return taskId;
+                    // Create TaskInList using the mapped properties and the status obtained from getStatus
+                    return new TaskInList
+                    {
+                        Id = existingDependency!.Id,
+                        Description = existingDependency.Description,
+                        Alias = existingDependency.Alias,
+                        Status = status,
+                    };
+                }).ToList();
+                if (dependencies.Count != item?.Dependencies?.Count)
+                {
+                    throw new BlDoesNotExistException("One or more dependencies do not exist");
+                }
+                // Create a new DO.Task object
+                DO.Task doTask = new DO.Task
+                {
+                    Id = item!.Id,
+                    Alias = item.Alias,
+                    Description = item.Description,
+                    CreatedAtDate = item.CreatedAtDate,
+                    /*Dependencies = dependencies,*/
+                    IsMilestone = false,
+                    RequiredEffortTime = item.RequiredEffortTime,
+                    StartDate = item.StartDate,
+                    ScheduledDate = item.ScheduledDate,
+                    DeadlineDate = item.DeadlineDate,
+                    CompleteDate = item.CompleteDate,
+                    Deliverables = item.Deliverables,
+                    Remarks = item.Remarks,
+                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                    Copmlexity = (DO.EngineerExperience)item.Copmlexity
+                };
+
+                // Attempt to add the task to the data layer
+                _dal.Task.Create(doTask);
+              }
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
+         throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
+        
 
     }
 
@@ -105,33 +73,37 @@ internal class TaskImplementation : ITask
         // Check if the task exists
         try
         {
+
             BO.Task? task = Read(id);
-
-            if (task == null)
+            if (Tools.IsProjectStartDateSet(task!))
             {
-                throw new BlDoesNotExistException($"Task with ID={id} does not exist");
+
+                if (task == null)
+                {
+                    throw new BlDoesNotExistException($"Task with ID={id} does not exist");
+                }
+
+                // Check if the task has dependencies
+                if (task.Dependencies != null && task.Dependencies.Any())
+                {
+                    throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
+                }
+
+                // Check if the task has been scheduled
+                if (task.Status != BO.Status.Unscheduled)
+                {
+                    throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
+                }
+
+                bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
+
+                // Attempt to delete the task
+                if (!canDelete)
+                    _dal.Task.Delete(id);
+                throw new Exception();
             }
-
-            // Check if the task has dependencies
-            if (task.Dependencies != null && task.Dependencies.Any())
-            {
-                throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
-            }
-
-            // Check if the task has been scheduled
-            if (task.Status != BO.Status.Unscheduled)
-            {
-                throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
-            }
-
-            bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
-
-            // Attempt to delete the task
-            if (!canDelete)
-                _dal.Task.Delete(id);
-            throw new Exception();
         }
-        
+
         catch (DO.DalDeleteionImpossible ex)
         {
             throw new BlDoesNotExistException($"Failed to delete task with ID={id}. {ex.Message}");
@@ -176,10 +148,11 @@ internal class TaskImplementation : ITask
             },
             Copmlexity = (BO.EngineerExperience)doTask?.Copmlexity!,
             Dependencies = (from dep in dependencies
-                            let task = _dal.Task.Read(dep.DependsOnTask)
+                            from taskId in dep.DepOnTask
+                            let task = _dal.Task.Read(taskId)
                             select new TaskInList()
                             {
-                                Id = dep.Id,
+                                Id = task.Id,
                                 Alias = task.Alias,
                                 Description = task.Description,
                                 Status = status
@@ -201,63 +174,51 @@ internal class TaskImplementation : ITask
 
     public void Update(Task? item)
     {
-        // Check if the task object is null
-        if (item == null)
-        {
-            throw new BlDoesNotExistException("Task object cannot be null");
-        }
-        // Check the validity of the task's data
-        if (item.Id <= 0)
-        {
-            throw new BlArgumentOutOfRangeException("Task ID must be a positive number");
-        }
-        if (!string.IsNullOrEmpty(item?.Alias))
-        {
-            throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
-        }
-
         try
         {
-            if (item?.StartDate <= DateTime.MinValue)
+            if (Tools.IsProjectStartDateSet(item!) && Tools.CheckTaskHealth(item!))
             {
-
-                // Update the task in the data layer
-                var taskToUpdate = new DO.Task
+                if (item?.StartDate <= DateTime.MinValue)
                 {
-                    Id = item!.Id,
-                    Alias = item.Alias,
-                    Description = item.Description,
-                    CreatedAtDate = item.CreatedAtDate,
-                    /*Dependencies = dependencies,*/
-                    IsMilestone = false,
-                    RequiredEffortTime = item.RequiredEffortTime,
-                    StartDate = item.StartDate,
-                    ScheduledDate = item.ScheduledDate,
-                    DeadlineDate = item.DeadlineDate,
-                    CompleteDate = item.CompleteDate,
-                    Deliverables = item.Deliverables,
-                    Remarks = item.Remarks,
-                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-                    Copmlexity = (DO.EngineerExperience)item.Copmlexity,
 
-                };
+                    // Update the task in the data layer
+                    var taskToUpdate = new DO.Task
+                    {
+                        Id = item!.Id,
+                        Alias = item.Alias,
+                        Description = item.Description,
+                        CreatedAtDate = item.CreatedAtDate,
+                        /*Dependencies = dependencies,*/
+                        IsMilestone = false,
+                        RequiredEffortTime = item.RequiredEffortTime,
+                        StartDate = item.StartDate,
+                        ScheduledDate = item.ScheduledDate,
+                        DeadlineDate = item.DeadlineDate,
+                        CompleteDate = item.CompleteDate,
+                        Deliverables = item.Deliverables,
+                        Remarks = item.Remarks,
+                        Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                        Copmlexity = (DO.EngineerExperience)item.Copmlexity,
 
-                _dal.Task.Update(taskToUpdate);
-            }
-            else
-            {
-                DO.Task? dtask = _dal.Task.Read(item!.Id);
-                dtask = dtask! with
+                    };
+
+                    _dal.Task.Update(taskToUpdate);
+                }
+                else
                 {
-                    Engineerld = item.Engineer!.Id,
-                    Alias = item.Alias,
-                    Description = item.Description,
-                    Deliverables = item.Deliverables,
-                    Remarks = item.Remarks
-                };
+                    DO.Task? dtask = _dal.Task.Read(item!.Id);
+                    dtask = dtask! with
+                    {
+                        Engineerld = item.Engineer!.Id,
+                        Alias = item.Alias,
+                        Description = item.Description,
+                        Deliverables = item.Deliverables,
+                        Remarks = item.Remarks
+                    };
 
-                _dal.Task.Update(dtask!);
+                    _dal.Task.Update(dtask!);
 
+                }
             }
         }
         catch (DO.DalDoesNotExistException ex)

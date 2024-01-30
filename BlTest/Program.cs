@@ -1,5 +1,6 @@
 ﻿
 using BO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BlTest
 {
     internal class Program
@@ -101,6 +102,7 @@ namespace BlTest
                 Console.WriteLine("3. Read All");
                 Console.WriteLine("4. Update");
                 Console.WriteLine("5. Delete");
+                Console.WriteLine("6.Update the Start Date");
                 Console.WriteLine("0. Back to Main Menu");
                 int choice = GetUserChoice();
 
@@ -121,6 +123,9 @@ namespace BlTest
                     case 5:
                         DeleteTask();
                         break;
+                    case 6:
+                        UpdateTheStartDate();
+                        break;
                     case 0:
                         return;
                     default:
@@ -129,7 +134,6 @@ namespace BlTest
                 }
             }
         }
-
         static int GetUserChoice()
         {
             int choice;
@@ -157,8 +161,8 @@ namespace BlTest
             string? l = Console.ReadLine();
             BO.EngineerExperience? engineerLevel = (BO.EngineerExperience?)int.Parse(l!);
             //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
-            int crt =s_bl!.Engineer.Create(engineer);
-            Console.WriteLine(crt);
+            s_bl!.Engineer.Create(engineer);
+            //Console.WriteLine(crt);
 
         }
         static void ReadEngineerById()
@@ -220,8 +224,6 @@ namespace BlTest
         {
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
-
-
             Console.WriteLine(@"Enter the engineer ID of the task: ");
             tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the discription of the task if there: ");
@@ -230,9 +232,21 @@ namespace BlTest
             tsk.Alias  = Console.ReadLine();
             Console.WriteLine(@"Enter the level of the task: ");
             tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-
             Console.WriteLine(@"Enter the deliverables of the task: ");
-            string? deliTask = Console.ReadLine();
+            tsk.Deliverables=Console.ReadLine();
+            Console.WriteLine(@"Enter the Creat at Date of the task: ");
+            string dateString = Console.ReadLine()!;
+            if (DateTime.TryParse(dateString, out DateTime date))
+            {
+                tsk.CreatedAtDate = date;
+            }
+            else
+            {
+                throw new Exception("Invalid date format. Please enter again");
+            }
+            Console.WriteLine(@"Enter the Status the task: ");
+            tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
+
             Console.WriteLine(@"Enter the remark of the task: ");
             string? taskRemark = Console.ReadLine();
             DateTime start = new DateTime(2024, 1, 1);
@@ -245,29 +259,28 @@ namespace BlTest
             TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
             DateTime _endDate = start.AddDays(randomDays);
             DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
-            
-            int? tk = s_bl!.Task.Create(tsk);
-            Console.WriteLine(tk);
+            s_bl!.Task.Create(tsk);
+            //Console.WriteLine(tk);
 
         }
-        private DateTime GetEarliestStartDate(List<BO.Task>previousTasks)
-        {
-            DateTime earliestStartDate = DateTime.MaxValue;
+        //private DateTime GetEarliestStartDate(List<BO.Task>previousTasks)
+        //{
+        //    DateTime earliestStartDate = DateTime.MaxValue;
 
-            foreach (var task in previousTasks)
-            {
-                if (!task.ScheduledDate.HasValue)
-                {
-                    throw new Exception($"Task {task.Id} does not have a scheduled start date.");
-                }
+        //    foreach (var task in previousTasks)
+        //    {
+        //        if (!task.ScheduledDate.HasValue)
+        //        {
+        //            throw new Exception($"Task {task.Id} does not have a scheduled start date.");
+        //        }
 
-                earliestStartDate = DateTime.Compare(task.ScheduledDate.Value, earliestStartDate) < 0
-                    ? task.ScheduledDate.Value
-                    : earliestStartDate;
-            }
+        //        earliestStartDate = DateTime.Compare(task.ScheduledDate.Value, earliestStartDate) < 0
+        //            ? task.ScheduledDate.Value
+        //            : earliestStartDate;
+        //    }
 
-            return earliestStartDate;
-        }
+        //    return earliestStartDate;
+        //}
 
 
         static void ReadTaskById()
@@ -338,6 +351,10 @@ namespace BlTest
             string? d = Console.ReadLine();
             int idT = int.Parse(d!);
             s_bl?.Task.Delete(idT);
+        }
+        private static void UpdateTheStartDate()
+        {
+            //UpdateStartDate();
         }
     }
 }

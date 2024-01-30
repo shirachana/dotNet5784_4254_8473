@@ -25,7 +25,15 @@ public static class Tools
         {
             if(property is IEnumerable)
             {
-
+                IEnumerable<object>? enumerable = property.GetValue(obj) as IEnumerable<object>;
+                if (enumerable != null)
+                {
+                    sb.AppendLine($"{property.Name}:");
+                    foreach (var item in enumerable)
+                    {
+                        sb.AppendLine($"    {GetValueString(item)}");
+                    }
+                }
             }
             sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
         }
@@ -81,4 +89,44 @@ public static class Tools
 
         return status;
     }
+    public static bool CheckEngineerHealth(Engineer item)
+    {
+        if (item.Id < 0)
+            throw new BlArgumentOutOfRangeException("Engineer ID must be a positive number");
+        if ((item.Name)== "")
+            throw new BlArgumentOutOfRangeException("Engineer name cannot be empty");
+        if (item.Cost < 0)
+            throw new BlArgumentOutOfRangeException("Engineer cost must be a positive number");
+        if ((item.Email!).Contains("@gmail.com")==false)
+            throw new BlArgumentOutOfRangeException("Engineer email cannot be empty");
+
+        // If all checks pass, return true
+        return true;
+    }
+    public static bool CheckTaskHealth(Task item)
+    {
+        if (item == null)
+        {
+            throw new BlDoesNotExistException("Task object cannot be null");
+        }
+        // Check the validity of the task's data
+        if (item.Id <= 0)
+        {
+            throw new BlCantBeDeletedException("Task ID must be a positive number");
+        }
+        if (string.IsNullOrEmpty(item?.Alias))
+        {
+            throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
+        }
+        // If all checks pass, return true
+        return true;
+    }
+    public static bool IsProjectStartDateSet(Task task)
+    {
+        // Check if any task has a non-null start date
+        if (task.StartDate == null)
+            return true;
+        throw new BlAlreadyExistException("The project date has already been set");
+    }
+
 }

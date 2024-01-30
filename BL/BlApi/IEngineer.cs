@@ -11,7 +11,7 @@ public interface IEngineer
 {
   public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null);//not sure
   public BO.Engineer? Read(int id);
-  public int Create(BO.Engineer? item);
+  public void Create(BO.Engineer? item);
   public void Update(BO.Engineer item);
   public void Delete(int id);
 
