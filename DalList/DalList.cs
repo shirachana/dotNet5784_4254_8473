@@ -1,6 +1,4 @@
-﻿
-
-namespace Dal;
+﻿namespace Dal;
 using DalApi;
 sealed internal class DalList : IDal
 {

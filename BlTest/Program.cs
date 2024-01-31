@@ -146,7 +146,7 @@ namespace BlTest
 
         static void CreatEngineer()
         {
-            BO.Engineer eng = new BO.Engineer();
+            BO.Engineer? eng = new BO.Engineer();
             Console.WriteLine(@"Enter the engineer ID: ");
             eng.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the engineer cost for hour: ");
@@ -170,9 +170,19 @@ namespace BlTest
             eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
 
 
+            // Ensure s_bl is initialized before calling Create method
+            if (s_bl == null)
+            {
+                Console.WriteLine("s_bl is null. Make sure it is initialized.");
+            }
+            else
+            {
+                s_bl.Engineer.Create(eng);
+                
+            }
 
             //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
-            s_bl!.Engineer.Create(eng);
+            //s_bl!.Engineer.Create(eng);
             //Console.WriteLine(crt);
 
         }
@@ -232,6 +242,7 @@ namespace BlTest
                 eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
 
             }
+            s_bl.Engineer.Update(eng);
 
         }
         static void DeleteEngineer()
