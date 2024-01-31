@@ -168,17 +168,8 @@ namespace BlTest
             eng.Task = engineer;
             Console.WriteLine(@"Enter the level of the task: ");
             eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-
-
-            // Ensure s_bl is initialized before calling Create method
-            if (s_bl == null)
-            {
-                Console.WriteLine("s_bl is null. Make sure it is initialized.");
-            }
-            else
-            {
-               s_bl.Engineer.Create(eng);
-            }
+            s_bl.Engineer.Create(eng);
+            
 
             //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
             //s_bl!.Engineer.Create(eng);
