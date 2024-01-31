@@ -129,4 +129,11 @@ public static class Tools
         throw new BlAlreadyExistException("The project date has already been set");
     }
 
+    // public static bool IsDependentOnCurrentTask(BO.Task currentTask, BO.Task dependency)
+    //{
+    //    // Your implementation to check if dependency depends on currentTask
+    //    return dependency.Dependencies?.Any(dep => dep.Id == currentTask.Id) 
+    //        ?? throw new BlArgumentOutOfRangeException("The dependency depends on his task");
+    //}
+
 }
