@@ -17,9 +17,9 @@ internal class EngineerImplementation : IEngineer
                 (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
                 _dal.Engineer.Create(doEngineer);
                 // Proceed with other operations if the engineer is healthy
-            }        
+            }
         }
-        catch(DO.DalAlreadyExistsException ex)
+        catch (DO.DalAlreadyExistsException ex)
         {
             throw new BO.BlAlreadyExistException($"Student with ID={item!.Id} already exists", ex);
         }
@@ -27,7 +27,7 @@ internal class EngineerImplementation : IEngineer
 
     public void Delete(int id)
     {
-        
+
         BO.Engineer engineerToDelete = Read(id)!;
         IEnumerable<DO.Task> tsk = from DO.Task task in _dal.Task.ReadAll(task => task.Engineerld == id)
                                    where task.StartDate is not null
@@ -49,7 +49,13 @@ internal class EngineerImplementation : IEngineer
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
         if (doEngineer == null)
             throw new BlDoesNotExistException($"Engineer with ID={id} does Not exist");
-        DO.Task? tsk= _dal.Task.ReadAll(t=> t.Engineerld==id).Where(t=> t!.StartDate!= null && t.CompleteDate == null).FirstOrDefault();
+        DO.Task? tsk;
+        try
+        {
+
+             tsk = _dal.Task.Read(t => t.Engineerld == id && t!.StartDate != null && t.CompleteDate == null);
+        }
+        catch (DO.DalDoesNotExistException ex) { tsk = new DO.Task(); }
         return new BO.Engineer()
         {
             Id = id,
@@ -69,27 +75,11 @@ internal class EngineerImplementation : IEngineer
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-        if(filter == null)
-              return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
-                      orderby doEngineer.Level
-                      select new BO.Engineer()
-                      {
-                          Id= doEngineer.Id,
-                          Name = doEngineer.Name,
-                          Cost = doEngineer.Cost,
-                          Email = doEngineer.Email, 
-                          Level= (BO.EngineerExperience?)(doEngineer?.Level),
-                          Task = new BO.EngineerInTask
-                          {
-                              Id = doEngineer.Id,
-                              Name= doEngineer.Name,
-                          }
-                      });
-        else
+        if (filter == null)
             return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
-                    let tsk = /*tasks.FirstOrDefault(t => t!.Engineerld == doEngineer.Id)*/
-                    /*select*/ new BO.Engineer()
-                      {
+                    orderby doEngineer.Level
+                    select new BO.Engineer()
+                    {
                         Id = doEngineer.Id,
                         Name = doEngineer.Name,
                         Cost = doEngineer.Cost,
@@ -100,7 +90,23 @@ internal class EngineerImplementation : IEngineer
                             Id = doEngineer.Id,
                             Name = doEngineer.Name,
                         }
-                      }
+                    });
+        else
+            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
+                    let tsk = /*tasks.FirstOrDefault(t => t!.Engineerld == doEngineer.Id)*/
+                    /*select*/ new BO.Engineer()
+                               {
+                                   Id = doEngineer.Id,
+                                   Name = doEngineer.Name,
+                                   Cost = doEngineer.Cost,
+                                   Email = doEngineer.Email,
+                                   Level = (BO.EngineerExperience?)(doEngineer?.Level),
+                                   Task = new BO.EngineerInTask
+                                   {
+                                       Id = doEngineer.Id,
+                                       Name = doEngineer.Name,
+                                   }
+                               }
                     where filter(tsk)
                     orderby doEngineer.Level
                     select tsk);

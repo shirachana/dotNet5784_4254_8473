@@ -13,8 +13,8 @@ internal class TaskImplementation : ITask
     {
         try
         {
-              if (Tools.IsProjectStartDateSet(item!)&&Tools.CheckTaskHealth(item!))
-              {
+            if (Tools.IsProjectStartDateSet(item!) && Tools.CheckTaskHealth(item!))
+            {
                 List<TaskInList> dependencies = item!.Dependencies!
                .Select(dependency => _dal.Task.Read(dependency.Id))
                .Where(existingDependency => existingDependency != null)
@@ -58,13 +58,13 @@ internal class TaskImplementation : ITask
 
                 // Attempt to add the task to the data layer
                 _dal.Task.Create(doTask);
-              }
+            }
         }
         catch (DO.DalAlreadyExistsException ex)
         {
-         throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
+            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
-        
+
 
     }
 
@@ -119,7 +119,7 @@ internal class TaskImplementation : ITask
             throw new Exception($"Task with ID={id} does Not exist");
 
         var dependencies = from item in _dal.Dependency.ReadAll()
-                           where item.DependentTask==id
+                           where item.DependentTask == id
                            group item by item.DependentTask into g
                            select new { DepOnTask = g.Select(x => x.DependsOnTask) };
         var depIds = dependencies.Select(x => x.DepOnTask).FirstOrDefault();
@@ -131,12 +131,12 @@ internal class TaskImplementation : ITask
             Alias = doTask.Alias,
             CreatedAtDate = doTask.DeadlineDate,
             Status = status,
-
-            /*Dependencies=*/
             RequiredEffortTime = doTask.RequiredEffortTime,
             StartDate = doTask.StartDate,
             ScheduledDate = doTask.ScheduledDate,
-            /*ForecastDate=*/
+            ForecastDate = doTask.StartDate > doTask.ScheduledDate ?
+                doTask.StartDate + doTask.RequiredEffortTime :
+                doTask.ScheduledDate + doTask.RequiredEffortTime,
             DeadlineDate = doTask.DeadlineDate,
             CompleteDate = doTask?.CompleteDate,
             Deliverables = doTask?.Deliverables,
@@ -225,44 +225,46 @@ internal class TaskImplementation : ITask
         {
             throw new Exception($"Failed to update task with ID={item!.Id}. {ex.Message}");
         }
-        
+
     }
 
     public void UpdateStartDate(int id, DateTime startDate)
     {
-        // Check if the task with the given ID exists
-        var task = Read(id);
-        if (task == null)
-        {
-            throw new BlDoesNotExistException($"Task with ID={id} does not exist");
-        }
-
-        // Check if all scheduled start dates of preceding tasks are updated
-        if (task.Dependencies != null && task.Dependencies.Any())
-        {
-            var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
-            if (precedingTasks.Any(t => t! == null ||t.StartDate==null))
-            {
-                throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
-            }
-        }
-        // Check if the received start date is not earlier than the end dates of preceding tasks
-        if (task.Dependencies != null && task.Dependencies.Any())
-        {
-            var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
-            var incompletePrecedingTasks = precedingTasks.Where(t => t?.CompleteDate == null);
-            if (incompletePrecedingTasks.Any(t => t!.StartDate > startDate))
-            {
-                throw new BlArgumentOutOfRangeException($"Scheduled start date cannot be earlier than the start dates of incomplete preceding tasks");
-            }
-        }
-
-        // Update or add the scheduled start date for the task
-        task.StartDate = startDate;
-
-        // Attempt to update the task in the data layer
         try
         {
+            // Check if the task with the given ID exists
+            var task = Read(id);
+
+            if (task == null)
+            {
+                throw new BlDoesNotExistException($"Task with ID={id} does not exist");
+            }
+
+            // Check if all scheduled start dates of preceding tasks are updated
+            if (task.Dependencies != null && task.Dependencies.Any())
+            {
+                var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
+                if (precedingTasks.Any(t => t! == null || t.StartDate == null))
+                {
+                    throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
+                }
+            }
+            // Check if the received start date is not earlier than the end dates of preceding tasks
+            if (task.Dependencies != null && task.Dependencies.Any())
+            {
+                var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
+                var incompletePrecedingTasks = precedingTasks.Where(t => t?.CompleteDate == null);
+                if (incompletePrecedingTasks.Any(t => t!.StartDate > startDate))
+                {
+                    throw new BlArgumentOutOfRangeException($"Scheduled start date cannot be earlier than the start dates of incomplete preceding tasks");
+                }
+            }
+
+            // Update or add the scheduled start date for the task
+            task.StartDate = startDate;
+
+            // Attempt to update the task in the data layer
+
             Update(task);
         }
         catch (DO.DalDoesNotExistException ex)

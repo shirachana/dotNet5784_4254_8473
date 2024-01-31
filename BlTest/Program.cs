@@ -248,8 +248,6 @@ namespace BlTest
         {
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
-            Console.WriteLine(@"Enter the engineer ID of the task: ");
-            tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the discription of the task if there: ");
             tsk.Description = Console.ReadLine();
             Console.WriteLine(@"Enter the alias of the task");

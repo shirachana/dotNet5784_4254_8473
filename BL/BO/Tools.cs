@@ -64,6 +64,13 @@ public static class Tools
     }
     public static BO.Status GetStatus(DO.Task delTask)
     {
+        return delTask.ScheduledDate is null ? Status.Unscheduled :
+            delTask.StartDate is null ? Status.Scheduled :
+            delTask.DeadlineDate is null ? Status.OnTrack :
+            delTask.CompleteDate is null ? Status.InJeopardy :
+            Status.Done;
+
+
         var dateTimeNow = DateTime.Now;
 
         BO.Status status;
