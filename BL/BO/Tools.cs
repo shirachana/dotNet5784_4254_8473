@@ -66,35 +66,34 @@ public static class Tools
     {
         return delTask.ScheduledDate is null ? Status.Unscheduled :
             delTask.StartDate is null ? Status.Scheduled :
-            delTask.DeadlineDate is null ? Status.OnTrack :
-            delTask.CompleteDate is null ? Status.InJeopardy :
+            delTask.CompleteDate is null ? Status.OnTrack :
             Status.Done;
 
 
-        var dateTimeNow = DateTime.Now;
+        //var dateTimeNow = DateTime.Now;
 
-        BO.Status status;
+        //BO.Status status;
 
-        switch (delTask)
-        {
-            case DO.Task tmp when tmp.Id is 0:
-                status = BO.Status.Unscheduled;
-                break;
+        //switch (delTask)
+        //{
+        //    case DO.Task tmp when tmp.Id is 0:
+        //        status = BO.Status.Unscheduled;
+        //        break;
 
-            case DO.Task tmp when tmp.StartDate > dateTimeNow:
-                status = BO.Status.Scheduled;
-                break;
+        //    case DO.Task tmp when tmp.StartDate > dateTimeNow:
+        //        status = BO.Status.Scheduled;
+        //        break;
 
-            case DO.Task tmp when tmp.CompleteDate > dateTimeNow:
-                status = BO.Status.OnTrack;
-                break;
+        //    case DO.Task tmp when tmp.CompleteDate > dateTimeNow:
+        //        status = BO.Status.OnTrack;
+        //        break;
 
-            default:
-                status = BO.Status.Done;
-                break;
-        }
+        //    default:
+        //        status = BO.Status.Done;
+        //        break;
+        //}
 
-        return status;
+        //return status;
     }
     public static bool CheckEngineerHealth(Engineer item)
     {
