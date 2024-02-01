@@ -50,7 +50,7 @@ internal class TaskImplementation : ITask
 
 
 
-    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null)
+    public IEnumerable<Task> ReadAll(Func<Task, bool>? filter = null)
     {
         List<Task> taskElem = XMLTools.LoadListFromXMLSerializer<Task>(s_tasks_xml);
         if (filter == null)

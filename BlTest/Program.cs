@@ -248,6 +248,8 @@ namespace BlTest
         {
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
+            Console.WriteLine(@"Enter the id of the task if there: ");
+            tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the discription of the task if there: ");
             tsk.Description = Console.ReadLine();
             Console.WriteLine(@"Enter the alias of the task");
@@ -266,16 +268,18 @@ namespace BlTest
             tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter number of dependencies: ");
             int numberOfDependencies = int.Parse(Console.ReadLine()!);
-            Console.WriteLine(@"Enter the Dependency description: ");
-            string descriptionDep = Console.ReadLine()!;
-            Console.WriteLine(@"Enter the Dependency alias: ");
-            string aliasDep = (Console.ReadLine()!);
-            Console.WriteLine(@"Enter the Dependency status: ");
-            BO.Status statusDep = (BO.Status)int.Parse(Console.ReadLine()!);
+            
+            tsk.Dependencies = new List<TaskInList>();
             for (int i = 0;i<numberOfDependencies; i++)
             {
                 Console.WriteLine(@"Enter the Dependency id: ");
                 int idDep = int.Parse(Console.ReadLine()!);
+                Console.WriteLine(@"Enter the Dependency description: ");
+                string descriptionDep = Console.ReadLine()!;
+                Console.WriteLine(@"Enter the Dependency alias: ");
+                string aliasDep = (Console.ReadLine()!);
+                Console.WriteLine(@"Enter the Dependency status: ");
+                BO.Status statusDep = (BO.Status)int.Parse(Console.ReadLine()!);
                 BO.TaskInList dependency = new BO.TaskInList
                 {
                     Id = idDep,
@@ -290,15 +294,15 @@ namespace BlTest
             int requiredEffortDays = int.Parse(Console.ReadLine()!);
             tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
 
-            Console.WriteLine(@"Enter the Start Date of the task: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-            {
-                tsk.StartDate = startDate;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
+            //Console.WriteLine(@"Enter the Start Date of the task: ");
+            //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
+            //{
+            //    tsk.StartDate = startDate;
+            //}
+            //else
+            //{
+            //    throw new Exception("Invalid date format. Please enter again");
+            //}
 
             Console.WriteLine(@"Enter the Scheduled Date of the task: ");
             if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
@@ -394,9 +398,9 @@ namespace BlTest
         static void ReadAllTasks()
         {
 
-            IEnumerable<BO.Task?> tasks;
-            tasks = (IEnumerable<BO.Task?>)s_bl!.Task.ReadAll();
-            foreach (BO.Task? task in tasks) { Console.WriteLine(task); }
+            IEnumerable<BO.TaskInList?> tasks;
+            tasks = (IEnumerable<BO.TaskInList?>)s_bl!.Task.ReadAll();
+            foreach (BO.TaskInList? task in tasks) { Console.WriteLine(task); }
 
         }
 
@@ -412,6 +416,7 @@ namespace BlTest
             tsks = s_bl!.Task.Read(idT);
             if (tsks != null)
             {
+
                 Console.WriteLine(@"Enter the engineer ID of the task: ");
                 tsk.Id = int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the discription of the task if there: ");

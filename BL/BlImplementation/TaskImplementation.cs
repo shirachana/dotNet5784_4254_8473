@@ -236,7 +236,7 @@ internal class TaskImplementation : ITask
             // Check if the task with the given ID exists
             var task = Read(id);
             // Check if all scheduled start dates of preceding tasks are updated
-            if (task.Dependencies != null && task.Dependencies.Any())
+            if (task?.Dependencies != null && task.Dependencies.Any())
             {
                 var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
                 if (precedingTasks.Any(t => t! == null || t.StartDate == null))
@@ -245,7 +245,7 @@ internal class TaskImplementation : ITask
                 }
             }
             // Check if the received start date is not earlier than the end dates of preceding tasks
-            if (task.Dependencies != null && task.Dependencies.Any())
+            if (task?.Dependencies != null && task.Dependencies.Any())
             {
                 var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
                 var incompletePrecedingTasks = precedingTasks.Where(t => t?.CompleteDate == null);
@@ -256,7 +256,7 @@ internal class TaskImplementation : ITask
             }
 
             // Update or add the scheduled start date for the task
-            task.StartDate = startDate;
+            task!.StartDate = startDate;
 
             // Attempt to update the task in the data layer
 
