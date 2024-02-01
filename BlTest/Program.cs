@@ -537,7 +537,19 @@ namespace BlTest
         }
         private static void UpdateTheStartDate()
         {
-            //UpdateStartDate();
+            Console.WriteLine(@"Enter id of Task to update the tasks start date: ");
+            string? d = Console.ReadLine();
+            int idT = int.Parse(d!);
+            Console.WriteLine(@"Enter the Start Date of the task: ");
+            if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
+            {
+                DateTime sd = startDate;
+                s_bl?.Task.UpdateStartDate(idT, sd);
+            }
+            else
+            {
+                throw new Exception("Invalid date format. Please enter again");
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ internal class TaskImplementation : ITask
                 {
                     // Call getStatus outside the LINQ query
                     Status status = Tools.GetStatus(existingDependency!);
-
+                    _dal.Dependency.Create(new DO.Dependency(0,item.Id,existingDependency!.Id));
                     // Create TaskInList using the mapped properties and the status obtained from getStatus
                     return new TaskInList
                     {
@@ -76,15 +76,9 @@ internal class TaskImplementation : ITask
 
             BO.Task? task = Read(id);
             if (Tools.IsProjectStartDateSet(task!))
-            {
-
-                if (task == null)
-                {
-                    throw new BlDoesNotExistException($"Task with ID={id} does not exist");
-                }
-
+            { 
                 // Check if the task has dependencies
-                if (task.Dependencies != null && task.Dependencies.Any())
+                if (task!.Dependencies != null && task.Dependencies.Any())
                 {
                     throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
                 }
@@ -113,51 +107,58 @@ internal class TaskImplementation : ITask
 
     public Task? Read(int id)
     {
-        DO.Task? doTask = _dal.Task.Read(id);
-        DO.Engineer? eng = _dal.Engineer.Read(doTask!.Engineerld);
-        if (doTask is null || eng is null)
-            throw new Exception($"Task with ID={id} does Not exist");
-
-        var dependencies = from item in _dal.Dependency.ReadAll()
-                           where item.DependentTask == id
-                           group item by item.DependentTask into g
-                           select new { DepOnTask = g.Select(x => x.DependsOnTask) };
-        var depIds = dependencies.Select(x => x.DepOnTask).FirstOrDefault();
-        Status status = Tools.GetStatus(doTask);
-        return new BO.Task()
+        try
         {
-            Id = id,
-            Description = doTask.Description,
-            Alias = doTask.Alias,
-            CreatedAtDate = doTask.DeadlineDate,
-            Status = status,
-            RequiredEffortTime = doTask.RequiredEffortTime,
-            StartDate = doTask.StartDate,
-            ScheduledDate = doTask.ScheduledDate,
-            ForecastDate = doTask.StartDate > doTask.ScheduledDate ?
-                doTask.StartDate + doTask.RequiredEffortTime :
-                doTask.ScheduledDate + doTask.RequiredEffortTime,
-            DeadlineDate = doTask.DeadlineDate,
-            CompleteDate = doTask?.CompleteDate,
-            Deliverables = doTask?.Deliverables,
-            Remarks = doTask?.Remarks,
-            Engineer = new EngineerInTask()
+            DO.Task? doTask = _dal.Task.Read(id);
+            DO.Engineer? eng = _dal.Engineer.Read(doTask!.Engineerld);
+            if (doTask is null || eng is null)
+                throw new Exception($"Task with ID={id} does Not exist");
+
+            var dependencies = from item in _dal.Dependency.ReadAll()
+                               where item.DependentTask == id
+                               group item by item.DependentTask into g
+                               select new { DepOnTask = g.Select(x => x.DependsOnTask) };
+            var depIds = dependencies.Select(x => x.DepOnTask).FirstOrDefault();
+            Status status = Tools.GetStatus(doTask);
+            return new BO.Task()
             {
-                Id = eng.Id,
-                Name = eng.Name
-            },
-            Copmlexity = (BO.EngineerExperience)doTask?.Copmlexity!,
-            Dependencies = (from dep in dependencies
-                            from taskId in dep.DepOnTask
-                            let task = _dal.Task.Read(taskId)
-                            select new TaskInList()
-                            {
-                                Id = task.Id,
-                                Alias = task.Alias,
-                                Description = task.Description,
-                                Status = status
-                            }).ToList(),
-        };
+                Id = id,
+                Description = doTask.Description,
+                Alias = doTask.Alias,
+                CreatedAtDate = doTask.DeadlineDate,
+                Status = status,
+                RequiredEffortTime = doTask.RequiredEffortTime,
+                StartDate = doTask.StartDate,
+                ScheduledDate = doTask.ScheduledDate,
+                ForecastDate = doTask.StartDate > doTask.ScheduledDate ?
+                    doTask.StartDate + doTask.RequiredEffortTime :
+                    doTask.ScheduledDate + doTask.RequiredEffortTime,
+                DeadlineDate = doTask.DeadlineDate,
+                CompleteDate = doTask?.CompleteDate,
+                Deliverables = doTask?.Deliverables,
+                Remarks = doTask?.Remarks,
+                Engineer = new EngineerInTask()
+                {
+                    Id = eng.Id,
+                    Name = eng.Name
+                },
+                Copmlexity = (BO.EngineerExperience)doTask?.Copmlexity!,
+                Dependencies = (from dep in dependencies
+                                from taskId in dep.DepOnTask
+                                let task = _dal.Task.Read(taskId)
+                                select new TaskInList()
+                                {
+                                    Id = task.Id,
+                                    Alias = task.Alias,
+                                    Description = task.Description,
+                                    Status = status
+                                }).ToList(),
+            };
+        }
+        catch (DO.DalDoesNotExistException ex) 
+        {
+            throw new BlDoesNotExistException($"Failed to Read Task. {ex.Message}");
+        }
     }
 
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
@@ -234,12 +235,6 @@ internal class TaskImplementation : ITask
         {
             // Check if the task with the given ID exists
             var task = Read(id);
-
-            if (task == null)
-            {
-                throw new BlDoesNotExistException($"Task with ID={id} does not exist");
-            }
-
             // Check if all scheduled start dates of preceding tasks are updated
             if (task.Dependencies != null && task.Dependencies.Any())
             {
