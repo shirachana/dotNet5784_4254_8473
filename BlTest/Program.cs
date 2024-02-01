@@ -443,6 +443,7 @@ namespace BlTest
                 string aliasDep = (Console.ReadLine()!);
                 Console.WriteLine(@"Enter the Dependency status: ");
                 BO.Status statusDep = (BO.Status)int.Parse(Console.ReadLine()!);
+                tsk.Dependencies = new List<BO.TaskInList>();
                 for (int i = 0; i < numberOfDependencies; i++)
                 {
                     Console.WriteLine(@"Enter the Dependency id: ");
