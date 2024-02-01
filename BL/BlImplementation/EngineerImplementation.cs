@@ -55,7 +55,11 @@ internal class EngineerImplementation : IEngineer
 
              tsk = _dal.Task.Read(t => t.Engineerld == id && t!.StartDate != null && t.CompleteDate == null);
         }
-        catch (DO.DalDoesNotExistException ex) { tsk = new DO.Task(); }
+        catch (DO.DalDoesNotExistException)
+        { 
+            tsk = new DO.Task();
+            
+        }
         return new BO.Engineer()
         {
             Id = id,

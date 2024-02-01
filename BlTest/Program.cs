@@ -269,7 +269,7 @@ namespace BlTest
             Console.WriteLine(@"Enter number of dependencies: ");
             int numberOfDependencies = int.Parse(Console.ReadLine()!);
             
-            tsk.Dependencies = new List<TaskInList>();
+            tsk.Dependencies = new List<BO.TaskInList>();
             for (int i = 0;i<numberOfDependencies; i++)
             {
                 Console.WriteLine(@"Enter the Dependency id: ");
