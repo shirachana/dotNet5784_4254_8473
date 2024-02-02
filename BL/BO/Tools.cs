@@ -97,7 +97,7 @@ public static class Tools
     }
     public static bool CheckEngineerHealth(Engineer item)
     {
-        if (item.Id < 0)
+        if (item.Id <= 0)
             throw new BlArgumentOutOfRangeException("Engineer ID must be a positive number");
         if ((item.Name)== "")
             throw new BlArgumentOutOfRangeException("Engineer name cannot be empty");
@@ -116,10 +116,10 @@ public static class Tools
             throw new BlDoesNotExistException("Task object cannot be null");
         }
         // Check the validity of the task's data
-        if (item.Id <= 0)
-        {
-            throw new BlCantBeDeletedException("Task ID must be a positive number");
-        }
+        //if (item.Id <= 0)
+        //{
+        //    throw new BlCantBeDeletedException("Task ID must be a positive number");
+        //}
         if (string.IsNullOrEmpty(item?.Alias))
         {
             throw new BlArgumentOutOfRangeException("Task alias cannot be empty");

@@ -25,8 +25,8 @@ public static class Initialization
         }
         foreach (var id in ids)
         {
-            dependentTask = s_rand.Next(1, 41);
-            dependsOnTask = s_rand.Next(1, dependentTask);
+            dependentTask = s_rand.Next(1, 20);
+            dependsOnTask = s_rand.Next(1, 20);
             bool flag = true;
             foreach (var item in s_dal!.Dependency.ReadAll())
             {
@@ -129,9 +129,10 @@ public static class Initialization
         "Market Trend Analysis Software"};
         EngineerExperience[] lev = { (EngineerExperience)0, (EngineerExperience)2, (EngineerExperience)1, (EngineerExperience)2, (EngineerExperience)3, (EngineerExperience)1, (EngineerExperience)2, (EngineerExperience)2, (EngineerExperience)0, (EngineerExperience)3, (EngineerExperience)2, (EngineerExperience)1, (EngineerExperience)2, (EngineerExperience)1, (EngineerExperience)2, (EngineerExperience)3, (EngineerExperience)2, (EngineerExperience)1, (EngineerExperience)3, (EngineerExperience)2 };
         int _engId;
+        List<int> engineersID = s_dal!.Engineer.ReadAll().Select(x => x.Id).ToList();
         for (int i = 0; i < lev.Length; i++)
         {
-            _engId = s_rand.Next(1000000, 99999999);
+            _engId = engineersID[ s_rand.Next(0, 5)];
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
@@ -178,10 +179,9 @@ public static class Initialization
         //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
         //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
         s_dal = DalApi.Factory.Get; //stage 4
-        CreateDependencies();
         CreatEngineer();
         CreatTask();
-
+        CreateDependencies();
 
     }
 }

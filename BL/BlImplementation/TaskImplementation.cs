@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
-    public void Create(Task? item)
+    public int Create(Task? item)
     {
         try
         {
@@ -57,7 +57,7 @@ internal class TaskImplementation : ITask
                 };
 
                 // Attempt to add the task to the data layer
-                _dal.Task.Create(doTask);
+                return _dal.Task.Create(doTask);
             }
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -65,7 +65,7 @@ internal class TaskImplementation : ITask
             throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
 
-
+        throw new BlNullPropertyException($"Failed to create task");
     }
 
     public void Delete(int id)
@@ -177,7 +177,7 @@ internal class TaskImplementation : ITask
     {
         try
         {
-            if (Tools.IsProjectStartDateSet(item!) && Tools.CheckTaskHealth(item!))
+            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
             {
                 if (item?.StartDate <= DateTime.MinValue)
                 {
