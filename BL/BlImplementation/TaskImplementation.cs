@@ -94,7 +94,7 @@ internal class TaskImplementation : ITask
                 // Attempt to delete the task
                 if (!canDelete)
                     _dal.Task.Delete(id);
-                throw new Exception();
+                throw new BlCantBeDeletedException($"Task with ID={id} cannot be deleted"); 
             }
         }
 

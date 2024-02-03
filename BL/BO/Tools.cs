@@ -130,10 +130,20 @@ public static class Tools
     public static bool IsProjectStartDateSet(Task task)
     {
         // Check if any task has a non-null start date
-        if (task.StartDate == null)
+        DO.Task newTask = new DO.Task
+        {
+            Id = task.Id,
+            ScheduledDate = task.ScheduledDate,
+            StartDate = task.StartDate,
+            CompleteDate = task.CompleteDate
+        };
+
+        if (GetStatus(newTask) == Status.Unscheduled)
             return true;
+
         throw new BlAlreadyExistException("The project date has already been set");
     }
+
 
 
 }
