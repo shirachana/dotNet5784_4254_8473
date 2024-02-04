@@ -13,7 +13,7 @@ internal class TaskImplementation : ITask
     {
         try
         {
-            if (Tools.IsProjectStartDateSet(item!) && Tools.CheckTaskHealth(item!))
+            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
             {
                 List<TaskInList> dependencies = item!.Dependencies!
                .Select(dependency => _dal.Task.Read(dependency.Id))
@@ -22,7 +22,7 @@ internal class TaskImplementation : ITask
                 {
                     // Call getStatus outside the LINQ query
                     Status status = Tools.GetStatus(existingDependency!);
-                    _dal.Dependency.Create(new DO.Dependency(0,item.Id,existingDependency!.Id));
+                    _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
                     // Create TaskInList using the mapped properties and the status obtained from getStatus
                     return new TaskInList
                     {
@@ -55,7 +55,6 @@ internal class TaskImplementation : ITask
                     Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity
                 };
-
                 // Attempt to add the task to the data layer
                 return _dal.Task.Create(doTask);
             }
@@ -75,27 +74,21 @@ internal class TaskImplementation : ITask
         {
 
             BO.Task? task = Read(id);
-            if (Tools.IsProjectStartDateSet(task!))
-            { 
-                // Check if the task has dependencies
-                if (task!.Dependencies != null && task.Dependencies.Any())
-                {
-                    throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
-                }
-
-                // Check if the task has been scheduled
-                if (task.Status != BO.Status.Unscheduled)
-                {
-                    throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
-                }
-
-                bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
-
-                // Attempt to delete the task
-                if (!canDelete)
-                    _dal.Task.Delete(id);
-                throw new BlCantBeDeletedException($"Task with ID={id} cannot be deleted"); 
+            //if (Tools.IsProjectStartDateSet(task!))
+            //{ 
+            //Check if the task has been scheduled
+            if (task!.Status != BO.Status.Unscheduled)
+            {
+                throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
             }
+            bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
+
+            // Attempt to delete the task Check if the task has dependencies
+            if (canDelete==false)
+                _dal.Task.Delete(id);
+            else
+               throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted"); 
+            //}
         }
 
         catch (DO.DalDeleteionImpossible ex)
@@ -155,12 +148,11 @@ internal class TaskImplementation : ITask
                                 }).ToList(),
             };
         }
-        catch (DO.DalDoesNotExistException ex) 
+        catch (DO.DalDoesNotExistException ex)
         {
             throw new BlDoesNotExistException($"Failed to Read Task. {ex.Message}");
         }
     }
-
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         return from DO.Task doTask in _dal.Task.ReadAll((Func<DO.Task, bool>?)filter)
@@ -179,7 +171,7 @@ internal class TaskImplementation : ITask
         {
             if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
             {
-                if (item?.StartDate <= DateTime.MinValue)
+                if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
                 {
 
                     // Update the task in the data layer
@@ -234,7 +226,7 @@ internal class TaskImplementation : ITask
         try
         {
             // Check if the task with the given ID exists
-            var task = Read(id);
+             var task = Read(id);
             // Check if all scheduled start dates of preceding tasks are updated
             if (task?.Dependencies != null && task.Dependencies.Any())
             {

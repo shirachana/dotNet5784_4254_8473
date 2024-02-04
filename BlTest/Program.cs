@@ -264,11 +264,8 @@ namespace BlTest
             {
                 throw new Exception("Invalid date format. Please enter again");
             }
-            Console.WriteLine(@"Enter the Status the task: ");
-            tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter number of dependencies: ");
             int numberOfDependencies = int.Parse(Console.ReadLine()!);
-            
             tsk.Dependencies = new List<BO.TaskInList>();
             for (int i = 0;i<numberOfDependencies; i++)
             {
@@ -287,23 +284,11 @@ namespace BlTest
                     Alias=aliasDep,
                     Status=statusDep,
                 };
-
                 tsk.Dependencies?.Add(dependency);
             }
             Console.WriteLine(@"Enter the Required Effort Time: ");
             int requiredEffortDays = int.Parse(Console.ReadLine()!);
             tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
-
-            //Console.WriteLine(@"Enter the Start Date of the task: ");
-            //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-            //{
-            //    tsk.StartDate = startDate;
-            //}
-            //else
-            //{
-            //    throw new Exception("Invalid date format. Please enter again");
-            //}
-
             Console.WriteLine(@"Enter the Scheduled Date of the task: ");
             if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
             {
@@ -313,17 +298,6 @@ namespace BlTest
             {
                 throw new Exception("Invalid date format. Please enter again");
             }
-
-            Console.WriteLine(@"Enter the Forecast Date of the task: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime forecastDate))
-            {
-                tsk.ForecastDate = forecastDate;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
-
             Console.WriteLine(@"Enter the Deadline Date of the task: ");
             if (DateTime.TryParse(Console.ReadLine()!, out DateTime deadlineDate))
             {
@@ -410,15 +384,14 @@ namespace BlTest
             BO.Task tsk = new BO.Task();
 
             Console.WriteLine(@"Enter id of task: ");
-            string? d = Console.ReadLine();
-            int idT = int.Parse(d!);
+            tsk.Id = int.Parse(Console.ReadLine()!);
             BO.Task? tsks = new BO.Task();
-            tsks = s_bl!.Task.Read(idT);
+            tsks = s_bl!.Task.Read(tsk.Id);
             if (tsks != null)
             {
 
-                Console.WriteLine(@"Enter the engineer ID of the task: ");
-                tsk.Id = int.Parse(Console.ReadLine()!);
+                //Console.WriteLine(@"Enter the engineer ID of the task: ");
+                //tsk.Id = int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the discription of the task if there: ");
                 tsk.Description = Console.ReadLine();
                 Console.WriteLine(@"Enter the alias of the task");
@@ -462,15 +435,15 @@ namespace BlTest
                 int requiredEffortDays = int.Parse(Console.ReadLine()!);
                 tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
 
-                Console.WriteLine(@"Enter the Start Date of the task: ");
-                if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-                {
-                    tsk.StartDate = startDate;
-                }
-                else
-                {
-                    throw new Exception("Invalid date format. Please enter again");
-                }
+                //Console.WriteLine(@"Enter the Start Date of the task: ");
+                //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
+                //{
+                //    tsk.StartDate = startDate;
+                //}
+                //else
+                //{
+                //    throw new Exception("Invalid date format. Please enter again");
+                //}
 
                 Console.WriteLine(@"Enter the Scheduled Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
@@ -482,15 +455,15 @@ namespace BlTest
                     throw new Exception("Invalid date format. Please enter again");
                 }
 
-                Console.WriteLine(@"Enter the Forecast Date of the task: ");
-                if (DateTime.TryParse(Console.ReadLine()!, out DateTime forecastDate))
-                {
-                    tsk.ForecastDate = forecastDate;
-                }
-                else
-                {
-                    throw new Exception("Invalid date format. Please enter again");
-                }
+                //Console.WriteLine(@"Enter the Forecast Date of the task: ");
+                //if (DateTime.TryParse(Console.ReadLine()!, out DateTime forecastDate))
+                //{
+                //    tsk.ForecastDate = forecastDate;
+                //}
+                //else
+                //{
+                //    throw new Exception("Invalid date format. Please enter again");
+                //}
 
                 Console.WriteLine(@"Enter the Deadline Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime deadlineDate))
@@ -541,7 +514,7 @@ namespace BlTest
             int idT = int.Parse(d!);
             s_bl?.Task.Delete(idT);
         }
-        private static void UpdateTheStartDate()
+        static void UpdateTheStartDate()
         {
             Console.WriteLine(@"Enter id of Task to update the tasks start date: ");
             string? d = Console.ReadLine();
@@ -549,8 +522,7 @@ namespace BlTest
             Console.WriteLine(@"Enter the Start Date of the task: ");
             if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
             {
-                DateTime sd = startDate;
-                s_bl?.Task.UpdateStartDate(idT, sd);
+                s_bl?.Task.UpdateStartDate(idT, startDate);
             }
             else
             {
