@@ -158,7 +158,7 @@ internal class TaskImplementation : BlApi.ITask
             if (canDelete==false)
                 _dal.Task.Delete(id);
             else
-               throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted"); 
+               throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
             }
         }
 

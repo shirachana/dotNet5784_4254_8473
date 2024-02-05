@@ -121,23 +121,17 @@ public static class Tools
     }
     public static bool IsStatusProject(Task item)
     {
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.Id != null)
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.Engineer?.Id != null)
         {
-            return false;
-           // throw new BlPlanning("the project is during planning");
-            
+            throw new BlPlanning("the project is during planning");
         }
         if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
         {
-            return false;
-           // throw new BlPlanning("the project is during planning");
-            
+           throw new BlPlanning("the project is during planning");
         }
         if (Tools.CheckStatusProject() == BO.StatusProject.Execution)
         {
-            return false;
-            //throw new BlExection("the project is during Exection");
-            
+            throw new BlExection("the project is during Exection");
         }
         return true;
 }

@@ -37,7 +37,7 @@ public class Task
     public TimeSpan? RequiredEffortTime { get; set; }
 
     public DateTime? ScheduledDate { get; set; }
-    public DateTime? StartDate { get; set; }
+    public DateTime? StartDate { get; set; } = null;
     public DateTime? DeadlineDate { get; set; }
     public DateTime? CompleteDate { get; set; }
     public DateTime? ForecastDate { get; set; }
