@@ -254,6 +254,20 @@ namespace BlTest
             tsk.Description = Console.ReadLine();
             Console.WriteLine(@"Enter the alias of the task");
             tsk.Alias  = Console.ReadLine();
+            Console.WriteLine(@"Enter the Remarks of the task: ");
+            tsk.Remarks = Console.ReadLine();
+            Console.WriteLine(@"Enter the level of the task: ");
+            tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
+            //Console.WriteLine(@"Enter the Start Date of the task: ");
+            //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
+            //{
+            //    tsk.StartDate = startDate;
+            //}
+            //else
+            //{
+            //    throw new Exception("Invalid date format. Please enter again");
+            //}
+
             Console.WriteLine(@"Enter the Creat at Date of the task: ");
             string dateString = Console.ReadLine()!;
             if (DateTime.TryParse(dateString, out DateTime date))
@@ -263,28 +277,6 @@ namespace BlTest
             else
             {
                 throw new Exception("Invalid date format. Please enter again");
-            }
-            Console.WriteLine(@"Enter number of dependencies: ");
-            int numberOfDependencies = int.Parse(Console.ReadLine()!);
-            tsk.Dependencies = new List<BO.TaskInList>();
-            for (int i = 0;i<numberOfDependencies; i++)
-            {
-                Console.WriteLine(@"Enter the Dependency id: ");
-                int idDep = int.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Dependency description: ");
-                string descriptionDep = Console.ReadLine()!;
-                Console.WriteLine(@"Enter the Dependency alias: ");
-                string aliasDep = (Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Dependency status: ");
-                BO.Status statusDep = (BO.Status)int.Parse(Console.ReadLine()!);
-                BO.TaskInList dependency = new BO.TaskInList
-                {
-                    Id = idDep,
-                    Description=descriptionDep,
-                    Alias=aliasDep,
-                    Status=statusDep,
-                };
-                tsk.Dependencies?.Add(dependency);
             }
             Console.WriteLine(@"Enter the Required Effort Time: ");
             int requiredEffortDays = int.Parse(Console.ReadLine()!);
@@ -319,45 +311,28 @@ namespace BlTest
             }
             Console.WriteLine(@"Enter the deliverables of the task: ");
             tsk.Deliverables = Console.ReadLine();
+            Console.WriteLine(@"Enter number of dependencies: ");
+            int numberOfDependencies = int.Parse(Console.ReadLine()!);
+            tsk.Dependencies = new List<BO.TaskInList>();
+            for (int i = 0;i<numberOfDependencies; i++)
+            {
+                Console.WriteLine(@"Enter the Dependency id: ");
+                int idDep = int.Parse(Console.ReadLine()!);
+                BO.TaskInList dependency = new BO.TaskInList
+                {
+                    Id = idDep,
+                };
+                tsk.Dependencies?.Add(dependency);
+            }
             Console.WriteLine(@"Enter the Engineer ID for the task: ");
             int engineerId = int.Parse(Console.ReadLine()!);
-            Console.WriteLine(@"Enter the Engineer Name for the task: ");
-            string engineerName = (Console.ReadLine()!);
             BO.EngineerInTask engineer= new BO.EngineerInTask()
             {
                 Id= engineerId,
-                Name= engineerName,
-                
             };
             tsk.Engineer=engineer;
-
-            Console.WriteLine(@"Enter the Remarks of the task: ");
-            tsk.Remarks = Console.ReadLine();
-            Console.WriteLine(@"Enter the level of the task: ");
-            tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-
             s_bl!.Task.Create(tsk);
         }
-        //private DateTime GetEarliestStartDate(List<BO.Task>previousTasks)
-        //{
-        //    DateTime earliestStartDate = DateTime.MaxValue;
-
-        //    foreach (var task in previousTasks)
-        //    {
-        //        if (!task.ScheduledDate.HasValue)
-        //        {
-        //            throw new Exception($"Task {task.Id} does not have a scheduled start date.");
-        //        }
-
-        //        earliestStartDate = DateTime.Compare(task.ScheduledDate.Value, earliestStartDate) < 0
-        //            ? task.ScheduledDate.Value
-        //            : earliestStartDate;
-        //    }
-
-        //    return earliestStartDate;
-        //}
-
-
         static void ReadTaskById()
         {
 
@@ -389,13 +364,16 @@ namespace BlTest
             tsks = s_bl!.Task.Read(tsk.Id);
             if (tsks != null)
             {
-
-                //Console.WriteLine(@"Enter the engineer ID of the task: ");
-                //tsk.Id = int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the discription of the task if there: ");
                 tsk.Description = Console.ReadLine();
                 Console.WriteLine(@"Enter the alias of the task");
                 tsk.Alias = Console.ReadLine();
+                Console.WriteLine(@"Enter the Remarks of the task: ");
+                tsk.Remarks = Console.ReadLine();
+                Console.WriteLine(@"Enter the level of the task: ");
+                tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
+                Console.WriteLine(@"Enter the deliverables of the task: ");
+                tsk.Deliverables = Console.ReadLine();
                 Console.WriteLine(@"Enter the Creat at Date of the task: ");
                 string dateString = Console.ReadLine()!;
                 if (DateTime.TryParse(dateString, out DateTime date))
@@ -406,31 +384,8 @@ namespace BlTest
                 {
                     throw new Exception("Invalid date format. Please enter again");
                 }
-                Console.WriteLine(@"Enter the Status the task: ");
-                tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter number of dependencies: ");
-                int numberOfDependencies = int.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Dependency description: ");
-                string descriptionDep = Console.ReadLine()!;
-                Console.WriteLine(@"Enter the Dependency alias: ");
-                string aliasDep = (Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Dependency status: ");
-                BO.Status statusDep = (BO.Status)int.Parse(Console.ReadLine()!);
-                tsk.Dependencies = new List<BO.TaskInList>();
-                for (int i = 0; i < numberOfDependencies; i++)
-                {
-                    Console.WriteLine(@"Enter the Dependency id: ");
-                    int idDep = int.Parse(Console.ReadLine()!);
-                    BO.TaskInList dependency = new BO.TaskInList
-                    {
-                        Id = idDep,
-                        Description = descriptionDep,
-                        Alias = aliasDep,
-                        Status = statusDep,
-                    };
-
-                    tsk.Dependencies?.Add(dependency);
-                }
+                //Console.WriteLine(@"Enter the Status the task: ");
+                //tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the Required Effort Time: ");
                 int requiredEffortDays = int.Parse(Console.ReadLine()!);
                 tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
@@ -454,17 +409,6 @@ namespace BlTest
                 {
                     throw new Exception("Invalid date format. Please enter again");
                 }
-
-                //Console.WriteLine(@"Enter the Forecast Date of the task: ");
-                //if (DateTime.TryParse(Console.ReadLine()!, out DateTime forecastDate))
-                //{
-                //    tsk.ForecastDate = forecastDate;
-                //}
-                //else
-                //{
-                //    throw new Exception("Invalid date format. Please enter again");
-                //}
-
                 Console.WriteLine(@"Enter the Deadline Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime deadlineDate))
                 {
@@ -484,24 +428,27 @@ namespace BlTest
                 {
                     throw new Exception("Invalid date format. Please enter again");
                 }
-                Console.WriteLine(@"Enter the deliverables of the task: ");
-                tsk.Deliverables = Console.ReadLine();
+                Console.WriteLine(@"Enter number of dependencies: ");
+                int numberOfDependencies = int.Parse(Console.ReadLine()!);
+                tsk.Dependencies = new List<BO.TaskInList>();
+                for (int i = 0; i < numberOfDependencies; i++)
+                {
+                    Console.WriteLine(@"Enter the Dependency id: ");
+                    int idDep = int.Parse(Console.ReadLine()!);
+                    BO.TaskInList dependency = new BO.TaskInList
+                    {
+                        Id = idDep,
+                    };
+
+                    tsk.Dependencies?.Add(dependency);
+                }
                 Console.WriteLine(@"Enter the Engineer ID for the task: ");
                 int engineerId = int.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Engineer Name for the task: ");
-                string engineerName = (Console.ReadLine()!);
                 BO.EngineerInTask engineer = new BO.EngineerInTask()
                 {
                     Id = engineerId,
-                    Name = engineerName,
-
                 };
                 tsk.Engineer = engineer;
-
-                Console.WriteLine(@"Enter the Remarks of the task: ");
-                tsk.Remarks = Console.ReadLine();
-                Console.WriteLine(@"Enter the level of the task: ");
-                tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
                 s_bl!.Task.Update(tsk);
             }
 

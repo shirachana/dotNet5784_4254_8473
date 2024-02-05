@@ -14,7 +14,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (Tools.IsStatusProject(item!)&& Tools.CheckTaskHealth(item!))
+            if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
                 List<TaskInList> dependencies = item!.Dependencies!
                .Select(dependency => _dal.Task.Read(dependency.Id))
@@ -38,6 +38,7 @@ internal class TaskImplementation : BlApi.ITask
                     throw new BlDoesNotExistException("One or more dependencies do not exist");
                 }
                 // Create a new DO.Task object
+                DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                 DO.Task doTask = new DO.Task
                 {
                     Id = item!.Id,
@@ -67,68 +68,6 @@ internal class TaskImplementation : BlApi.ITask
 
         throw new BlNullPropertyException($"Failed to create task");
     }
-    //public int Create(Task? item)
-    //{
-    //    try
-    //    {
-    //        if (/*Tools.CheckStatusProject(item!) &&*/ Tools.CheckTaskHealth(item!))
-    //        {
-    //            var result = (from BO.TaskInList temp in item!.Dependencies!
-    //                          select new DO.Dependency
-    //                          {
-    //                              Id = 0,
-    //                              DependentTask = item.Id,
-    //                              DependsOnTask = temp.Id,
-    //                          });
-
-
-    //            var result2 = (from DO.Dependency dep in result
-    //                           select _dal.Dependency.Create(dep));
-    //            DO.Task doTask = new DO.Task
-    //            {
-    //                Id = item!.Id,
-    //                Alias = item.Alias,
-    //                Description = item.Description,
-    //                CreatedAtDate = item.CreatedAtDate,
-    //                /*Dependencies = dependencies,*/
-    //                IsMilestone = false,
-    //                RequiredEffortTime = item.RequiredEffortTime,
-    //                StartDate = item.StartDate,
-    //                ScheduledDate = item.ScheduledDate,
-    //                DeadlineDate = item.DeadlineDate,
-    //                CompleteDate = item.CompleteDate,
-    //                Deliverables = item.Deliverables,
-    //                Remarks = item.Remarks,
-    //                Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-    //                Copmlexity = (DO.EngineerExperience)item.Copmlexity
-    //            };
-
-
-    //            item.Status = Tools.GetStatus(doTask);
-    //            item.Dependencies =getDependenceList(doTask).ToList();
-    //            return _dal.Task.Create(doTask);
-    //        }
-    //    }
-    //    catch (BlAlreadyExistException ex)
-    //    {
-    //        throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
-    //    }
-
-    //    throw new BlNullPropertyException($"Failed to create task");
-    //}
-    //private IEnumerable<BO.TaskInList> getDependenceList(DO.Task doTask)
-    //{
-    //    var result = (from DO.Dependency dep in _dal.Dependency.ReadAll()
-    //                  where doTask.Id == dep.DependentTask
-    //                  select new BO.TaskInList
-    //                  {
-    //                      Id = dep!.Id,
-    //                      Description = _dal.Task.Read(dep.DependsOnTask)!.Description,
-    //                      Alias = _dal.Task.Read(dep.DependsOnTask)!.Alias,
-    //                      Status = Tools.GetStatus(doTask),
-    //                  });
-    //    return result;
-    //}
     private void AssociateDependenciesWithTask(DO.Task doTask, List<TaskInList> dependencies)
     {
         foreach (var dependency in dependencies)
@@ -137,7 +76,6 @@ internal class TaskImplementation : BlApi.ITask
             _dal.Dependency.Create(new DO.Dependency(0, doTask.Id, dependency.Id));
         }
     }
-
     public void Delete(int id)
     {
         // Check if the task exists
@@ -149,9 +87,9 @@ internal class TaskImplementation : BlApi.ITask
             {
                 //Check if the task has been scheduled
                 if (task!.Status != BO.Status.Unscheduled)
-            {
-                throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
-            }
+                {
+                     throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
+                }
             bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
 
             // Attempt to delete the task Check if the task has dependencies
@@ -244,7 +182,7 @@ internal class TaskImplementation : BlApi.ITask
             {
                 if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
                 {
-
+                    DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                     // Update the task in the data layer
                     var taskToUpdate = new DO.Task
                     {
@@ -270,6 +208,7 @@ internal class TaskImplementation : BlApi.ITask
                 }
                 else
                 {
+                    DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                     DO.Task? dtask = _dal.Task.Read(item!.Id);
                     dtask = dtask! with
                     {

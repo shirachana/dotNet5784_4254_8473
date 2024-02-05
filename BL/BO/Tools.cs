@@ -10,6 +10,48 @@ public static class Tools
 {
     // Static extension method for ToStringProperty
 
+    //public static string ToStringProperty<T>(this T obj)
+    //{
+    //    if (obj == null)
+    //        return "null";
+
+    //    Type type = obj.GetType();
+    //    PropertyInfo[] properties = type.GetProperties();
+
+    //    StringBuilder sb = new StringBuilder();
+    //    sb.AppendLine($"Type: {type.Name}");
+
+    //    foreach (PropertyInfo property in properties)
+    //    {
+    //        if(property is IEnumerable)
+    //        {
+    //            IEnumerable<object>? enumerable = property.GetValue(obj) as IEnumerable<object>;
+    //            if (enumerable != null)
+    //            {
+    //                sb.AppendLine($"{property.Name}:");
+    //                foreach (var item in enumerable)
+    //                {
+    //                    sb.AppendLine($"    {GetValueString(item)}");
+    //                }
+    //            }
+    //        }
+    //        if(property is List<T>)
+    //        {
+    //            var list = property.GetValue(obj) as IList;
+    //            if (list != null)
+    //            {
+    //                sb.AppendLine($"{property.Name}:");
+    //                foreach (var item in list)
+    //                {
+    //                    sb.AppendLine($"    {GetValueString(item)}");
+    //                }
+    //            }
+    //        }
+    //        sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
+    //    }
+
+    //    return sb.ToString();
+    //}
     public static string ToStringProperty<T>(this T obj)
     {
         if (obj == null)
@@ -22,9 +64,9 @@ public static class Tools
         sb.AppendLine($"Type: {type.Name}");
 
         foreach (PropertyInfo property in properties)
-
         {
-            if(property is IEnumerable)
+            if (property.PropertyType.IsGenericType &&
+                property.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
             {
                 IEnumerable<object>? enumerable = property.GetValue(obj) as IEnumerable<object>;
                 if (enumerable != null)
@@ -32,17 +74,18 @@ public static class Tools
                     sb.AppendLine($"{property.Name}:");
                     foreach (var item in enumerable)
                     {
-                        sb.AppendLine($"    {GetValueString(item)}");
+                        sb.AppendLine($" {GetValueString(item)}");
                     }
                 }
             }
-            sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
+            else
+            {
+                sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
+            }
         }
 
         return sb.ToString();
     }
-
-    // Helper method to get string representation of property value
     private static string GetValueString(object value)
     {
         if (value == null)
@@ -59,17 +102,30 @@ public static class Tools
             // Remove the trailing comma and space
             return $"[{sb.ToString().TrimEnd(',', ' ')}]";
         }
-
+        if (value is List<object> list)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in list)
+            {
+                sb.Append($"{GetValueString(item)}, ");
+            }
+            // Remove the trailing comma and space
+            return $"[{sb.ToString().TrimEnd(',', ' ')}]";
+        }
         // For other types, use ToString
         return value.ToString()!;
     }
+
     public static BO.Status GetStatus(DO.Task delTask)
     {
-        return delTask.ScheduledDate is null ? Status.Unscheduled :
-            delTask.StartDate is null ? Status.Scheduled :
-            delTask.CompleteDate is null ? Status.OnTrack :
-            Status.Done;
-
+        //return delTask.ScheduledDate is null ? Status.Unscheduled :
+        //    delTask.StartDate is null ? Status.Scheduled :
+        //    delTask.CompleteDate is null ? Status.OnTrack :
+        //    Status.Done;
+        return delTask.StartDate is null ? Status.Unscheduled :
+           delTask.ScheduledDate is null ? Status.Scheduled :
+           delTask.CompleteDate is null ? Status.OnTrack :
+           Status.Done;
     }
     public static bool CheckEngineerHealth(Engineer item)
     {
@@ -112,23 +168,25 @@ public static class Tools
 
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
-             select task).Count()>0)
+             select task).Count() > 0)
         {
             return StatusProject.Mid;
         }
-
-        return StatusProject.Execution;
+        else
+        {
+            return StatusProject.Execution;
+        }
     }
     public static bool IsStatusProject(Task item)
     {
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.Engineer?.Id != null)
+        if (Tools.CheckStatusProject() == BO.StatusProject.Mid /*&& item?.Engineer?.Id != null*/)
         {
-            throw new BlPlanning("the project is during planning");
+            throw new BlPlanning("The program is in the middle");
         }
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
-        {
-           throw new BlPlanning("the project is during planning");
-        }
+        //if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
+        //{
+        //   throw new BlPlanning("the project is during planning");
+        //}
         if (Tools.CheckStatusProject() == BO.StatusProject.Execution)
         {
             throw new BlExection("the project is during Exection");
