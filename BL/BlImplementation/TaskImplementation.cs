@@ -9,6 +9,63 @@ using System.Security.Cryptography;
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    //public int Create(Task? item)
+    //{
+    //    try
+    //    {
+    //        if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
+    //        {
+    //            List<TaskInList> dependencies = item!.Dependencies!
+    //           .Select(dependency => _dal.Task.Read(dependency.Id))
+    //           .Where(existingDependency => existingDependency != null)
+    //           .Select(existingDependency =>
+    //            {
+    //                // Call getStatus outside the LINQ query
+    //                Status status = Tools.GetStatus(existingDependency!);
+    //                _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
+    //                // Create TaskInList using the mapped properties and the status obtained from getStatus
+    //                return new TaskInList
+    //                {
+    //                    Id = existingDependency!.Id,
+    //                    Description = existingDependency.Description,
+    //                    Alias = existingDependency.Alias,
+    //                    Status = status,
+    //                };
+    //            }).ToList();
+    //            if (dependencies.Count != item?.Dependencies?.Count)
+    //            {
+    //                throw new BlDoesNotExistException("One or more dependencies do not exist");
+    //            }
+    //            // Create a new DO.Task object
+    //            DO.Task doTask = new DO.Task
+    //            {
+    //                Id = item!.Id,
+    //                Alias = item.Alias,
+    //                Description = item.Description,
+    //                CreatedAtDate = item.CreatedAtDate,
+    //                /*Dependencies = dependencies,*/
+    //                IsMilestone = false,
+    //                RequiredEffortTime = item.RequiredEffortTime,
+    //                StartDate = item.StartDate,
+    //                ScheduledDate = item.ScheduledDate,
+    //                DeadlineDate = item.DeadlineDate,
+    //                CompleteDate = item.CompleteDate,
+    //                Deliverables = item.Deliverables,
+    //                Remarks = item.Remarks,
+    //                Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+    //                Copmlexity = (DO.EngineerExperience)item.Copmlexity
+    //            };
+    //            // Attempt to add the task to the data layer
+    //            return _dal.Task.Create(doTask);
+    //        }
+    //    }
+    //    catch (DO.DalAlreadyExistsException ex)
+    //    {
+    //        throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
+    //    }
+
+    //    throw new BlNullPropertyException($"Failed to create task");
+    //}
     public int Create(Task? item)
     {
         try
@@ -19,19 +76,19 @@ internal class TaskImplementation : ITask
                .Select(dependency => _dal.Task.Read(dependency.Id))
                .Where(existingDependency => existingDependency != null)
                .Select(existingDependency =>
-                {
-                    // Call getStatus outside the LINQ query
-                    Status status = Tools.GetStatus(existingDependency!);
-                    _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
-                    // Create TaskInList using the mapped properties and the status obtained from getStatus
-                    return new TaskInList
-                    {
-                        Id = existingDependency!.Id,
-                        Description = existingDependency.Description,
-                        Alias = existingDependency.Alias,
-                        Status = status,
-                    };
-                }).ToList();
+               {
+                   // Call getStatus outside the LINQ query
+                   Status status = Tools.GetStatus(existingDependency!);
+                   _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
+                   // Create TaskInList using the mapped properties and the status obtained from getStatus
+                   return new TaskInList
+                   {
+                       Id = existingDependency!.Id,
+                       Description = existingDependency.Description,
+                       Alias = existingDependency.Alias,
+                       Status = status,
+                   };
+               }).ToList();
                 if (dependencies.Count != item?.Dependencies?.Count)
                 {
                     throw new BlDoesNotExistException("One or more dependencies do not exist");
@@ -43,7 +100,7 @@ internal class TaskImplementation : ITask
                     Alias = item.Alias,
                     Description = item.Description,
                     CreatedAtDate = item.CreatedAtDate,
-                    /*Dependencies = dependencies,*/
+                    /* Dependencies = dependencies,*/
                     IsMilestone = false,
                     RequiredEffortTime = item.RequiredEffortTime,
                     StartDate = item.StartDate,
@@ -56,15 +113,24 @@ internal class TaskImplementation : ITask
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity
                 };
                 // Attempt to add the task to the data layer
+                AssociateDependenciesWithTask(doTask, dependencies);
                 return _dal.Task.Create(doTask);
             }
         }
-        catch (DO.DalAlreadyExistsException ex)
+        catch (BlAlreadyExistException ex)
         {
             throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
         }
 
         throw new BlNullPropertyException($"Failed to create task");
+    }
+    private void AssociateDependenciesWithTask(DO.Task doTask, List<TaskInList> dependencies)
+    {
+        foreach (var dependency in dependencies)
+        {
+            // Add logic to associate dependencies with the task in your data layer
+            _dal.Dependency.Create(new DO.Dependency(0, doTask.Id, dependency.Id));
+        }
     }
 
     public void Delete(int id)
