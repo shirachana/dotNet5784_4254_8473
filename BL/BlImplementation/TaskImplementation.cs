@@ -14,7 +14,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
+            if (Tools.IsStatusProject(item!)&& Tools.CheckTaskHealth(item!))
             {
                 List<TaskInList> dependencies = item!.Dependencies!
                .Select(dependency => _dal.Task.Read(dependency.Id))
@@ -23,7 +23,7 @@ internal class TaskImplementation : BlApi.ITask
                 {
                     // Call getStatus outside the LINQ query
                     Status status = Tools.GetStatus(existingDependency!);
-                    _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
+                    _dal.Dependency.Create(new DO.Dependency(0, item.Id, existingDependency!.Id));
                     // Create TaskInList using the mapped properties and the status obtained from getStatus
                     return new TaskInList
                     {
@@ -71,7 +71,7 @@ internal class TaskImplementation : BlApi.ITask
     //{
     //    try
     //    {
-    //        if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
+    //        if (/*Tools.CheckStatusProject(item!) &&*/ Tools.CheckTaskHealth(item!))
     //        {
     //            var result = (from BO.TaskInList temp in item!.Dependencies!
     //                          select new DO.Dependency
@@ -145,10 +145,10 @@ internal class TaskImplementation : BlApi.ITask
         {
 
             BO.Task? task = Read(id);
-            //if (Tools.IsProjectStartDateSet(task!))
-            //{ 
-            //Check if the task has been scheduled
-            if (task!.Status != BO.Status.Unscheduled)
+            if (Tools.IsStatusProject(task!))
+            {
+                //Check if the task has been scheduled
+                if (task!.Status != BO.Status.Unscheduled)
             {
                 throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
             }
@@ -159,7 +159,7 @@ internal class TaskImplementation : BlApi.ITask
                 _dal.Task.Delete(id);
             else
                throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted"); 
-            //}
+            }
         }
 
         catch (DO.DalDeleteionImpossible ex)
@@ -240,7 +240,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
+            if (Tools.IsStatusProject(item!)&&Tools.CheckTaskHealth(item!))
             {
                 if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
                 {

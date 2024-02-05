@@ -9,10 +9,17 @@ public enum Status
 }
 public enum EngineerExperience
 {
-  Beginner,
-  AdvancedBeginner,
-  Intermediate,
-  Advanced,
-  Expert
+    Beginner,
+    AdvancedBeginner,
+    Intermediate,
+    Advanced,
+    Expert
+}
+
+public enum StatusProject
+{
+    Planning,
+    Mid,
+    Execution
 }
 

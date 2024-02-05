@@ -35,3 +35,18 @@ public class BlCantBeDeletedException : Exception
     public BlCantBeDeletedException(string message, Exception innerException)
                 : base(message, innerException) { }
 }
+[Serializable]
+public class BlPlanning : Exception
+{
+    public BlPlanning(string? message) : base(message) { }
+    public BlPlanning(string message, Exception innerException)
+                : base(message, innerException) { }
+}
+[Serializable]
+public class BlExection : Exception
+{
+    public BlExection(string? message) : base(message) { }
+    public BlExection(string message, Exception innerException)
+                : base(message, innerException) { }
+}
+

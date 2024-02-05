@@ -9,8 +9,8 @@ internal class Bl : IBl
     public IEngineer Engineer => new EngineerImplementation();
 
     public ITask Task => new TaskImplementation();
-    static DateTime? StartDateProject { get; set; } = null;
     public DateTime? EndDateProject { get; set; } = null;
+
 
 
 
@@ -24,12 +24,12 @@ internal class Bl : IBl
 
             if (currentTask.Dependencies == null)
             {
-                currentTask.StartDate = StartDateProject;
+                currentTask.StartDate = IBl.StartDateProject;
             }
             else
             {
                 var maxDeadlineDate = currentTask.Dependencies.Max(dep => tasks.Read(dep.Id)!.DeadlineDate);
-                currentTask.StartDate = maxDeadlineDate > currentTask.DeadlineDate ? maxDeadlineDate : StartDateProject;
+                currentTask.StartDate = maxDeadlineDate > currentTask.DeadlineDate ? maxDeadlineDate : IBl.StartDateProject;
             }
         }
     }

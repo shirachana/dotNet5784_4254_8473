@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using BlApi;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
@@ -69,31 +70,6 @@ public static class Tools
             delTask.CompleteDate is null ? Status.OnTrack :
             Status.Done;
 
-
-        //var dateTimeNow = DateTime.Now;
-
-        //BO.Status status;
-
-        //switch (delTask)
-        //{
-        //    case DO.Task tmp when tmp.Id is 0:
-        //        status = BO.Status.Unscheduled;
-        //        break;
-
-        //    case DO.Task tmp when tmp.StartDate > dateTimeNow:
-        //        status = BO.Status.Scheduled;
-        //        break;
-
-        //    case DO.Task tmp when tmp.CompleteDate > dateTimeNow:
-        //        status = BO.Status.OnTrack;
-        //        break;
-
-        //    default:
-        //        status = BO.Status.Done;
-        //        break;
-        //}
-
-        //return status;
     }
     public static bool CheckEngineerHealth(Engineer item)
     {
@@ -127,22 +103,47 @@ public static class Tools
         // If all checks pass, return true
         return true;
     }
-    public static bool IsProjectStartDateSet(Task task)
+    public static StatusProject CheckStatusProject()
     {
-        // Check if any task has a non-null start date
-        DO.Task newTask = new DO.Task
+        var tasks = BlApi.Factory.Get().Task;
+
+        if (IBl.StartDateProject == null)
+            return StatusProject.Planning;
+
+        if ((from task in tasks.ReadAll()
+             where tasks.Read(task.Id)!.StartDate == null
+             select task).Any())
         {
-            Id = task.Id,
-            ScheduledDate = task.ScheduledDate,
-            StartDate = task.StartDate,
-            CompleteDate = task.CompleteDate
-        };
+            return StatusProject.Mid;
+        }
 
-        if (GetStatus(newTask) == Status.Unscheduled)
-            return true;
-
-        throw new BlAlreadyExistException("The project date has already been set");
+        return StatusProject.Execution;
     }
+    public static bool IsStatusProject(Task item)
+    {
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item.Id != null)
+        {
+            return false;
+           // throw new BlPlanning("the project is during planning");
+            
+        }
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item.StartDate != null)
+        {
+            return false;
+           // throw new BlPlanning("the project is during planning");
+            
+        }
+        if (Tools.CheckStatusProject() == BO.StatusProject.Execution)
+        {
+            return false;
+            //throw new BlExection("the project is during Exection");
+            
+        }
+        return true;
+}
+
+
+
 
 
 
