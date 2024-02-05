@@ -1,42 +1,89 @@
 ﻿namespace BlImplementation;
 using BlApi;
 using BO;
+using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 
-internal class TaskImplementation : ITask
+internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    public int Create(Task? item)
+    {
+        try
+        {
+            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
+            {
+                List<TaskInList> dependencies = item!.Dependencies!
+               .Select(dependency => _dal.Task.Read(dependency.Id))
+               .Where(existingDependency => existingDependency != null)
+               .Select(existingDependency =>
+                {
+                    // Call getStatus outside the LINQ query
+                    Status status = Tools.GetStatus(existingDependency!);
+                    _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
+                    // Create TaskInList using the mapped properties and the status obtained from getStatus
+                    return new TaskInList
+                    {
+                        Id = existingDependency!.Id,
+                        Description = existingDependency.Description,
+                        Alias = existingDependency.Alias,
+                        Status = status,
+                    };
+                }).ToList();
+                if (dependencies.Count != item?.Dependencies?.Count)
+                {
+                    throw new BlDoesNotExistException("One or more dependencies do not exist");
+                }
+                // Create a new DO.Task object
+                DO.Task doTask = new DO.Task
+                {
+                    Id = item!.Id,
+                    Alias = item.Alias,
+                    Description = item.Description,
+                    CreatedAtDate = item.CreatedAtDate,
+                    /*Dependencies = dependencies,*/
+                    IsMilestone = false,
+                    RequiredEffortTime = item.RequiredEffortTime,
+                    StartDate = item.StartDate,
+                    ScheduledDate = item.ScheduledDate,
+                    DeadlineDate = item.DeadlineDate,
+                    CompleteDate = item.CompleteDate,
+                    Deliverables = item.Deliverables,
+                    Remarks = item.Remarks,
+                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                    Copmlexity = (DO.EngineerExperience)item.Copmlexity
+                };
+                // Attempt to add the task to the data layer
+                return _dal.Task.Create(doTask);
+            }
+        }
+        catch (DO.DalAlreadyExistsException ex)
+        {
+            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
+        }
+
+        throw new BlNullPropertyException($"Failed to create task");
+    }
     //public int Create(Task? item)
     //{
     //    try
     //    {
     //        if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
     //        {
-    //            List<TaskInList> dependencies = item!.Dependencies!
-    //           .Select(dependency => _dal.Task.Read(dependency.Id))
-    //           .Where(existingDependency => existingDependency != null)
-    //           .Select(existingDependency =>
-    //            {
-    //                // Call getStatus outside the LINQ query
-    //                Status status = Tools.GetStatus(existingDependency!);
-    //                _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
-    //                // Create TaskInList using the mapped properties and the status obtained from getStatus
-    //                return new TaskInList
-    //                {
-    //                    Id = existingDependency!.Id,
-    //                    Description = existingDependency.Description,
-    //                    Alias = existingDependency.Alias,
-    //                    Status = status,
-    //                };
-    //            }).ToList();
-    //            if (dependencies.Count != item?.Dependencies?.Count)
-    //            {
-    //                throw new BlDoesNotExistException("One or more dependencies do not exist");
-    //            }
-    //            // Create a new DO.Task object
+    //            var result = (from BO.TaskInList temp in item!.Dependencies!
+    //                          select new DO.Dependency
+    //                          {
+    //                              Id = 0,
+    //                              DependentTask = item.Id,
+    //                              DependsOnTask = temp.Id,
+    //                          });
+
+
+    //            var result2 = (from DO.Dependency dep in result
+    //                           select _dal.Dependency.Create(dep));
     //            DO.Task doTask = new DO.Task
     //            {
     //                Id = item!.Id,
@@ -55,75 +102,33 @@ internal class TaskImplementation : ITask
     //                Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
     //                Copmlexity = (DO.EngineerExperience)item.Copmlexity
     //            };
-    //            // Attempt to add the task to the data layer
+
+
+    //            item.Status = Tools.GetStatus(doTask);
+    //            item.Dependencies =getDependenceList(doTask).ToList();
     //            return _dal.Task.Create(doTask);
     //        }
     //    }
-    //    catch (DO.DalAlreadyExistsException ex)
+    //    catch (BlAlreadyExistException ex)
     //    {
     //        throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
     //    }
 
     //    throw new BlNullPropertyException($"Failed to create task");
     //}
-    public int Create(Task? item)
-    {
-        try
-        {
-            if (/*Tools.IsProjectStartDateSet(item!) &&*/ Tools.CheckTaskHealth(item!))
-            {
-                List<TaskInList> dependencies = item!.Dependencies!
-               .Select(dependency => _dal.Task.Read(dependency.Id))
-               .Where(existingDependency => existingDependency != null)
-               .Select(existingDependency =>
-               {
-                   // Call getStatus outside the LINQ query
-                   Status status = Tools.GetStatus(existingDependency!);
-                   _dal.Dependency.Create(new DO.Dependency(0, item!.Id, existingDependency!.Id));
-                   // Create TaskInList using the mapped properties and the status obtained from getStatus
-                   return new TaskInList
-                   {
-                       Id = existingDependency!.Id,
-                       Description = existingDependency.Description,
-                       Alias = existingDependency.Alias,
-                       Status = status,
-                   };
-               }).ToList();
-                if (dependencies.Count != item?.Dependencies?.Count)
-                {
-                    throw new BlDoesNotExistException("One or more dependencies do not exist");
-                }
-                // Create a new DO.Task object
-                DO.Task doTask = new DO.Task
-                {
-                    Id = item!.Id,
-                    Alias = item.Alias,
-                    Description = item.Description,
-                    CreatedAtDate = item.CreatedAtDate,
-                    /* Dependencies = dependencies,*/
-                    IsMilestone = false,
-                    RequiredEffortTime = item.RequiredEffortTime,
-                    StartDate = item.StartDate,
-                    ScheduledDate = item.ScheduledDate,
-                    DeadlineDate = item.DeadlineDate,
-                    CompleteDate = item.CompleteDate,
-                    Deliverables = item.Deliverables,
-                    Remarks = item.Remarks,
-                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-                    Copmlexity = (DO.EngineerExperience)item.Copmlexity
-                };
-                // Attempt to add the task to the data layer
-                AssociateDependenciesWithTask(doTask, dependencies);
-                return _dal.Task.Create(doTask);
-            }
-        }
-        catch (BlAlreadyExistException ex)
-        {
-            throw new BlAlreadyExistException($"Failed to create task. {ex.Message}");
-        }
-
-        throw new BlNullPropertyException($"Failed to create task");
-    }
+    //private IEnumerable<BO.TaskInList> getDependenceList(DO.Task doTask)
+    //{
+    //    var result = (from DO.Dependency dep in _dal.Dependency.ReadAll()
+    //                  where doTask.Id == dep.DependentTask
+    //                  select new BO.TaskInList
+    //                  {
+    //                      Id = dep!.Id,
+    //                      Description = _dal.Task.Read(dep.DependsOnTask)!.Description,
+    //                      Alias = _dal.Task.Read(dep.DependsOnTask)!.Alias,
+    //                      Status = Tools.GetStatus(doTask),
+    //                  });
+    //    return result;
+    //}
     private void AssociateDependenciesWithTask(DO.Task doTask, List<TaskInList> dependencies)
     {
         foreach (var dependency in dependencies)
