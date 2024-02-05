@@ -112,7 +112,7 @@ public static class Tools
 
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
-             select task).Any())
+             select task).Count()>0)
         {
             return StatusProject.Mid;
         }
