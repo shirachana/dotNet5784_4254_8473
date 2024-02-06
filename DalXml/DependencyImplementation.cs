@@ -71,7 +71,7 @@ internal class DependencyImplementation : IDependency
 
     }
 
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null)
+    public IEnumerable<Dependency> ReadAll(Func<Dependency, bool>? filter = null)
     {
 
         var x = XMLTools.LoadListFromXMLElement(s_dependencys_xml);
@@ -124,5 +124,6 @@ internal class DependencyImplementation : IDependency
         List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
         Dependencys.Clear();
         XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
+       // Config.NextDependencyId = 1;
     }
 }

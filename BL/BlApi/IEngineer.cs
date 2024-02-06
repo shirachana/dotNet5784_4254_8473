@@ -14,5 +14,6 @@ public interface IEngineer
   public void Create(BO.Engineer? item);
   public void Update(BO.Engineer item);
   public void Delete(int id);
+  public void Clear();//clear all the enitity
 
 }

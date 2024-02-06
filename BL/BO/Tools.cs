@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using DalApi;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -192,6 +193,7 @@ public static class Tools
             throw new BlExection("the project is during Exection");
         }
         return true;
+    }
 }
 
 
@@ -199,4 +201,4 @@ public static class Tools
 
 
 
-}
+

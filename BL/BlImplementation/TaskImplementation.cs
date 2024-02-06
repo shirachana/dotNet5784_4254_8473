@@ -4,6 +4,7 @@ using BO;
 using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 
@@ -61,7 +62,7 @@ internal class TaskImplementation : BlApi.ITask
                 {
                     throw new BlDoesNotExistException("One or more dependencies do not exist");
                 }
-                return _dal.Task.Create(doTask);
+               return /*_dal.Task.Create(doTask)*/IdT;
             }
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -271,6 +272,11 @@ internal class TaskImplementation : BlApi.ITask
         {
             throw new Exception($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
         }
+    }
+    public void Clear()
+    {
+       _dal.Task.Clear();
+        _dal.Dependency.Clear();
     }
 }
 

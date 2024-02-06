@@ -1,5 +1,7 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
+using DalTest;
 using System;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace BlTest
@@ -23,10 +25,36 @@ namespace BlTest
         }
         static void DisplayMainMenu()
         {
-            Console.Write("Would you like to create Initial data? (Y/N)");
-            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-            if (ans == "Y")
-                DalTest.Initialization.Do();
+            //Console.Write("Would you like to create Initial data? (Y/N)");
+            //string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            //if (ans == "Y")
+            //    DalTest.Initialization.Do();
+            bool validInput = false;
+
+            do
+            {
+                Console.Write("Would you like to create Initial data? (Y/N): ");
+                string? ans = Console.ReadLine();
+
+                if (ans == "Y")
+                {
+                    // s_dal!.Dependency.Clear();
+                    s_bl!.Task.Clear();
+                    s_bl!.Engineer.Clear();
+                    Initialization.Do();
+                    validInput = true;
+                }
+                else if (ans == "N")
+                {
+                    validInput = true;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong input. Please enter 'Y' or 'N'.");
+                }
+
+            } while (!validInput);
+
 
             do
             {
@@ -155,22 +183,19 @@ namespace BlTest
             eng.Email = Console.ReadLine();
             Console.WriteLine(@"Enter the engineer Name: ");
             eng.Name = Console.ReadLine();
-            Console.WriteLine(@"Enter the Engineer ID for the task: ");
-            int engineerId = int.Parse(Console.ReadLine()!);
-            Console.WriteLine(@"Enter the Engineer Name for the task: ");
-            string engineerName = (Console.ReadLine()!);
-            BO.EngineerInTask engineer = new BO.EngineerInTask()
-            {
-                Id = engineerId,
-                Name = engineerName,
-
-            };
-            eng.Task = engineer;
-            Console.WriteLine(@"Enter the level of the task: ");
+            //Console.WriteLine(@"Enter the Engineer ID for the task: ");
+            //int engineerId = int.Parse(Console.ReadLine()!);
+            //Console.WriteLine(@"Enter the Engineer Name for the task: ");
+            //string engineerName = (Console.ReadLine()!);
+            //BO.TaskInEngineer engineer = new BO.TaskInEngineer()
+            //{
+            //    Id = 0,
+            //    Alias=""
+            //};
+            //eng.Task = engineer;
+            Console.WriteLine(@"Enter the level of the engineer: ");
             eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
             s_bl.Engineer.Create(eng);
-            
-
             //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
             //s_bl!.Engineer.Create(eng);
             //Console.WriteLine(crt);
@@ -217,17 +242,14 @@ namespace BlTest
                 eng.Email = Console.ReadLine();
                 Console.WriteLine(@"Enter the engineer Name: ");
                 eng.Name = Console.ReadLine();
-                Console.WriteLine(@"Enter the Engineer ID for the task: ");
-                int engineerId = int.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter the Engineer Name for the task: ");
-                string engineerName = (Console.ReadLine()!);
-                BO.EngineerInTask engineer = new BO.EngineerInTask()
-                {
-                    Id = engineerId,
-                    Name = engineerName,
-
-                };
-                eng.Task = engineer;
+                //Console.WriteLine(@"Enter the Engineer ID for the task: ");
+                //int engineerId = int.Parse(Console.ReadLine()!);
+                //Console.WriteLine(@"Enter the Engineer Name for the task: ");
+                //string engineerName = (Console.ReadLine()!);
+                //BO.TaskInEngineer engineer = new BO.TaskInEngineer()
+                //{
+                //};
+                //eng.Task = engineer;
                 Console.WriteLine(@"Enter the level of the task: ");
                 eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
 

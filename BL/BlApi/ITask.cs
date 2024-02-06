@@ -16,5 +16,5 @@ public interface ITask
     public void Update(BO.Task item);
     public void Delete(int id);
     public void UpdateStartDate(int id, DateTime startDate);
-    
+    public void Clear();//clear all the enitity
 }
