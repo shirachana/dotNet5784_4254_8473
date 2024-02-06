@@ -12,33 +12,14 @@ internal class TaskImplementation : BlApi.ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(Task? item)
     {
+        
         try
         {
+           
             if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
-                List<TaskInList> dependencies = item!.Dependencies!
-               .Select(dependency => _dal.Task.Read(dependency.Id))
-               .Where(existingDependency => existingDependency != null)
-               .Select(existingDependency =>
-                {
-                    // Call getStatus outside the LINQ query
-                    Status status = Tools.GetStatus(existingDependency!);
-                    _dal.Dependency.Create(new DO.Dependency(0, item.Id, existingDependency!.Id));
-                    // Create TaskInList using the mapped properties and the status obtained from getStatus
-                    return new TaskInList
-                    {
-                        Id = existingDependency!.Id,
-                        Description = existingDependency.Description,
-                        Alias = existingDependency.Alias,
-                        Status = status,
-                    };
-                }).ToList();
-                if (dependencies.Count != item?.Dependencies?.Count)
-                {
-                    throw new BlDoesNotExistException("One or more dependencies do not exist");
-                }
                 // Create a new DO.Task object
-                DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
+                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
                 DO.Task doTask = new DO.Task
                 {
                     Id = item!.Id,
@@ -57,7 +38,29 @@ internal class TaskImplementation : BlApi.ITask
                     Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity
                 };
+                int IdT= _dal.Task.Create(doTask);
                 // Attempt to add the task to the data layer
+                List<TaskInList> dependencies = item!.Dependencies!
+               .Select(dependency => _dal.Task.Read(dependency.Id))
+               .Where(existingDependency => existingDependency != null)
+               .Select(existingDependency =>
+                {
+                    // Call getStatus outside the LINQ query
+                    Status status = Tools.GetStatus(existingDependency!);
+                    _dal.Dependency.Create(new DO.Dependency(0, IdT, existingDependency!.Id));
+                    // Create TaskInList using the mapped properties and the status obtained from getStatus
+                    return new TaskInList
+                    {
+                        Id = existingDependency!.Id,
+                        Description = existingDependency.Description,
+                        Alias = existingDependency.Alias,
+                        Status = status,
+                    };
+                }).ToList();
+                if (dependencies.Count != item?.Dependencies?.Count)
+                {
+                    throw new BlDoesNotExistException("One or more dependencies do not exist");
+                }
                 return _dal.Task.Create(doTask);
             }
         }
