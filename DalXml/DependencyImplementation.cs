@@ -124,6 +124,6 @@ internal class DependencyImplementation : IDependency
         List<Dependency> Dependencys = XMLTools.LoadListFromXMLSerializer<Dependency>(s_dependencys_xml);
         Dependencys.Clear();
         XMLTools.SaveListToXMLSerializer(Dependencys, s_dependencys_xml);
-       // Config.NextDependencyId = 1;
+        Config.NextDependencyId = 1;
     }
 }

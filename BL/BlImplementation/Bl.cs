@@ -1,8 +1,8 @@
-﻿namespace BlImplementation;
-using BlApi;
+﻿using BlApi;
 using BO;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+namespace BlImplementation;
 
 internal class Bl : IBl
 {

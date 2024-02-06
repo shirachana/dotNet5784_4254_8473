@@ -145,7 +145,7 @@ public static class Initialization
             DateTime _endDate = start.AddDays(randomDays);
             DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
 
-            Task tsk = new(0, _engId, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], _startDate, _scheduledDate, _deadLine, _endDate, _deliverables[i], _remarks[i]);
+            Task tsk = new(0, _engId, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], null, _scheduledDate, _deadLine, _endDate, _deliverables[i], _remarks[i]);
 
             s_dal!.Task.Create(tsk);
         }

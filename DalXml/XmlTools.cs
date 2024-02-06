@@ -34,12 +34,12 @@ static class XMLTools
         XMLTools.SaveListToXMLElement(root, data_config_xml);
         return nextId;
     }
-    //public static void SetNextId(string data_config_xml, string elemName, int val)
-    //{
-    //    XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
-    //    root.Element(elemName)?.SetValue((val).ToString());
-    //    XMLTools.SaveListToXMLElement(root, data_config_xml);
-    //}
+    public static void SetNextId(string data_config_xml, string elemName, int val)
+    {
+        XElement root = XMLTools.LoadListFromXMLElement(data_config_xml);
+        root.Element(elemName)?.SetValue((val).ToString());
+        XMLTools.SaveListToXMLElement(root, data_config_xml);
+    }
 
     #endregion
 

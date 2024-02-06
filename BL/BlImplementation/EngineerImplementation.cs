@@ -30,7 +30,7 @@ internal class EngineerImplementation : IEngineer
 
         BO.Engineer engineerToDelete = Read(id)!;
         IEnumerable<DO.Task> tsk = from DO.Task task in _dal.Task.ReadAll(task => task.Engineerld == id)
-                                   where task.StartDate is not null
+                                   where /*task.StartDate is not null*/(Tools.GetStatus(task)==BO.Status.OnTrack|| Tools.GetStatus(task) == BO.Status.Done)&&Tools.CheckStatusProject()==BO.StatusProject.Execution&&BO.Status.Scheduled==Tools.GetStatus(task)
                                    select task;
         if (tsk.Any())
             throw new BlCantBeDeletedException($"Engineer with ID={id} can't be deleted");
@@ -83,44 +83,44 @@ internal class EngineerImplementation : IEngineer
 
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
-        IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-        if (filter == null)
-            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
-                    orderby doEngineer.Level
-                    let task =_dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
-                    select new BO.Engineer()
-                    {
-                        Id = doEngineer.Id,
-                        Name = doEngineer.Name,
-                        Cost = doEngineer.Cost,
-                        Email = doEngineer.Email,
-                        Level = (BO.EngineerExperience?)(doEngineer?.Level),
-                        Task = task!=null ? new BO.TaskInEngineer
+            IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
+            if (filter == null)
+                return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
+                        orderby doEngineer.Level
+                        //let task = _dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
+                        select new BO.Engineer()
                         {
-                            Id = task.Id,
-                            Alias = task.Alias,
-                        }:null
-                    });
-        else
-            return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
-                    let tsk = _dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
-                    let boWorker=/*tasks.FirstOrDefault(t => t!.Engineerld == doEngineer.Id)*/
-                    /*select*/ new BO.Engineer()
-                               {
-                                   Id = doEngineer.Id,
-                                   Name = doEngineer.Name,
-                                   Cost = doEngineer.Cost,
-                                   Email = doEngineer.Email, 
-                                   Level = (BO.EngineerExperience?)(doEngineer?.Level),
-                                   Task = new BO.TaskInEngineer
+                            Id = doEngineer.Id,
+                            Name = doEngineer.Name,
+                            Cost = doEngineer.Cost,
+                            Email = doEngineer.Email,
+                            Level = (BO.EngineerExperience?)(doEngineer?.Level),
+                            Task = GetEngineerTask(doEngineer) /*new BO.TaskInEngineer
+                            {
+                                Id = task.Id,
+                                Alias = task.Alias,
+                            }*/
+                        });
+            else
+                return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
+                        //let tsk = _dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
+                        let boWorker =/*tasks.FirstOrDefault(t => t!.Engineerld == doEngineer.Id)*/
+                        /*select*/ new BO.Engineer()
                                    {
-                                       Id = tsk.Id,
-                                       Alias = tsk.Alias,
+                                       Id = doEngineer.Id,
+                                       Name = doEngineer.Name,
+                                       Cost = doEngineer.Cost,
+                                       Email = doEngineer.Email,
+                                       Level = (BO.EngineerExperience?)(doEngineer?.Level),
+                                       Task = GetEngineerTask(doEngineer)/*new BO.TaskInEngineer
+                                       {
+                                           Id = tsk.Id,
+                                           Alias = tsk.Alias,
+                                       }*/
                                    }
-                               }
-                    where filter(boWorker)
-                    orderby doEngineer.Level
-                    select boWorker);
+                        where filter(boWorker)
+                        orderby doEngineer.Level
+                        select boWorker);
     }
 
     public void Update(BO.Engineer item)
@@ -147,9 +147,10 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Failed to update engineer. {ex.Message}");
         }
     }
+
     public void Clear()
     {
-        _dal.Task.Clear();
+        _dal.Engineer.Clear();
     }
 }
 

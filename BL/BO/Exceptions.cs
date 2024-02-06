@@ -49,4 +49,11 @@ public class BlExection : Exception
     public BlExection(string message, Exception innerException)
                 : base(message, innerException) { }
 }
+[Serializable]
+public class BlCantScheduleTheProject : Exception
+{
+    public BlCantScheduleTheProject(string? message) : base(message) { }
+    public BlCantScheduleTheProject(string message, Exception innerException)
+                : base(message, innerException) { }
+}
 

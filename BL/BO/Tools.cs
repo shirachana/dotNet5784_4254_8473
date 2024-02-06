@@ -124,8 +124,8 @@ public static class Tools
         //    delTask.CompleteDate is null ? Status.OnTrack :
         //    Status.Done;
         return delTask.StartDate is null ? Status.Unscheduled :
-           delTask.ScheduledDate is null ? Status.Scheduled :
-           delTask.CompleteDate is null ? Status.OnTrack :
+           delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
+           delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
            Status.Done;
     }
     public static bool CheckEngineerHealth(Engineer item)
@@ -166,7 +166,6 @@ public static class Tools
 
         if (IBl.StartDateProject == null)
             return StatusProject.Planning;
-
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
              select task).Count() > 0)
@@ -180,19 +179,26 @@ public static class Tools
     }
     public static bool IsStatusProject(Task item)
     {
-        if (Tools.CheckStatusProject() == BO.StatusProject.Mid /*&& item?.Engineer?.Id != null*/)
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.Engineer?.Id != null)
         {
-            throw new BlPlanning("The program is in the middle");
+            throw new BlPlanning("The program is in the planning");
         }
-        //if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
-        //{
-        //   throw new BlPlanning("the project is during planning");
-        //}
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
+        {
+            throw new BlPlanning("the project is during planning");
+        }
         if (Tools.CheckStatusProject() == BO.StatusProject.Execution)
         {
             throw new BlExection("the project is during Exection");
         }
         return true;
+    }
+    public static void CreatTheSchedule(DateTime startDateP)
+    {
+        if (startDateP >= DateTime.Today)
+            IBl.StartDateProject = startDateP;
+        else
+            throw new BlCantScheduleTheProject("the time pass already");
     }
 }
 

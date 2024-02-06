@@ -25,10 +25,6 @@ namespace BlTest
         }
         static void DisplayMainMenu()
         {
-            //Console.Write("Would you like to create Initial data? (Y/N)");
-            //string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-            //if (ans == "Y")
-            //    DalTest.Initialization.Do();
             bool validInput = false;
 
             do
@@ -61,6 +57,7 @@ namespace BlTest
                 Console.WriteLine("Main Menu - Select an entity you want to check:");
                 Console.WriteLine("1. Engineer");
                 Console.WriteLine("2. Task");
+                Console.WriteLine("3.Create The Start Date Of The Project");
                 Console.WriteLine("0. Exit");
                 int choice = GetUserChoice();
 
@@ -71,6 +68,9 @@ namespace BlTest
                         break;
                     case 2:
                         DisplayEntityMenuT("Task");
+                        break;
+                    case 3:
+                        CreatStartDate();
                         break;
                     case 0:
                         Environment.Exit(0);
@@ -171,6 +171,21 @@ namespace BlTest
             }
             return choice;
         }
+        static void CreatStartDate()
+        {
+            if (Tools.CheckStatusProject() != BO.StatusProject.Planning)
+                throw new BlCantScheduleTheProject("cant creat the start date of the project");
+            Console.WriteLine("Enter the project Date: ");
+            if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
+            {
+                try { Tools.CreatTheSchedule(startDate); }
+                catch(BlCantScheduleTheProject ex) { Console.WriteLine(ex); }
+            }
+            else
+            {
+                throw new Exception("Invalid date format. Please enter again");
+            }
+        }
 
         static void CreatEngineer()
         {
@@ -270,8 +285,6 @@ namespace BlTest
         {
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
-            //Console.WriteLine(@"Enter the id of the task if there: ");
-            //tsk.Id = int.Parse(Console.ReadLine()!);
             Console.WriteLine(@"Enter the discription of the task if there: ");
             tsk.Description = Console.ReadLine();
             Console.WriteLine(@"Enter the alias of the task");
@@ -280,16 +293,6 @@ namespace BlTest
             tsk.Remarks = Console.ReadLine();
             Console.WriteLine(@"Enter the level of the task: ");
             tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-            //Console.WriteLine(@"Enter the Start Date of the task: ");
-            //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-            //{
-            //    tsk.StartDate = startDate;
-            //}
-            //else
-            //{
-            //    throw new Exception("Invalid date format. Please enter again");
-            //}
-
             Console.WriteLine(@"Enter the Creat at Date of the task: ");
             string dateString = Console.ReadLine()!;
             if (DateTime.TryParse(dateString, out DateTime date))
@@ -303,34 +306,6 @@ namespace BlTest
             Console.WriteLine(@"Enter the Required Effort Time: ");
             int requiredEffortDays = int.Parse(Console.ReadLine()!);
             tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
-            Console.WriteLine(@"Enter the Scheduled Date of the task: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
-            {
-                tsk.ScheduledDate = scheduledDate;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
-            Console.WriteLine(@"Enter the Deadline Date of the task: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime deadlineDate))
-            {
-                tsk.DeadlineDate = deadlineDate;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
-
-            Console.WriteLine(@"Enter the Complete Date of the task: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime completeDate))
-            {
-                tsk.CompleteDate = completeDate;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
             Console.WriteLine(@"Enter the deliverables of the task: ");
             tsk.Deliverables = Console.ReadLine();
             Console.WriteLine(@"Enter number of dependencies: ");
@@ -346,13 +321,13 @@ namespace BlTest
                 };
                 tsk.Dependencies?.Add(dependency);
             }
-            Console.WriteLine(@"Enter the Engineer ID for the task: ");
-            int engineerId = int.Parse(Console.ReadLine()!);
-            BO.EngineerInTask engineer= new BO.EngineerInTask()
-            {
-                Id= engineerId,
-            };
-            tsk.Engineer=engineer;
+            //Console.WriteLine(@"Enter the Engineer ID for the task: ");
+            //int engineerId = int.Parse(Console.ReadLine()!);
+            //BO.EngineerInTask engineer = new BO.EngineerInTask()
+            //{
+            //    Id = engineerId,
+            //};
+            //tsk.Engineer = engineer;
             s_bl!.Task.Create(tsk);
         }
         static void ReadTaskById()

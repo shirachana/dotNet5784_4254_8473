@@ -13,56 +13,32 @@ internal class TaskImplementation : BlApi.ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(Task? item)
     {
-        
+
         try
         {
-           
+
             if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
                 // Create a new DO.Task object
-                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
+
                 DO.Task doTask = new DO.Task
                 {
-                    Id = item!.Id,
-                    Alias = item.Alias,
+                    Alias = item!.Alias,
                     Description = item.Description,
                     CreatedAtDate = item.CreatedAtDate,
                     /*Dependencies = dependencies,*/
-                    IsMilestone = false,
                     RequiredEffortTime = item.RequiredEffortTime,
-                    StartDate = item.StartDate,
-                    ScheduledDate = item.ScheduledDate,
-                    DeadlineDate = item.DeadlineDate,
-                    CompleteDate = item.CompleteDate,
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
-                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity
                 };
-                int IdT= _dal.Task.Create(doTask);
+                int IdT = _dal.Task.Create(doTask);
+
                 // Attempt to add the task to the data layer
-                List<TaskInList> dependencies = item!.Dependencies!
-               .Select(dependency => _dal.Task.Read(dependency.Id))
-               .Where(existingDependency => existingDependency != null)
-               .Select(existingDependency =>
-                {
-                    // Call getStatus outside the LINQ query
-                    Status status = Tools.GetStatus(existingDependency!);
-                    _dal.Dependency.Create(new DO.Dependency(0, IdT, existingDependency!.Id));
-                    // Create TaskInList using the mapped properties and the status obtained from getStatus
-                    return new TaskInList
-                    {
-                        Id = existingDependency!.Id,
-                        Description = existingDependency.Description,
-                        Alias = existingDependency.Alias,
-                        Status = status,
-                    };
-                }).ToList();
-                if (dependencies.Count != item?.Dependencies?.Count)
-                {
-                    throw new BlDoesNotExistException("One or more dependencies do not exist");
-                }
-               return /*_dal.Task.Create(doTask)*/IdT;
+                item!.Dependencies!
+              .ForEach(dependency => _dal.Dependency.Create(new DO.Dependency(0, IdT, dependency.Id)));
+
+                return IdT;
             }
         }
         catch (DO.DalAlreadyExistsException ex)
@@ -71,14 +47,6 @@ internal class TaskImplementation : BlApi.ITask
         }
 
         throw new BlNullPropertyException($"Failed to create task");
-    }
-    private void AssociateDependenciesWithTask(DO.Task doTask, List<TaskInList> dependencies)
-    {
-        foreach (var dependency in dependencies)
-        {
-            // Add logic to associate dependencies with the task in your data layer
-            _dal.Dependency.Create(new DO.Dependency(0, doTask.Id, dependency.Id));
-        }
     }
     public void Delete(int id)
     {
@@ -90,17 +58,17 @@ internal class TaskImplementation : BlApi.ITask
             if (Tools.IsStatusProject(task!))
             {
                 //Check if the task has been scheduled
-                if (task!.Status != BO.Status.Unscheduled)
+                if (task!.Status != BO.Status.Done)
                 {
-                     throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
+                    throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
                 }
-            bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
+                bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
 
-            // Attempt to delete the task Check if the task has dependencies
-            if (canDelete==false)
-                _dal.Task.Delete(id);
-            else
-               throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
+                // Attempt to delete the task Check if the task has dependencies
+                if (canDelete == false)
+                    _dal.Task.Delete(id);
+                else
+                    throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
             }
         }
 
@@ -116,10 +84,9 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             DO.Task? doTask = _dal.Task.Read(id);
-            DO.Engineer? eng = _dal.Engineer.Read(doTask!.Engineerld);
-            if (doTask is null || eng is null)
+            if (doTask is null)
                 throw new Exception($"Task with ID={id} does Not exist");
-
+            EngineerInTask? engineerInTask = CalculateEngineerForTask(doTask.Engineerld);
             var dependencies = from item in _dal.Dependency.ReadAll()
                                where item.DependentTask == id
                                group item by item.DependentTask into g
@@ -143,11 +110,7 @@ internal class TaskImplementation : BlApi.ITask
                 CompleteDate = doTask?.CompleteDate,
                 Deliverables = doTask?.Deliverables,
                 Remarks = doTask?.Remarks,
-                Engineer = new EngineerInTask()
-                {
-                    Id = eng.Id,
-                    Name = eng.Name
-                },
+                Engineer = engineerInTask,
                 Copmlexity = (BO.EngineerExperience)doTask?.Copmlexity!,
                 Dependencies = (from dep in dependencies
                                 from taskId in dep.DepOnTask
@@ -166,6 +129,7 @@ internal class TaskImplementation : BlApi.ITask
             throw new BlDoesNotExistException($"Failed to Read Task. {ex.Message}");
         }
     }
+
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         return from DO.Task doTask in _dal.Task.ReadAll((Func<DO.Task, bool>?)filter)
@@ -182,12 +146,12 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (Tools.IsStatusProject(item!)&&Tools.CheckTaskHealth(item!))
+            if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
                 if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
                 {
                     DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
-                    // Update the task in the data layer
+                                                                             // Update the task in the data layer
                     var taskToUpdate = new DO.Task
                     {
                         Id = item!.Id,
@@ -240,7 +204,7 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             // Check if the task with the given ID exists
-             var task = Read(id);
+            var task = Read(id);
             // Check if all scheduled start dates of preceding tasks are updated
             if (task?.Dependencies != null && task.Dependencies.Any())
             {
@@ -273,10 +237,33 @@ internal class TaskImplementation : BlApi.ITask
             throw new Exception($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
         }
     }
+
     public void Clear()
     {
-       _dal.Task.Clear();
+        _dal.Task.Clear();
         _dal.Dependency.Clear();
     }
+
+    private EngineerInTask? CalculateEngineerForTask(int engineerId)
+    {
+        try
+        {
+            DO.Engineer? eng = _dal.Engineer.Read(engineerId);
+            if (eng == null)
+            {
+                return null; // If engineer doesn't exist, return null
+            }
+            return new EngineerInTask()
+            {
+                Id = eng.Id,
+                Name = eng.Name
+            };
+        }
+        catch (DO.DalDoesNotExistException)
+        {
+            return null; // If engineer doesn't exist, return null
+        }
+    }
+
 }
 
