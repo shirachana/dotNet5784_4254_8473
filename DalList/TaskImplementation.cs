@@ -82,13 +82,13 @@ internal class TaskImplementation : ITask
     { 
         DataSource.Tasks.Clear();
     }
-    //public DateTime getStartDay()
-    //{
-    //    return DataSource.Config.startDate;
-    //}
-    //public void setStartDay(DateTime startDate)
-    //{
-    //    DataSource.Config.startDate = startDate;
-    //}
+    public DateTime? getStartDay()
+    {
+        return DataSource.Config.StartDateProject;
+    }
+    public void setStartDay(DateTime startDate)
+    {
+        DataSource.Config.StartDateProject = startDate;
+    }
 }
 
