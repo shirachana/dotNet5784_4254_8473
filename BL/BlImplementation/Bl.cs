@@ -6,10 +6,13 @@ namespace BlImplementation;
 
 internal class Bl : IBl
 {
+    private readonly DalApi.IDal dal = DalApi.Factory.Get;
     public IEngineer Engineer => new EngineerImplementation();
 
     public ITask Task => new TaskImplementation();
-    public DateTime? EndDateProject { get; set; } = null;
+
+    public DateTime? GetStartDay() => dal.GetStartDay();
+    public void  SetStartDay(DateTime dateTime) =>dal.setStartDay(dateTime);    
 
     //public void ScheduleTasks()
     //{

@@ -1,7 +1,5 @@
 ﻿using BlApi;
-using DalApi;
-using System.Collections;
-using System.Collections.Generic;
+using BlImplementation;
 using System.Reflection;
 using System.Text;
 
@@ -132,11 +130,11 @@ public static class Tools
     {
         if (item.Id <= 0)
             throw new BlArgumentOutOfRangeException("Engineer ID must be a positive number");
-        if ((item.Name)== "")
+        if ((item.Name) == "")
             throw new BlArgumentOutOfRangeException("Engineer name cannot be empty");
         if (item.Cost < 0)
             throw new BlArgumentOutOfRangeException("Engineer cost must be a positive number");
-        if ((item.Email!).Contains("@gmail.com")==false)
+        if ((item.Email!).Contains("@gmail.com") == false)
             throw new BlArgumentOutOfRangeException("Engineer email cannot be empty");
 
         // If all checks pass, return true
@@ -164,7 +162,7 @@ public static class Tools
     {
         var tasks = BlApi.Factory.Get().Task;
 
-        if (IBl.StartDateProject == null)
+        if (Factory.Get().GetStartDay() == null)
             return StatusProject.Planning;
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
@@ -200,7 +198,7 @@ public static class Tools
     public static void CreatTheSchedule(DateTime startDateP)
     {
         if (startDateP >= DateTime.Today)
-            IBl.StartDateProject = startDateP;
+            Factory.Get().SetStartDay(startDateP);
         else
             throw new BlCantScheduleTheProject("the time pass already");
     }

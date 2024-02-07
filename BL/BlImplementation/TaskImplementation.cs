@@ -148,7 +148,7 @@ internal class TaskImplementation : BlApi.ITask
             Tools.CheckTaskHealth(item!);
             DO.Task task = _dal.Task.Read(item!.Id) ?? throw new BlDoesNotExistException("the task dosnt exist");
 
-            if (IBl.StartDateProject is null && item?.StartDate is null)
+            if (_dal.GetStartDay() is null && item?.StartDate is null)
             {
 
                 DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already

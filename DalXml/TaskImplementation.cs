@@ -87,15 +87,5 @@ internal class TaskImplementation : ITask
         XMLTools.SaveListToXMLSerializer(Tasks, s_tasks_xml);
        Config.NextTaskId = 1; 
     }
-    public DateTime? getStartDay()
-    {
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        return root.ToDateTimeNullable("startDate");
-    }
-    public void setStartDay(DateTime? startDate)
-    {
-        XElement root = XMLTools.LoadListFromXMLElement("data-config");
-        root.Element("endDate")!.Value = startDate.ToString()!;
-        XMLTools.SaveListToXMLElement(root, "endDate");
-    }
+ 
 }
