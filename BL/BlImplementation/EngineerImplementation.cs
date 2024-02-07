@@ -145,7 +145,7 @@ internal class EngineerImplementation : IEngineer
     {
         try
         {
-            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == doEng.Id /*&& t.StartDate != null && t.CompleteDate == null*/);
+            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == doEng.Id && t.StartDate != null && t.CompleteDate == null);
 
             return new BO.TaskInEngineer
             {
