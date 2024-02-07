@@ -28,9 +28,8 @@ internal class EngineerImplementation : IEngineer
     public void Delete(int id)
     {
 
-        BO.Engineer engineerToDelete = Read(id)!;
         IEnumerable<DO.Task> tsk = from DO.Task task in _dal.Task.ReadAll(task => task.Engineerld == id)
-                                   where /*task.StartDate is not null*/(Tools.GetStatus(task)==BO.Status.OnTrack|| Tools.GetStatus(task) == BO.Status.Done)&&Tools.CheckStatusProject()==BO.StatusProject.Execution&&BO.Status.Scheduled==Tools.GetStatus(task)
+                                   where task.StartDate is not null
                                    select task;
         if (tsk.Any())
             throw new BlCantBeDeletedException($"Engineer with ID={id} can't be deleted");
@@ -66,21 +65,7 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Engineer with ID={id} does Not exist");
         }
     }
-    private BO.TaskInEngineer? GetEngineerTask(DO.Engineer doEng)
-    {
-        try
-        {
-            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == doEng.Id /*&& t.StartDate != null && t.CompleteDate == null*/);
-           
-                return new BO.TaskInEngineer
-                {
-                    Id = tsk!.Id,
-                    Alias = tsk.Alias
-                };
-        }
-        catch(DO.DalDoesNotExistException ) { return null; }
-    }
-
+    
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
             IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
@@ -129,17 +114,20 @@ internal class EngineerImplementation : IEngineer
         {
             if (Tools.CheckEngineerHealth(item!))
             {
-                DO.Engineer existingEngineer = _dal.Engineer.Read(item!.Id)!;
-                if (existingEngineer!.Level < (DO.EngineerExperience)item.Level!)
+                DO.Engineer engineer = _dal.Engineer.Read(item!.Id)  ?? throw new BlDoesNotExistException("The Engineer to update does not Exist");
+                if (engineer.Level < (DO.EngineerExperience)item.Level!)
                 {
                     throw new BlArgumentOutOfRangeException($"Engineer level it's not Upwards ");
                 }
-                existingEngineer = new DO.Engineer
+                engineer = new DO.Engineer
                 (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
-                _dal.Engineer.Update(existingEngineer);
-                DO.Task? existingTask = _dal.Task.Read(item.Task!.Id)!;
-                DO.Task newTask = new DO.Task(existingTask.Id, item.Id, existingTask.Alias, existingTask.Description, existingTask.CreatedAtDate, existingTask.RequiredEffortTime, existingTask.IsMilestone, existingTask.Copmlexity, existingTask.StartDate, existingTask.ScheduledDate, existingTask.DeadlineDate, existingTask.CompleteDate, existingTask.Deliverables, existingTask.Remarks);
-                _dal.Task.Update(newTask);
+
+
+                DO.Task existingTask = _dal.Task.Read(item.Task!.Id) ?? throw new BlDoesNotExistException("The Task does not Exist");
+                existingTask = existingTask with { Engineerld = item.Id };
+
+                _dal.Engineer.Update(engineer);
+                _dal.Task.Update(existingTask);
             }
         }
         catch (DO.DalDoesNotExistException ex)
@@ -152,5 +140,22 @@ internal class EngineerImplementation : IEngineer
     {
         _dal.Engineer.Clear();
     }
+
+    private BO.TaskInEngineer? GetEngineerTask(DO.Engineer doEng)
+    {
+        try
+        {
+            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == doEng.Id /*&& t.StartDate != null && t.CompleteDate == null*/);
+
+            return new BO.TaskInEngineer
+            {
+                Id = tsk!.Id,
+                Alias = tsk.Alias
+            };
+        }
+        catch (DO.DalDoesNotExistException) { return null; }
+    }
+
+
 }
 

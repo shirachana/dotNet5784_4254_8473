@@ -4,7 +4,6 @@ public interface IBl
     public IEngineer Engineer { get; }
     //public IMilestone Milestone { get; }
     public ITask Task { get; }
-    public static DateTime? StartDateProject { get; set; }
-
+    public static  DateTime? StartDateProject { get; set; }
 }
 

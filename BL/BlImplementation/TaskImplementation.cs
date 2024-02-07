@@ -26,7 +26,6 @@ internal class TaskImplementation : BlApi.ITask
                     Alias = item!.Alias,
                     Description = item.Description,
                     CreatedAtDate = item.CreatedAtDate,
-                    /*Dependencies = dependencies,*/
                     RequiredEffortTime = item.RequiredEffortTime,
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
@@ -146,50 +145,65 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (Tools.IsStatusProjectToUpp(item!) && Tools.CheckTaskHealth(item!))
+            Tools.CheckTaskHealth(item!);
+            DO.Task task = _dal.Task.Read(item!.Id) ?? throw new BlDoesNotExistException("the task dosnt exist");
+
+            if (IBl.StartDateProject is null && item?.StartDate is null)
             {
-                if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
+
+                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
+                                                                          // Update the task in the data layer
+                task = task with
                 {
-                    DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
-                                                                             // Update the task in the data layer
-                    var taskToUpdate = new DO.Task
+                    Id = item!.Id,
+                    Alias = item.Alias,
+                    Description = item.Description,
+                    CreatedAtDate = item.CreatedAtDate,
+                    IsMilestone = false,
+                    RequiredEffortTime = item.RequiredEffortTime,
+                    //ScheduledDate = item.ScheduledDate,// יש פונקציה אחרת שעושה את העדכון
+                    //DeadlineDate = item.DeadlineDate > item.ForecastDate ? item.DeadlineDate : throw new Exception(),
+                    //CompleteDate = item.CompleteDate,// יש לבדוק אם זה שייך למסך של מהנדס
+                    Deliverables = item.Deliverables,
+                    Remarks = item.Remarks,
+                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                    Copmlexity = (DO.EngineerExperience)item.Copmlexity,
+
+                };
+
+                _dal.Task.Update(task);
+
+                if (item.Dependencies is null)
+                    item.Dependencies = new();
+
+                IEnumerable<DO.Dependency> dependencies = _dal.Dependency.ReadAll(x => x.DependentTask == item.Id);
+
+                item.Dependencies.Where(_new => !dependencies.Any(old => old.DependsOnTask == _new.Id)).
+                    ToList().ForEach(_newItem => _dal.Dependency.Create(new DO.Dependency()
                     {
-                        Id = item!.Id,
-                        Alias = item.Alias,
-                        Description = item.Description,
-                        CreatedAtDate = item.CreatedAtDate,
-                        /*Dependencies = dependencies,*/
-                        IsMilestone = false,
-                        RequiredEffortTime = item.RequiredEffortTime,
-                        StartDate = item.StartDate,
-                        ScheduledDate = item.ScheduledDate,
-                        DeadlineDate = item.DeadlineDate,
-                        CompleteDate = item.CompleteDate,
-                        Deliverables = item.Deliverables,
-                        Remarks = item.Remarks,
-                        Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
-                        Copmlexity = (DO.EngineerExperience)item.Copmlexity,
+                        DependentTask = item.Id,
+                        DependsOnTask = _newItem.Id
+                    }));
 
-                    };
+                dependencies.Where(old => !item.Dependencies.Any(_new => _new.Id == old.DependsOnTask)).
+                 ToList().ForEach(old => _dal.Dependency.Delete(old.Id));
 
-                    _dal.Task.Update(taskToUpdate);
-                }
-                else
+            }
+            else
+            {
+                DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
+                DO.Task? dtask = _dal.Task.Read(item!.Id);
+                dtask = dtask! with
                 {
-                    DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
-                    DO.Task? dtask = _dal.Task.Read(item!.Id);
-                    dtask = dtask! with
-                    {
-                        Engineerld = item.Engineer!.Id,
-                        Alias = item.Alias,
-                        Description = item.Description,
-                        Deliverables = item.Deliverables,
-                        Remarks = item.Remarks
-                    };
+                    Engineerld = item.Engineer!.Id,
+                    Alias = item.Alias,
+                    Description = item.Description,
+                    Deliverables = item.Deliverables,
+                    Remarks = item.Remarks
+                };
 
-                    _dal.Task.Update(dtask!);
+                _dal.Task.Update(dtask!);
 
-                }
             }
         }
         catch (DO.DalDoesNotExistException ex)
@@ -204,33 +218,22 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             // Check if the task with the given ID exists
-            var task = Read(id);
+            Task task = Read(id)!;
+
             // Check if all scheduled start dates of preceding tasks are updated
             if (task?.Dependencies != null && task.Dependencies.Any())
             {
                 var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
-                if (precedingTasks.Any(t => t! == null || t.StartDate == null))
+                if (precedingTasks.Any(t => t!.StartDate == null || t!.ForecastDate < startDate))
                 {
                     throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
                 }
             }
-            // Check if the received start date is not earlier than the end dates of preceding tasks
-            if (task?.Dependencies != null && task.Dependencies.Any())
-            {
-                var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
-                var incompletePrecedingTasks = precedingTasks.Where(t => t?.CompleteDate == null);
-                if (incompletePrecedingTasks.Any(t => t!.StartDate > startDate))
-                {
-                    throw new BlArgumentOutOfRangeException($"Scheduled start date cannot be earlier than the start dates of incomplete preceding tasks");
-                }
-            }
-
             // Update or add the scheduled start date for the task
-            task!.StartDate = startDate;
-
             // Attempt to update the task in the data layer
+            DO.Task dtask = _dal.Task.Read(id)!;
 
-            Update(task);
+            _dal.Task.Update(dtask with { StartDate = startDate });
         }
         catch (DO.DalDoesNotExistException ex)
         {

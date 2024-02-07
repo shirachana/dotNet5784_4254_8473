@@ -14,35 +14,34 @@ public static class Initialization
     private static readonly Random s_rand = new();
     private static void CreateDependencies()
     {
-        int dependentTask;
-        int dependsOnTask;
-        int[] ids = new int[40];
-
-        // Create 40 dependencies
         for (int i = 0; i < 40; i++)
         {
-            ids[i] = i;
-        }
-        foreach (var id in ids)
-        {
-            dependentTask = s_rand.Next(1, 20);
-            dependsOnTask = s_rand.Next(1, 20);
-            bool flag = true;
-            foreach (var item in s_dal!.Dependency.ReadAll())
+            Dependency dep = new Dependency();
+            switch (i)
             {
-                if (item?.DependentTask == dependentTask && item.DependsOnTask == dependsOnTask)
-                {
-                    flag = false;
-                    break; // exit the loop as soon as a match is found
-                }
+                case int c when i < 10:
+                    dep = dep with
+                    {
+                        DependentTask = s_rand.Next(6, 11),
+                        DependsOnTask = s_rand.Next(1, 6)
+                    };
+                    break;
+                case int c when i < 20:
+                    dep = dep with
+                    {
+                        DependentTask = s_rand.Next(11, 16),
+                        DependsOnTask = s_rand.Next(6, 11),
+                    };
+                    break;
+                case int c when i < 40:
+                    dep = dep with
+                    {
+                        DependentTask = s_rand.Next(16, 21),
+                        DependsOnTask = s_rand.Next(11, 16),
+                    };
+                    break;
             }
-
-            if (flag)
-            {
-                Dependency dep = new(0, dependentTask, dependsOnTask);
-                s_dal?.Dependency.Create(dep);
-
-            }
+            s_dal!.Dependency.Create(dep);
         }
     }
     private static void CreatTask()
@@ -132,7 +131,7 @@ public static class Initialization
         List<int> engineersID = s_dal!.Engineer.ReadAll().Select(x => x.Id).ToList();
         for (int i = 0; i < lev.Length; i++)
         {
-            _engId = engineersID[ s_rand.Next(0, 5)];
+            _engId = engineersID[s_rand.Next(0, 5)];
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
@@ -145,14 +144,14 @@ public static class Initialization
             DateTime _endDate = start.AddDays(randomDays);
             DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
 
-            Task tsk = new(0, _engId, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], null, _scheduledDate, _deadLine, _endDate, _deliverables[i], _remarks[i]);
+            Task tsk = new(0, _engId, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], null, null, null, null, _deliverables[i], _remarks[i]);
 
             s_dal!.Task.Create(tsk);
         }
     }
     private static void CreatEngineer()
     {
-        string[] namesOfEng = ["Shira", "Efrat", "Adi", "Moti", "Israel"];
+        string[] namesOfEng = { "Shira", "Efrat", "Adi", "Moti", "Israel" };
 
         foreach (var _name in namesOfEng)
         {

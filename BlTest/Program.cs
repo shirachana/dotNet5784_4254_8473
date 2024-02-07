@@ -61,24 +61,24 @@ namespace BlTest
                 Console.WriteLine("0. Exit");
                 int choice = GetUserChoice();
 
-                switch (choice)
-                {
-                    case 1:
-                        DisplayEntityMenuE("Engineer");
-                        break;
-                    case 2:
-                        DisplayEntityMenuT("Task");
-                        break;
-                    case 3:
-                        CreatStartDate();
-                        break;
-                    case 0:
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Invalid choice. Please try again.");
-                        break;
-                }
+                    switch (choice)
+                    {
+                        case 1:
+                            DisplayEntityMenuE("Engineer");
+                            break;
+                        case 2:
+                            DisplayEntityMenuT("Task");
+                            break;
+                        case 3:
+                            CreatStartDate();
+                            break;
+                        case 0:
+                            Environment.Exit(0);
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please try again.");
+                            break;
+                    }
             } while (true);
         }
 
@@ -179,7 +179,7 @@ namespace BlTest
             if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
             {
                 try { Tools.CreatTheSchedule(startDate); }
-                catch(BlCantScheduleTheProject ex) { Console.WriteLine(ex); }
+                catch (BlCantScheduleTheProject ex) { Console.WriteLine(ex); }
             }
             else
             {
@@ -239,18 +239,14 @@ namespace BlTest
         static void UpdateEngineer()
         {
             Random s_rand = new Random();
-
             BO.Engineer eng = new BO.Engineer();
             Console.WriteLine(@"Enter id of Engineer: ");
             string? d = Console.ReadLine();
             int idD = int.Parse(d!);
-            BO.Engineer? engi = new BO.Engineer();
-            engi = s_bl!.Engineer.Read(idD)!;
-            if (engi != null)
+            //BO.Engineer? engi = new BO.Engineer();
+            eng = s_bl!.Engineer.Read(idD)!;
+            if (eng != null)
             {
-                Console.WriteLine(engi);
-                Console.WriteLine(@"Enter the engineer ID: ");
-                eng.Id = int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the engineer cost for hour: ");
                 eng.Cost = double.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the engineer Email: ");
@@ -267,10 +263,8 @@ namespace BlTest
                 //eng.Task = engineer;
                 Console.WriteLine(@"Enter the level of the task: ");
                 eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-
+                s_bl.Engineer.Update(eng);
             }
-            s_bl.Engineer.Update(eng);
-
         }
         static void DeleteEngineer()
         {
@@ -288,7 +282,7 @@ namespace BlTest
             Console.WriteLine(@"Enter the discription of the task if there: ");
             tsk.Description = Console.ReadLine();
             Console.WriteLine(@"Enter the alias of the task");
-            tsk.Alias  = Console.ReadLine();
+            tsk.Alias = Console.ReadLine();
             Console.WriteLine(@"Enter the Remarks of the task: ");
             tsk.Remarks = Console.ReadLine();
             Console.WriteLine(@"Enter the level of the task: ");
@@ -311,7 +305,7 @@ namespace BlTest
             Console.WriteLine(@"Enter number of dependencies: ");
             int numberOfDependencies = int.Parse(Console.ReadLine()!);
             tsk.Dependencies = new List<BO.TaskInList>();
-            for (int i = 0;i<numberOfDependencies; i++)
+            for (int i = 0; i < numberOfDependencies; i++)
             {
                 Console.WriteLine(@"Enter the Dependency id: ");
                 int idDep = int.Parse(Console.ReadLine()!);
@@ -470,8 +464,9 @@ namespace BlTest
             }
             else
             {
-                throw new Exception("Invalid date format. Please enter again");
+                Console.WriteLine(  ("Invalid date format. Please enter again"));
             }
         }
     }
 }
+

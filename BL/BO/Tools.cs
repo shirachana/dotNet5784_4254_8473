@@ -177,38 +177,26 @@ public static class Tools
             return StatusProject.Execution;
         }
     }
+
     public static bool IsStatusProject(Task item)
     {
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.Engineer?.Id != null)
+        if (CheckStatusProject() == BO.StatusProject.Planning && item?.Engineer?.Id != null)
         {
             throw new BlPlanning("The program is in the planning");
         }
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
+
+        if (CheckStatusProject() == BO.StatusProject.Planning && item?.StartDate != null)
         {
             throw new BlPlanning("the project is during planning");
         }
-        if (Tools.CheckStatusProject() == BO.StatusProject.Execution)
+
+        if (CheckStatusProject() == BO.StatusProject.Execution)
         {
             throw new BlExection("the project is during Exection");
         }
         return true;
     }
-    public static bool IsStatusProjectToUpp(Task item)
-    {
-        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.CreatedAtDate != null)
-        {
-            throw new BlPlanning("The program is in the Planning");
-        }
-        if (Tools.CheckStatusProject() == BO.StatusProject.Execution && item?.RequiredEffortTime != null)
-        {
-            throw new BlPlanning("the project is during Exection");
-        }
-        if (Tools.CheckStatusProject() == BO.StatusProject.Execution&& item?.StartDate != null)
-        {
-            throw new BlExection("the project is during Exection");
-        }
-        return true;
-    }
+
     public static void CreatTheSchedule(DateTime startDateP)
     {
         if (startDateP >= DateTime.Today)
