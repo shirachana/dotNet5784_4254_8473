@@ -146,7 +146,7 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
+            if (Tools.IsStatusProjectToUpp(item!) && Tools.CheckTaskHealth(item!))
             {
                 if (/*item?.StartDate <= DateTime.MinValue*/item?.StartDate >= item!.ScheduledDate)
                 {

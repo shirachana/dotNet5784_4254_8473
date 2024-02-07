@@ -193,6 +193,22 @@ public static class Tools
         }
         return true;
     }
+    public static bool IsStatusProjectToUpp(Task item)
+    {
+        if (Tools.CheckStatusProject() == BO.StatusProject.Planning && item?.CreatedAtDate != null)
+        {
+            throw new BlPlanning("The program is in the Planning");
+        }
+        if (Tools.CheckStatusProject() == BO.StatusProject.Execution && item?.RequiredEffortTime != null)
+        {
+            throw new BlPlanning("the project is during Exection");
+        }
+        if (Tools.CheckStatusProject() == BO.StatusProject.Execution&& item?.StartDate != null)
+        {
+            throw new BlExection("the project is during Exection");
+        }
+        return true;
+    }
     public static void CreatTheSchedule(DateTime startDateP)
     {
         if (startDateP >= DateTime.Today)
