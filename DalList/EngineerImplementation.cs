@@ -42,7 +42,7 @@ internal class EngineerImplementation : IEngineer
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
     public Engineer? Read(int id)
-    {
+    { 
         return DataSource.Engineers.FirstOrDefault(item => item.Id == id) ?? throw new DalDoesNotExistException($"Engineer with {id} does Not exist");
     }
     public Engineer? Read(Func<Engineer, bool> filter)

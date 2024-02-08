@@ -194,7 +194,7 @@ internal class TaskImplementation : BlApi.ITask
                 DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                 DO.Task? dtask = _dal.Task.Read(item!.Id);
                 if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
-                    throw new BlArgumentOutOfRangeException("You cannot add workers to a task when the program is in the middle of planning");
+                    throw new BlArgumentOutOfRangeException("You cannot add Engineer to a task when the program is in the middle of planning");
                 if ((int)eng!.Level! < (int)item!.Copmlexity)
                     throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
                 if (item.Engineer.Id != 0 && item.Engineer.Id != eng.Id)
@@ -247,8 +247,11 @@ internal class TaskImplementation : BlApi.ITask
                 // Update or add the scheduled start date for the task
                 // Attempt to update the task in the data layer
                 DO.Task dtask = _dal.Task.Read(id)!;
-
-                _dal.Task.Update(dtask with { StartDate = startDate });
+                if (_dal.GetStartDay() <= startDate) 
+                { 
+                    _dal.Task.Update(dtask with { StartDate = startDate });
+                }
+                else { throw new BlArgumentOutOfRangeException($"This start day is before the start of the project"); }
             }
         }
         catch (DO.DalDoesNotExistException ex)
@@ -267,22 +270,28 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            DO.Engineer? eng = _dal.Engineer.Read(engineerId);
+            //Console.WriteLine($"Trying to read engineer with ID: {engineerId}");
+            DO.Engineer? eng = _dal.Engineer.Read(engineerId)?? throw new BlDoesNotExistException($"There is no Engineer in the task");
+
             if (eng == null)
             {
-                return null; // If engineer doesn't exist, return null
+                //Console.WriteLine($"Engineer with ID {engineerId} not found");
+                 return null;// If engineer doesn't exist, return null
             }
+
             return new EngineerInTask()
             {
                 Id = eng.Id,
                 Name = eng.Name
             };
         }
-        catch (DO.DalDoesNotExistException)
+        catch (DO.DalDoesNotExistException )
         {
+           //Console.WriteLine($"Error reading engineer: {ex.Message}");
             return null; // If engineer doesn't exist, return null
         }
     }
+
 
 }
 
