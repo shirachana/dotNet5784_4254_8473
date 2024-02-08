@@ -221,7 +221,7 @@ internal class TaskImplementation : BlApi.ITask
         }
         catch (DO.DalDoesNotExistException ex)
         {
-            throw new Exception($"Failed to update task with ID={item!.Id}. {ex.Message}");
+            throw new BlArgumentOutOfRangeException($"Failed to update task with ID={item!.Id}. {ex.Message}");
         }
 
     }
