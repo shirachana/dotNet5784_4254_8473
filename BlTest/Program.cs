@@ -390,22 +390,9 @@ namespace BlTest
                 {
                     throw new Exception("Invalid date format. Please enter again");
                 }
-                //Console.WriteLine(@"Enter the Status the task: ");
-                //tsk.Status = (BO.Status)int.Parse(Console.ReadLine()!);
                 Console.WriteLine(@"Enter the Required Effort Time: ");
                 int requiredEffortDays = int.Parse(Console.ReadLine()!);
                 tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
-
-                //Console.WriteLine(@"Enter the Start Date of the task: ");
-                //if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-                //{
-                //    tsk.StartDate = startDate;
-                //}
-                //else
-                //{
-                //    throw new Exception("Invalid date format. Please enter again");
-                //}
-
                 Console.WriteLine(@"Enter the Scheduled Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
                 {
