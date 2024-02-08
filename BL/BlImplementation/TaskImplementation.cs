@@ -217,23 +217,26 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            // Check if the task with the given ID exists
-            Task task = Read(id)!;
-
-            // Check if all scheduled start dates of preceding tasks are updated
-            if (task?.Dependencies != null && task.Dependencies.Any())
+            if (Tools.CheckStatusProject() == StatusProject.Mid)
             {
-                var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
-                if (precedingTasks.Any(t => t!.StartDate == null || t!.ForecastDate < startDate))
-                {
-                    throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
-                }
-            }
-            // Update or add the scheduled start date for the task
-            // Attempt to update the task in the data layer
-            DO.Task dtask = _dal.Task.Read(id)!;
+                // Check if the task with the given ID exists
+                Task task = Read(id)!;
 
-            _dal.Task.Update(dtask with { StartDate = startDate });
+                // Check if all scheduled start dates of preceding tasks are updated
+                if (task?.Dependencies != null && task.Dependencies.Any())
+                {
+                    var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
+                    if (precedingTasks.Any(t => t!.StartDate == null || t!.ForecastDate < startDate))
+                    {
+                        throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
+                    }
+                }
+                // Update or add the scheduled start date for the task
+                // Attempt to update the task in the data layer
+                DO.Task dtask = _dal.Task.Read(id)!;
+
+                _dal.Task.Update(dtask with { StartDate = startDate });
+            }
         }
         catch (DO.DalDoesNotExistException ex)
         {
