@@ -56,10 +56,10 @@ internal class TaskImplementation : BlApi.ITask
             BO.Task? task = Read(id);
             if (Tools.IsStatusProject(task!))
             {
-                //Check if the task has been scheduled
-                if (task!.Status != BO.Status.Done)
+               
+                if (task!.Status == BO.Status.Done|| task!.Status == BO.Status.OnTrack)
                 {
-                    throw new BlCantBeDeletedException($"Task with ID={id} has been scheduled and cannot be deleted");
+                    throw new BlCantBeDeletedException($"Task with ID={id} cannot be deleted");
                 }
                 bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
 
