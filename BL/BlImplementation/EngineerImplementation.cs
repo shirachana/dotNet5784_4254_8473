@@ -2,6 +2,7 @@
 using BlApi;
 using BO;
 using System.Collections.Generic;
+using System.Data;
 using System.Reflection.Emit;
 
 internal class EngineerImplementation : IEngineer
@@ -134,6 +135,31 @@ internal class EngineerImplementation : IEngineer
         {
             throw new BlDoesNotExistException($"Failed to update engineer. {ex.Message}");
         }
+    }
+    public void UpdateEngineerToTask(int idEng,int idTsk)
+    {
+        if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
+            throw new BlPlanning("the Engineer cant add task becuse the start project and the task date not update yet");
+        try
+        {
+            DO.Engineer eng = _dal.Engineer.Read(idEng) ?? throw new BlDoesNotExistException($"the Engineer with the id={idEng} does not exist"); ;
+            DO.Task tsk = _dal.Task.Read(idTsk) ?? throw new BlDoesNotExistException($"the Task with the id={idTsk} does not exist");
+            if (eng.Level < tsk.Copmlexity)
+                throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
+            if (tsk.Engineerld != 0 && tsk.Engineerld != idEng)
+                throw new BlArgumentOutOfRangeException("there is another Engineer that work on this task");
+            IEnumerable<DO.Task> tasksDep=
+              from DO.Dependency d in _dal.Dependency.ReadAll()
+              where d.DependentTask == idTsk
+              select _dal.Task.Read(d.DependsOnTask);
+            tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime) !< DateTime.Today);
+            if (tasksDep.Any())
+                throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
+            DO.Task uppTask = new DO.Task(tsk.Id,idEng,tsk.Alias,tsk.Description,tsk.CreatedAtDate,tsk.RequiredEffortTime,tsk.IsMilestone,tsk.Copmlexity,tsk.StartDate,tsk.ScheduledDate,tsk.DeadlineDate,tsk.CompleteDate,tsk.Deliverables,tsk.Remarks);
+            _dal.Task.Update(uppTask);
+        }
+        catch(DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException("cant update the Task in The Engineer", ex); }
+
     }
 
     public void Clear()

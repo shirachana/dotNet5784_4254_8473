@@ -57,10 +57,10 @@ namespace BlTest
             do
             {
                 Console.WriteLine("Main Menu - Select an entity you want to check:");
+                Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Engineer");
                 Console.WriteLine("2. Task");
                 Console.WriteLine("3.Create The Start Date Of The Project");
-                Console.WriteLine("0. Exit");
                 int choice = GetUserChoice();
 
                     switch (choice)
@@ -94,6 +94,7 @@ namespace BlTest
                 Console.WriteLine("3. Read All");
                 Console.WriteLine("4. Update");
                 Console.WriteLine("5. Delete");
+                Console.WriteLine("6.Update Engineer to task");
                 Console.WriteLine("0. Back to Main Menu");
                 int choice = GetUserChoice();
 
@@ -113,6 +114,9 @@ namespace BlTest
                         break;
                     case 5:
                         DeleteEngineer();
+                        break;
+                        case 6:
+                        UpdateTheEngineerTask();
                         break;
                     case 0:
                         return;
@@ -236,6 +240,15 @@ namespace BlTest
             engineers = (IEnumerable<BO.Engineer?>)s_bl!.Engineer.ReadAll();
             foreach (BO.Engineer? engineer in engineers) { Console.WriteLine(engineer); }
 
+        }
+        static void UpdateTheEngineerTask()
+        {
+            Random s_rand = new Random();
+            Console.WriteLine(@"Enter the Engineer ID for the task: ");
+            int engineerId = int.Parse(Console.ReadLine()!);
+            Console.WriteLine(@"Enter the Task Id: ");
+            int TaskId = int.Parse(Console.ReadLine()!);
+            s_bl!.Engineer!.UpdateEngineerToTask(engineerId, TaskId);
         }
 
         static void UpdateEngineer()

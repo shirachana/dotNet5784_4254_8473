@@ -151,7 +151,7 @@ internal class TaskImplementation : BlApi.ITask
             if (_dal.GetStartDay() is null && item?.StartDate is null)
             {
 
-                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
+                /*DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);*///to check if the id of the engieer is exist already
                                                                           // Update the task in the data layer
                 task = task with
                 {
@@ -193,6 +193,19 @@ internal class TaskImplementation : BlApi.ITask
             {
                 DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                 DO.Task? dtask = _dal.Task.Read(item!.Id);
+                if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
+                    throw new BlArgumentOutOfRangeException("You cannot add workers to a task when the program is in the middle of planning");
+                if ((int)eng!.Level! < (int)item!.Copmlexity)
+                    throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
+                if (item.Engineer.Id != 0 && item.Engineer.Id != eng.Id)
+                    throw new BlArgumentOutOfRangeException("there is another Engineer that work on this task");
+                IEnumerable<DO.Task> tasksDep =
+                  from DO.Dependency d in _dal.Dependency.ReadAll()
+                  where d.DependentTask == item.Id
+                  select _dal.Task.Read(d.DependsOnTask);
+                tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
+                if (tasksDep.Any())
+                    throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
                 dtask = dtask! with
                 {
                     Engineerld = item.Engineer!.Id,
