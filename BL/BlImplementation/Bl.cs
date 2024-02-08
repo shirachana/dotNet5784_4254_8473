@@ -12,7 +12,7 @@ internal class Bl : IBl
     public ITask Task => new TaskImplementation();
 
     public DateTime? GetStartDay() => dal.GetStartDay();
-    public void  SetStartDay(DateTime dateTime) =>dal.setStartDay(dateTime);    
+    public void  SetStartDay(DateTime? dateTime) =>dal.setStartDay(dateTime);    
 
     //public void ScheduleTasks()
     //{

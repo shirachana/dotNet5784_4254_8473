@@ -166,7 +166,7 @@ internal class TaskImplementation : BlApi.ITask
                     //CompleteDate = item.CompleteDate,// יש לבדוק אם זה שייך למסך של מהנדס
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
-                    Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
+                    //Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity,
 
                 };

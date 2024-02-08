@@ -5,6 +5,6 @@ public interface IBl
     //public IMilestone Milestone { get; }
     public ITask Task { get; }
     public DateTime? GetStartDay();
-    public void SetStartDay(DateTime dateTime);
+    public void SetStartDay(DateTime? dateTime);
 }
 

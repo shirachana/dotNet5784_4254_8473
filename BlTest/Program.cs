@@ -37,6 +37,8 @@ namespace BlTest
                     // s_dal!.Dependency.Clear();
                     s_bl!.Task.Clear();
                     s_bl!.Engineer.Clear();
+                    DateTime? start = null;
+                    s_bl.SetStartDay(start);
                     Initialization.Do();
                     validInput = true;
                 }
