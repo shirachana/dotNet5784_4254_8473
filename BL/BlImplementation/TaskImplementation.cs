@@ -3,14 +3,26 @@ using BlApi;
 using BO;
 using DalApi;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Net.NetworkInformation;
+using System.Reflection.Emit;
 using System.Security.Cryptography;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    /// <summary>
+    /// Adding a task will receive (as a parameter) an object of a task will check for correctness will add dependencies
+    /// for previous tasks from the existing task list if the data is correct - 
+    /// will attempt to add requests to the data layer will throw its own appropriate exception if adding a task failed.
+    /// </summary>
+    /// <param name="item"></param>the task to add
+    /// <returns></returns>
+    /// <exception cref="BlAlreadyExistException"></exception>
+    /// <exception cref="BlNullPropertyException"></exception>
     public int Create(Task? item)
     {
 
@@ -47,6 +59,15 @@ internal class TaskImplementation : BlApi.ITask
 
         throw new BlNullPropertyException($"Failed to create task");
     }
+    /// <summary>
+    /// Deleting a task, you will receive a task ID. We will check that the task can be deleted, 
+    /// that is, the task exists or the task does not precede other tasks. If the check is successful - 
+    /// you will make an attempt to request a deletion from the other data layer
+    /// - you will throw an appropriate exception.
+    /// </summary>
+    /// <param name="id"></param>the task to delete
+    /// <exception cref="BlCantBeDeletedException"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
         // Check if the task exists
@@ -77,14 +98,23 @@ internal class TaskImplementation : BlApi.ITask
         }
 
     }
-
+    /// <summary>
+    /// A request for task details will receive a task ID will build a task object
+    /// based on the data received from the data layer (DO), and the calculation of 
+    /// the additional information will return a constructed task object (logical entity) 
+    /// will throw its own appropriate exception if the request fails
+    /// </summary>
+    /// <param name="id"></param>the tasks id to read
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public Task? Read(int id)
     {
         try
         {
             DO.Task? doTask = _dal.Task.Read(id);
             if (doTask is null)
-                throw new Exception($"Task with ID={id} does Not exist");
+                throw new BlDoesNotExistException($"Task with ID={id} does Not exist");
             EngineerInTask? engineerInTask = CalculateEngineerForTask(doTask.Engineerld);
             var dependencies = from item in _dal.Dependency.ReadAll()
                                where item.DependentTask == id
@@ -128,7 +158,11 @@ internal class TaskImplementation : BlApi.ITask
             throw new BlDoesNotExistException($"Failed to Read Task. {ex.Message}");
         }
     }
-
+    /// <summary>
+    /// Task list request Request the list of tasks from the data layer.
+    /// </summary>
+    /// <param name="filter"></param>the filter if there
+    /// <returns></returns>
     public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         return from DO.Task doTask in _dal.Task.ReadAll((Func<DO.Task, bool>?)filter)
@@ -140,7 +174,17 @@ internal class TaskImplementation : BlApi.ITask
                    Status = Tools.GetStatus(doTask)
                };
     }
-
+    /// <summary>
+    /// Updating a task We will receive a task object for updating. 
+    /// We will check the integrity of the data: if the test was successful
+    /// - you will attempt an update request to the data layer will throw its own appropriate exception.
+    /// If the update fails in the planning phase, you can update the details of the task,
+    /// such as the required duration, level of difficulty, adding/deleting dependencies on another task, etc. After creating a schedule,
+    /// only the textual fields and the engineer assigned to the task can be changed.
+    /// </summary>
+    /// <param name="item"></param>the task to update
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BlArgumentOutOfRangeException"></exception>
     public void Update(Task? item)
     {
         try
@@ -150,9 +194,6 @@ internal class TaskImplementation : BlApi.ITask
 
             if (_dal.GetStartDay() is null && item?.StartDate is null)
             {
-
-                /*DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);*///to check if the id of the engieer is exist already
-                                                                          // Update the task in the data layer
                 task = task with
                 {
                     Id = item!.Id,
@@ -225,7 +266,18 @@ internal class TaskImplementation : BlApi.ITask
         }
 
     }
-
+    /// <summary>
+    /// Updating or adding a task's scheduled start date will give you a task ID 
+    /// and dateThe action will check if all the scheduled start dates of the tasks 
+    /// preceding it are already updated(exist), otherwise it will throw an appropriate
+    /// exception after that, the action will check that the date received as a parameter
+    /// is not earlier than all the estimated end dates of all the tasks preceding it.
+    /// Otherwise an exception will be thrown.If the data is correct -
+    /// you will make update requests to the data layer
+    /// </summary>
+    /// <param name="id"></param>id of the task to update
+    /// <param name="startDate"></param>the date
+    /// <exception cref="BlArgumentOutOfRangeException"></exception>
     public void UpdateStartDate(int id, DateTime startDate)
     {
         try
@@ -259,13 +311,20 @@ internal class TaskImplementation : BlApi.ITask
             throw new BlArgumentOutOfRangeException($"Failed to update scheduled start date for task with ID={id}. {ex.Message}");
         }
     }
-
+    /// <summary>
+    /// claer tha data of the task and the dependency
+    /// </summary>
     public void Clear()
     {
         _dal.Task.Clear();
         _dal.Dependency.Clear();
     }
-
+    /// <summary>
+    /// A helper function to calculate a worker for a task receives an engineer ID and searches for his task
+    /// </summary>
+    /// <param name="engineerId"></param>the engineeers id
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
     private EngineerInTask? CalculateEngineerForTask(int engineerId)
     {
         try
@@ -275,7 +334,7 @@ internal class TaskImplementation : BlApi.ITask
 
             if (eng == null)
             {
-                //Console.WriteLine($"Engineer with ID {engineerId} not found");
+
                  return null;// If engineer doesn't exist, return null
             }
 

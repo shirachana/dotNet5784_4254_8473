@@ -1,18 +1,27 @@
 ﻿namespace BlImplementation;
 using BlApi;
 using BO;
+using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection.Emit;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    /// <summary>
+    /// You will receive an engineer's object, check for correctness if the data is correct - 
+    /// make an attempt to request an addition to the data layer will throw its own appropriate exception if adding an engineer failed.
+    /// </summary>
+    /// <param name="item"></param>the Engineer to creat
+    /// <exception cref="BO.BlAlreadyExistException"></exception>
     public void Create(Engineer? item)
     {
         try
         {
-            if (Tools.CheckEngineerHealth(item!))
+            if (Tools.CheckEngineerHealth(item!))//its good
             {
                 DO.Engineer doEngineer = new DO.Engineer
                 (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
@@ -25,11 +34,18 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlAlreadyExistException($"Student with ID={item!.Id} already exists", ex);
         }
     }
-
+    /// <summary>
+    /// Deleting an engineer: You will get an engineer ID Check that the engineer is not on a mission
+    ///If the test was successful - you will make an attempt to request deletion from the data layer
+    ///Throw its own appropriate exception if the engineer cannot be deleted or if no engineer with such an ID exists at all
+    /// </summary>
+    /// <param name="id"></param>the id of engineer to delete
+    /// <exception cref="BlCantBeDeletedException"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
 
-        IEnumerable<DO.Task> tsk = from DO.Task task in _dal.Task.ReadAll(task => task.Engineerld == id)
+        IEnumerable<DO.Task> tsk = from DO.Task task in _dal.Task.ReadAll(task => task.Engineerld == id)//check if there task
                                    where task.StartDate is not null
                                    select task;
         if (tsk.Any())
@@ -43,7 +59,13 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Failed to delete engineer with ID={id}", ex);
         }
     }
-
+    /// <summary>
+    /// Engineer details request: You will receive an engineer ID Build an 
+    /// engineer object based on the received data and calculate the additional information (current task) Return a constructed engineer object Throw its own appropriate exception if the request fails.
+    /// </summary>
+    /// <param name="id"></param>the engineers id to read
+    /// <returns></returns>
+    /// <exception cref="BlDoesNotExistException"></exception>
     public BO.Engineer? Read(int id)
     {
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
@@ -66,14 +88,18 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Engineer with ID={id} does Not exist");
         }
     }
-    
+    /// <summary>
+    /// Request a list of engineers: request the list of engineers from the data layer
+    /// for each engineer, build an appropriate entity and return the built list
+    /// </summary>
+    /// <param name="filter"></param>the filter to read if there
+    /// <returns></returns>
     public IEnumerable<BO.Engineer> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
             IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
-            if (filter == null)
+            if (filter == null)//if there no filter
                 return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
                         orderby doEngineer.Level
-                        //let task = _dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
                         select new BO.Engineer()
                         {
                             Id = doEngineer.Id,
@@ -89,9 +115,8 @@ internal class EngineerImplementation : IEngineer
                         });
             else
                 return (from DO.Engineer doEngineer in _dal.Engineer.ReadAll()
-                        //let tsk = _dal.Task.Read(t => t.Engineerld == doEngineer.Id /*&& t!.StartDate != null && t.CompleteDate == null*/)
-                        let boWorker =/*tasks.FirstOrDefault(t => t!.Engineerld == doEngineer.Id)*/
-                        /*select*/ new BO.Engineer()
+                        let boWorker =
+                         new BO.Engineer()
                                    {
                                        Id = doEngineer.Id,
                                        Name = doEngineer.Name,
@@ -108,7 +133,12 @@ internal class EngineerImplementation : IEngineer
                         orderby doEngineer.Level
                         select boWorker);
     }
-
+    /// <summary>
+    /// Update engineer data You will receive an update request engineer
+    /// object to the data layer and will throw its own appropriate exception if the update fails.
+    /// </summary>
+    /// <param name="item"></param>the engineer to update
+    /// <exception cref="BlDoesNotExistException"></exception>
     public void Update(BO.Engineer item)
     {
         try
@@ -118,7 +148,7 @@ internal class EngineerImplementation : IEngineer
                 DO.Engineer engineer = _dal.Engineer.Read(item!.Id)  ?? throw new BlDoesNotExistException("The Engineer to update does not Exist");
                 if (engineer.Level < (DO.EngineerExperience)item.Level!)
                 {
-                    throw new BlArgumentOutOfRangeException($"Engineer level it's not Upwards ");
+                    throw new BlDoesNotExistException($"Engineer level it's not Upwards ");
                 }
                 engineer = new DO.Engineer
                 (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
@@ -136,6 +166,16 @@ internal class EngineerImplementation : IEngineer
             throw new BlDoesNotExistException($"Failed to update engineer. {ex.Message}");
         }
     }
+    /// <summary>
+    /// A separate function for updating a worker to a task receives the worker's 
+    /// identity and the task's identity checks for normality (that there are no other workers on this task and the status is normal) 
+    /// if it does not return a suitable exception
+    /// </summary>
+    /// <param name="idEng"></param>the enginneer id
+    /// <param name="idTsk"></param>the task id
+    /// <exception cref="BlPlanning"></exception>
+    /// <exception cref="BlDoesNotExistException"></exception>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public void UpdateEngineerToTask(int idEng,int idTsk)
     {
         if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
@@ -145,28 +185,36 @@ internal class EngineerImplementation : IEngineer
             DO.Engineer eng = _dal.Engineer.Read(idEng) ?? throw new BlDoesNotExistException($"the Engineer with the id={idEng} does not exist"); ;
             DO.Task tsk = _dal.Task.Read(idTsk) ?? throw new BlDoesNotExistException($"the Task with the id={idTsk} does not exist");
             if (eng.Level < tsk.Copmlexity)
-                throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
+                throw new BlDoesNotExistException("The level of the Task dont match to the Engineer level");
             if (tsk.Engineerld != 0 && tsk.Engineerld != idEng)
-                throw new BlArgumentOutOfRangeException("there is another Engineer that work on this task");
-            IEnumerable<DO.Task> tasksDep=
+                throw new BlDoesNotExistException("there is another Engineer that work on this task");
+            IEnumerable<DO.Task> tasksDep =
               from DO.Dependency d in _dal.Dependency.ReadAll()
               where d.DependentTask == idTsk
               select _dal.Task.Read(d.DependsOnTask);
-            tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime) !< DateTime.Today);
+            tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
             if (tasksDep.Any())
-                throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
-            DO.Task uppTask = new DO.Task(tsk.Id,idEng,tsk.Alias,tsk.Description,tsk.CreatedAtDate,tsk.RequiredEffortTime,tsk.IsMilestone,tsk.Copmlexity,tsk.StartDate,tsk.ScheduledDate,tsk.DeadlineDate,tsk.CompleteDate,tsk.Deliverables,tsk.Remarks);
+                throw new BlDoesNotExistException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
+            DO.Task uppTask = new DO.Task(tsk.Id, idEng, tsk.Alias, tsk.Description, tsk.CreatedAtDate, tsk.RequiredEffortTime, tsk.IsMilestone, tsk.Copmlexity, tsk.StartDate, tsk.ScheduledDate, tsk.DeadlineDate, tsk.CompleteDate, tsk.Deliverables, tsk.Remarks);
             _dal.Task.Update(uppTask);
         }
-        catch(DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException("cant update the Task in The Engineer", ex); }
+        catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException("cant update the Task in The Engineer", ex); }
+
 
     }
+    /// <summary>
+    /// to clear the data
+    /// </summary>
 
     public void Clear()
     {
         _dal.Engineer.Clear();
     }
-
+    /// <summary>
+    /// private function that help to get the engineer task
+    /// </summary>
+    /// <param name="doEng"></param>the engineer
+    /// <returns></returns>
     private BO.TaskInEngineer? GetEngineerTask(DO.Engineer doEng)
     {
         try

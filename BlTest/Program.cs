@@ -34,7 +34,6 @@ namespace BlTest
 
                 if (ans == "Y")
                 {
-                    // s_dal!.Dependency.Clear();
                     s_bl!.Task.Clear();
                     s_bl!.Engineer.Clear();
                     DateTime? start = null;
@@ -204,23 +203,9 @@ namespace BlTest
             eng.Email = Console.ReadLine();
             Console.WriteLine(@"Enter the engineer Name: ");
             eng.Name = Console.ReadLine();
-            //Console.WriteLine(@"Enter the Engineer ID for the task: ");
-            //int engineerId = int.Parse(Console.ReadLine()!);
-            //Console.WriteLine(@"Enter the Engineer Name for the task: ");
-            //string engineerName = (Console.ReadLine()!);
-            //BO.TaskInEngineer engineer = new BO.TaskInEngineer()
-            //{
-            //    Id = 0,
-            //    Alias=""
-            //};
-            //eng.Task = engineer;
             Console.WriteLine(@"Enter the level of the engineer: ");
             eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
             s_bl.Engineer.Create(eng);
-            //BO.Engineer engineer = new BO.Engineer(idD, costForHour, engineerEmail, engineerName, engineerLevel);
-            //s_bl!.Engineer.Create(eng);
-            //Console.WriteLine(crt);
-
         }
         static void ReadEngineerById()
         {
@@ -258,7 +243,6 @@ namespace BlTest
             Console.WriteLine(@"Enter id of Engineer: ");
             string? d = Console.ReadLine();
             int idD = int.Parse(d!);
-            //BO.Engineer? engi = new BO.Engineer();
             eng = s_bl!.Engineer.Read(idD)!;
             if (eng != null)
             {
@@ -268,14 +252,6 @@ namespace BlTest
                 eng.Email = Console.ReadLine();
                 Console.WriteLine(@"Enter the engineer Name: ");
                 eng.Name = Console.ReadLine();
-                //Console.WriteLine(@"Enter the Engineer ID for the task: ");
-                //int engineerId = int.Parse(Console.ReadLine()!);
-                //Console.WriteLine(@"Enter the Engineer Name for the task: ");
-                //string engineerName = (Console.ReadLine()!);
-                //BO.TaskInEngineer engineer = new BO.TaskInEngineer()
-                //{
-                //};
-                //eng.Task = engineer;
                 Console.WriteLine(@"Enter the level of the task: ");
                 eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
                 s_bl.Engineer.Update(eng);
@@ -330,13 +306,6 @@ namespace BlTest
                 };
                 tsk.Dependencies?.Add(dependency);
             }
-            //Console.WriteLine(@"Enter the Engineer ID for the task: ");
-            //int engineerId = int.Parse(Console.ReadLine()!);
-            //BO.EngineerInTask engineer = new BO.EngineerInTask()
-            //{
-            //    Id = engineerId,
-            //};
-            //tsk.Engineer = engineer;
             s_bl!.Task.Create(tsk);
         }
         static void ReadTaskById()
