@@ -193,8 +193,8 @@ internal class TaskImplementation : BlApi.ITask
             {
                 DO.Engineer? eng = _dal.Engineer.Read(item.Engineer!.Id);//to check if the id of the engieer is exist already
                 DO.Task? dtask = _dal.Task.Read(item!.Id);
-                //if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
-                //    throw new BlArgumentOutOfRangeException("You cannot add Engineer to a task when the program is in the middle of planning");
+                if (Tools.CheckStatusProject() == BO.StatusProject.Mid)
+                    throw new BlArgumentOutOfRangeException("You cannot add Engineer to a task when the program is in the middle of planning");
                 if ((int)eng!.Level! < (int)item!.Copmlexity)
                     throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
                 if (item.Engineer.Id != 0 && item.Engineer.Id != eng.Id)
