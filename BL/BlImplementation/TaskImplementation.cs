@@ -28,7 +28,6 @@ internal class TaskImplementation : BlApi.ITask
 
         try
         {
-
             if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
                 // Create a new DO.Task object
@@ -192,7 +191,7 @@ internal class TaskImplementation : BlApi.ITask
             Tools.CheckTaskHealth(item!);
             DO.Task task = _dal.Task.Read(item!.Id) ?? throw new BlDoesNotExistException("the task dosnt exist");
 
-            if (_dal.GetStartDay() is null && item?.StartDate is null)
+            if (Tools.CheckStatusProject()!=BO.StatusProject.Mid)
             {
                 task = task with
                 {
@@ -299,7 +298,7 @@ internal class TaskImplementation : BlApi.ITask
                 // Update or add the scheduled start date for the task
                 // Attempt to update the task in the data layer
                 DO.Task dtask = _dal.Task.Read(id)!;
-                if (_dal.GetStartDay() <= startDate) 
+                if (_dal.StartDate <= startDate) 
                 { 
                     _dal.Task.Update(dtask with { StartDate = startDate });
                 }

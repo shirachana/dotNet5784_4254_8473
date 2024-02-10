@@ -1,17 +1,20 @@
 ﻿namespace Dal;
 using DalApi;
+using DO;
+
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();
     private DalList() { }
-
-    public DateTime? GetStartDay()
+    public DateTime? StartDate
     {
-        return DataSource.Config.StartDateProject;
+        set => DataSource.Config.StartDateProject = value;
+        get => DataSource.Config.StartDateProject;
     }
-    public void setStartDay(DateTime? startDate)
+    public DateTime? EndDate
     {
-        DataSource.Config.StartDateProject = startDate;
+        set => DataSource.Config.EndDateProject = value;
+        get => DataSource.Config.EndDateProject;
     }
 
     public IDependency Dependency => new DependencyImplementation();

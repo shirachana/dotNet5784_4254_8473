@@ -36,8 +36,8 @@ namespace BlTest
                 {
                     s_bl!.Task.Clear();
                     s_bl!.Engineer.Clear();
-                    DateTime? start = null;
-                    s_bl.SetStartDay(start);
+                    s_bl.EndDate = null;
+                    s_bl.StartDate = null;
                     Initialization.Do();
                     validInput = true;
                 }
@@ -62,24 +62,24 @@ namespace BlTest
                 Console.WriteLine("3.Create The Start Date Of The Project");
                 int choice = GetUserChoice();
 
-                    switch (choice)
-                    {
-                        case 1:
-                            DisplayEntityMenuE("Engineer");
-                            break;
-                        case 2:
-                            DisplayEntityMenuT("Task");
-                            break;
-                        case 3:
-                            CreatStartDate();
-                            break;
-                        case 0:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            Console.WriteLine("Invalid choice. Please try again.");
-                            break;
-                    }
+                switch (choice)
+                {
+                    case 1:
+                        DisplayEntityMenuE("Engineer");
+                        break;
+                    case 2:
+                        DisplayEntityMenuT("Task");
+                        break;
+                    case 3:
+                        CreatStartDate();
+                        break;
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
             } while (true);
         }
 
@@ -114,7 +114,7 @@ namespace BlTest
                     case 5:
                         DeleteEngineer();
                         break;
-                        case 6:
+                    case 6:
                         UpdateTheEngineerTask();
                         break;
                     case 0:
@@ -178,18 +178,12 @@ namespace BlTest
         }
         static void CreatStartDate()
         {
-            if (Tools.CheckStatusProject() != BO.StatusProject.Planning)
-                throw new BlCantScheduleTheProject("cant creat the start date of the project");
-            Console.WriteLine("Enter the project Date: ");
-            if (DateTime.TryParse(Console.ReadLine()!, out DateTime startDate))
-            {
-                try { Tools.CreatTheSchedule(startDate); }
-                catch (BlCantScheduleTheProject ex) { Console.WriteLine(ex); }
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
+            Console.WriteLine("enterStartDate\n");
+            string Date = Console.ReadLine()!;
+            DateTime.TryParse(Date, out DateTime date);
+
+            try { s_bl.StartDate = date; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 
         static void CreatEngineer()
@@ -435,7 +429,7 @@ namespace BlTest
             }
             else
             {
-                Console.WriteLine(  ("Invalid date format. Please enter again"));
+                Console.WriteLine(("Invalid date format. Please enter again"));
             }
         }
     }

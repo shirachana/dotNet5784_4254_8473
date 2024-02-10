@@ -109,7 +109,7 @@ public static class Tools
     {
         var tasks = BlApi.Factory.Get().Task;
 
-        if (Factory.Get().GetStartDay() == null)
+        if (Factory.Get().StartDate == null)
             return StatusProject.Planning;
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
@@ -145,7 +145,7 @@ public static class Tools
     public static void CreatTheSchedule(DateTime startDateP)
     {
         if (startDateP >= DateTime.Today)
-            Factory.Get().SetStartDay(startDateP);
+            Factory.Get().StartDate =startDateP;
         else
             throw new BlCantScheduleTheProject("the time pass already");
     }

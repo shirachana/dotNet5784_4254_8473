@@ -11,28 +11,33 @@ internal class Bl : IBl
 
     public ITask Task => new TaskImplementation();
 
-    public DateTime? GetStartDay() => dal.GetStartDay();
-    public void  SetStartDay(DateTime? dateTime) =>dal.setStartDay(dateTime);    
+    public DateTime? StartDate
+    {
+        set
+        {
+            if (value is null)
+                throw new BlDoesNotExistException("there is no start date");
 
-    //public void ScheduleTasks()
-    //{
-    //    var tasks = Factory.Get().Task;
+            //if (dal.Task.ReadAll(x => x.StartDate < value || x.StartDate is null).Any())
+            //    throw new ArgumentException();
 
-    //    foreach (var task in tasks.ReadAll())
-    //    {
-    //        var currentTask = tasks.Read(task.Id)!;
+            dal.StartDate = value;
+        }
+        get => dal.StartDate;
+    }
+    public DateTime? EndDate {
+        set
+        {
+            if (value is null)
+                throw new BlDoesNotExistException("there is no end date");
 
-    //        if (currentTask.Dependencies == null)
-    //        {
-    //            currentTask.StartDate = IBl.StartDateProject;
-    //        }
-    //        else
-    //        {
-    //            var maxDeadlineDate = currentTask.Dependencies.Max(dep => tasks.Read(dep.Id)!.DeadlineDate);
-    //            currentTask.StartDate = maxDeadlineDate > currentTask.DeadlineDate ? maxDeadlineDate : IBl.StartDateProject;
-    //        }
-    //    }
-    //}
+            if (dal.Task.ReadAll(x => x.DeadlineDate > value || x.DeadlineDate is not null).Any())
+                throw new BlDoesNotExistException("there is no daedline or the deadline is bigger than value");
+
+            dal.EndDate = value;
+        }
+        get => dal.EndDate;
+    }
 
 }
 

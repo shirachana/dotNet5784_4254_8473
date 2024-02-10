@@ -13,6 +13,7 @@ internal static class DataSource
            private static int nextDependencyId = startDependencyId;
            internal static int NextDependencyId { get => nextDependencyId++; }
            internal static DateTime? StartDateProject = null;
+           internal static DateTime? EndDateProject = null;
 
     }
 
