@@ -60,6 +60,7 @@ namespace BlTest
                 Console.WriteLine("1. Engineer");
                 Console.WriteLine("2. Task");
                 Console.WriteLine("3.Create The Start Date Of The Project");
+                Console.WriteLine("3.Create The end Date Of The Project");
                 int choice = GetUserChoice();
 
                 switch (choice)
@@ -73,6 +74,9 @@ namespace BlTest
                     case 3:
                         CreatStartDate();
                         break;
+                    case 4:
+                        CreatEndDate();
+                        break;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -82,7 +86,6 @@ namespace BlTest
                 }
             } while (true);
         }
-
         static void DisplayEntityMenuE(string entityName)
         {
             while (true)
@@ -178,11 +181,27 @@ namespace BlTest
         }
         static void CreatStartDate()
         {
-            Console.WriteLine("enterStartDate\n");
+            Console.WriteLine("enter StartDate\n");
             string Date = Console.ReadLine()!;
             DateTime.TryParse(Date, out DateTime date);
-
-            try { s_bl.StartDate = date; }
+            try {
+                s_bl.StartDate = date;
+                if (date! < DateTime.Today)
+                    throw new Exception("the date pass already");
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+        private static void CreatEndDate()
+        {
+            Console.WriteLine("enter EndDate\n");
+            string Date = Console.ReadLine()!;
+            DateTime.TryParse(Date, out DateTime date);
+            try
+            {
+                s_bl.EndDate = date;
+                if (date! <s_bl.StartDate )
+                    throw new Exception("the date its earlier than the start date");
+            }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
 

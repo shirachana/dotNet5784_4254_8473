@@ -76,8 +76,8 @@ internal class TaskImplementation : BlApi.ITask
             BO.Task? task = Read(id);
             if (Tools.IsStatusProject(task!))
             {
-               
-                if (task!.Status == BO.Status.Done|| task!.Status == BO.Status.OnTrack)
+
+                if (task!.Status == BO.Status.Done || task!.Status == BO.Status.OnTrack)
                 {
                     throw new BlCantBeDeletedException($"Task with ID={id} cannot be deleted");
                 }
@@ -191,7 +191,7 @@ internal class TaskImplementation : BlApi.ITask
             Tools.CheckTaskHealth(item!);
             DO.Task task = _dal.Task.Read(item!.Id) ?? throw new BlDoesNotExistException("the task dosnt exist");
 
-            if (Tools.CheckStatusProject()!=BO.StatusProject.Mid)
+            if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
             {
                 task = task with
                 {
@@ -232,20 +232,20 @@ internal class TaskImplementation : BlApi.ITask
             else
             {
                 DO.Task? dtask = _dal.Task.Read(item!.Id);
-                if (Tools.CheckStatusProject() != BO.StatusProject.Execution && item?.Engineer?.Id !=null)
+                if (Tools.CheckStatusProject() != BO.StatusProject.Execution && item?.Engineer?.Id != null)
                     throw new BlArgumentOutOfRangeException("You cannot add Engineer to a task when the program is in the middle of planning");
                 DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
                 if ((int)eng!.Level! < (int)item!.Copmlexity)
                     throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
                 if (item.Engineer.Id != 0 && item.Engineer.Id != eng.Id)
                     throw new BlArgumentOutOfRangeException("there is another Engineer that work on this task");
-                IEnumerable<DO.Task> tasksDep =
-                  from DO.Dependency d in _dal.Dependency.ReadAll()
-                  where d.DependentTask == item.Id
-                  select _dal.Task.Read(d.DependsOnTask);
-                tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
-                if (tasksDep.Any())
-                    throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
+                //IEnumerable<DO.Task> tasksDep =
+                //  from DO.Dependency d in _dal.Dependency.ReadAll()
+                //  where d.DependentTask == item.Id
+                //  select _dal.Task.Read(d.DependsOnTask);
+                //tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
+                //if (tasksDep.Any())
+                //    throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
                 dtask = dtask! with
                 {
                     Engineerld = item.Engineer!.Id,
@@ -298,8 +298,8 @@ internal class TaskImplementation : BlApi.ITask
                 // Update or add the scheduled start date for the task
                 // Attempt to update the task in the data layer
                 DO.Task dtask = _dal.Task.Read(id)!;
-                if (_dal.StartDate <= startDate) 
-                { 
+                if (_dal.StartDate <= startDate)
+                {
                     _dal.Task.Update(dtask with { StartDate = startDate });
                 }
                 else { throw new BlArgumentOutOfRangeException($"This start day is before the start of the project"); }
@@ -329,12 +329,12 @@ internal class TaskImplementation : BlApi.ITask
         try
         {
             //Console.WriteLine($"Trying to read engineer with ID: {engineerId}");
-            DO.Engineer? eng = _dal.Engineer.Read(engineerId)?? throw new BlDoesNotExistException($"There is no Engineer in the task");
+            DO.Engineer? eng = _dal.Engineer.Read(engineerId) ?? throw new BlDoesNotExistException($"There is no Engineer in the task");
 
             if (eng == null)
             {
 
-                 return null;// If engineer doesn't exist, return null
+                return null;// If engineer doesn't exist, return null
             }
 
             return new EngineerInTask()
@@ -343,9 +343,9 @@ internal class TaskImplementation : BlApi.ITask
                 Name = eng.Name
             };
         }
-        catch (DO.DalDoesNotExistException )
+        catch (DO.DalDoesNotExistException)
         {
-           //Console.WriteLine($"Error reading engineer: {ex.Message}");
+            //Console.WriteLine($"Error reading engineer: {ex.Message}");
             return null; // If engineer doesn't exist, return null
         }
     }
