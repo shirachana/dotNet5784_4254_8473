@@ -7,50 +7,6 @@ namespace BO;
 
 public static class Tools
 {
-    // Static extension method for ToStringProperty
-
-    //public static string ToStringProperty<T>(this T obj)
-    //{
-    //    if (obj == null)
-    //        return "null";
-
-    //    Type type = obj.GetType();
-    //    PropertyInfo[] properties = type.GetProperties();
-
-    //    StringBuilder sb = new StringBuilder();
-    //    sb.AppendLine($"Type: {type.Name}");
-
-    //    foreach (PropertyInfo property in properties)
-    //    {
-    //        if(property is IEnumerable)
-    //        {
-    //            IEnumerable<object>? enumerable = property.GetValue(obj) as IEnumerable<object>;
-    //            if (enumerable != null)
-    //            {
-    //                sb.AppendLine($"{property.Name}:");
-    //                foreach (var item in enumerable)
-    //                {
-    //                    sb.AppendLine($"    {GetValueString(item)}");
-    //                }
-    //            }
-    //        }
-    //        if(property is List<T>)
-    //        {
-    //            var list = property.GetValue(obj) as IList;
-    //            if (list != null)
-    //            {
-    //                sb.AppendLine($"{property.Name}:");
-    //                foreach (var item in list)
-    //                {
-    //                    sb.AppendLine($"    {GetValueString(item)}");
-    //                }
-    //            }
-    //        }
-    //        sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
-    //    }
-
-    //    return sb.ToString();
-    //}
     public static string ToStringProperty<T>(this T obj)
     {
         if (obj == null)
@@ -117,10 +73,6 @@ public static class Tools
 
     public static BO.Status GetStatus(DO.Task delTask)
     {
-        //return delTask.ScheduledDate is null ? Status.Unscheduled :
-        //    delTask.StartDate is null ? Status.Scheduled :
-        //    delTask.CompleteDate is null ? Status.OnTrack :
-        //    Status.Done;
         return delTask.StartDate is null ? Status.Unscheduled :
            delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
            delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
@@ -146,11 +98,6 @@ public static class Tools
         {
             throw new BlDoesNotExistException("Task object cannot be null");
         }
-        // Check the validity of the task's data
-        //if (item.Id <= 0)
-        //{
-        //    throw new BlCantBeDeletedException("Task ID must be a positive number");
-        //}
         if (string.IsNullOrEmpty(item?.Alias))
         {
             throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
