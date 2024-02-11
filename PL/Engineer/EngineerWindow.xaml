@@ -1,0 +1,44 @@
+﻿<Window x:Class="PL.Engineer.EngineerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Engineer"
+        mc:Ignorable="d"
+        Title="EngineerWindow" Height="450" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Controls for Id -->
+        <Label VerticalAlignment="Top" Margin="100,32,50,0"  Content="Id:" Grid.Row="4"/>
+        <TextBox VerticalAlignment="Center" Margin="267,0,0,0" Text="{Binding Id, Mode=TwoWay}"/>
+
+        <!-- Controls for Cost -->
+        <Label  VerticalAlignment="Center" Margin="267,0,0,0" Content="Name:"/>
+        <TextBox  Text="{Binding Cost, Mode=TwoWay}" Margin="-10,58,10,-26" Grid.Row="4" TextChanged="TextBox_TextChanged"/>
+
+        <!-- Controls for Email -->
+        <Label Grid.Column="0" Grid.Row="2" Content="Email:"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Email, Mode=TwoWay}"/>
+
+        <!-- Controls for Name -->
+        <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="4" Content="Cost:" Margin="123,206,125,-206" RenderTransformOrigin="0.763,0.451"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Name, Mode=TwoWay}"/>
+
+        <!-- Controls for Level (assuming it's an enum) -->
+        <Label Grid.Column="0"  Grid.Row="4" Content="Level:" Margin="118,159,66,-157"/>
+        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Levels}" SelectedItem="{Binding Level, Mode=TwoWay}"/>
+    </Grid>
+
+</Window>
