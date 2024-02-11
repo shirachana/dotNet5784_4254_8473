@@ -16,7 +16,7 @@ internal class Bl : IBl
         set
         {
             if (value is null)
-                throw new BlDoesNotExistException("there is no start date");
+                value = null;
 
             //if (dal.Task.ReadAll(x => x.StartDate < value || x.StartDate is null).Any())
             //    throw new ArgumentException();
@@ -29,7 +29,7 @@ internal class Bl : IBl
         set
         {
             if (value is null)
-                throw new BlDoesNotExistException("there is no end date");
+                value = null;
 
             if (dal.Task.ReadAll(x => x.DeadlineDate > value || x.DeadlineDate is not null).Any())
                 throw new BlDoesNotExistException("there is no daedline or the deadline is bigger than value");

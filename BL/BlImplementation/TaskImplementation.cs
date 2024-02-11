@@ -28,7 +28,7 @@ internal class TaskImplementation : BlApi.ITask
 
         try
         {
-            if (Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
+            if (item != null && Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
                 // Create a new DO.Task object
 

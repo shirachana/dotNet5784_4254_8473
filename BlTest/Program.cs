@@ -59,8 +59,8 @@ namespace BlTest
                 Console.WriteLine("0. Exit");
                 Console.WriteLine("1. Engineer");
                 Console.WriteLine("2. Task");
-                Console.WriteLine("3.Create The Start Date Of The Project");
-                Console.WriteLine("3.Create The end Date Of The Project");
+                Console.WriteLine("3. Create The Start Date Of The Project");
+                Console.WriteLine("4. Create The end Date Of The Project");
                 int choice = GetUserChoice();
 
                 switch (choice)
@@ -209,15 +209,36 @@ namespace BlTest
         {
             BO.Engineer? eng = new BO.Engineer();
             Console.WriteLine(@"Enter the engineer ID: ");
-            eng.Id = int.Parse(Console.ReadLine()!);
+            if (int.TryParse(Console.ReadLine(), out int engineerId) && engineerId > 0)
+            {
+                eng.Id = engineerId;
+            }
+            else
+            {
+                throw new Exception("Invalid engineer ID. Please enter a positive integer.");
+            }
             Console.WriteLine(@"Enter the engineer cost for hour: ");
-            eng.Cost = double.Parse(Console.ReadLine()!);
+            if (double.TryParse(Console.ReadLine(), out double engineerCost) && engineerCost >= 0)
+            {
+                eng.Cost = engineerCost;
+            }
+            else
+            {
+                throw new Exception("Invalid engineer cost. Please enter a non-negative number.");
+            }
             Console.WriteLine(@"Enter the engineer Email: ");
             eng.Email = Console.ReadLine();
             Console.WriteLine(@"Enter the engineer Name: ");
             eng.Name = Console.ReadLine();
             Console.WriteLine(@"Enter the level of the engineer: ");
-            eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
+            if (int.TryParse(Console.ReadLine(), out int engineerLevel) && Enum.IsDefined(typeof(BO.EngineerExperience), engineerLevel))
+            {
+                eng.Level = (BO.EngineerExperience)engineerLevel;
+            }
+            else
+            {
+                throw new Exception("Invalid engineer level. Please enter a valid integer corresponding to the EngineerExperience enum.");
+            }
             s_bl.Engineer.Create(eng);
         }
         static void ReadEngineerById()
@@ -257,18 +278,30 @@ namespace BlTest
             string? d = Console.ReadLine();
             int idD = int.Parse(d!);
             eng = s_bl!.Engineer.Read(idD)!;
-            if (eng != null)
-            {
-                Console.WriteLine(@"Enter the engineer cost for hour: ");
-                eng.Cost = double.Parse(Console.ReadLine()!);
-                Console.WriteLine(@"Enter the engineer Email: ");
-                eng.Email = Console.ReadLine();
-                Console.WriteLine(@"Enter the engineer Name: ");
-                eng.Name = Console.ReadLine();
-                Console.WriteLine(@"Enter the level of the task: ");
-                eng.Level = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-                s_bl.Engineer.Update(eng);
-            }
+                if (eng != null)
+                {
+
+                    Console.WriteLine(@"Enter the engineer cost for hour: ");
+                    eng.Cost = double.Parse(Console.ReadLine()!) >= 0 ? double.Parse(Console.ReadLine()!) : 
+                        throw new Exception("Invalid input. Please enter a non-negative number.");
+
+                    Console.WriteLine(@"Enter the engineer Email: ");
+                    eng.Email = !string.IsNullOrWhiteSpace(Console.ReadLine()) ? Console.ReadLine() : 
+                        throw new Exception("Invalid input. Please enter a non-empty string.");
+
+                    Console.WriteLine(@"Enter the engineer Name: ");
+                    eng.Name = !string.IsNullOrWhiteSpace(Console.ReadLine()) ? Console.ReadLine() : 
+                        throw new Exception("Invalid input. Please enter a non-empty string.");
+
+                    Console.WriteLine(@"Enter the level of the engineer: ");
+                    eng.Level = Enum.TryParse(Console.ReadLine(), out BO.EngineerExperience level) && Enum.IsDefined(typeof(BO.EngineerExperience), level) ? level : 
+                        throw new Exception("Invalid input. Please enter a valid EngineerExperience value.");
+                    s_bl.Engineer.Update(eng);
+                }
+            
+
+                
+           
         }
         static void DeleteEngineer()
         {
@@ -283,44 +316,80 @@ namespace BlTest
         {
             BO.Task tsk = new BO.Task();
             Random s_rand = new Random();
-            Console.WriteLine(@"Enter the discription of the task if there: ");
-            tsk.Description = Console.ReadLine();
-            Console.WriteLine(@"Enter the alias of the task");
-            tsk.Alias = Console.ReadLine();
-            Console.WriteLine(@"Enter the Remarks of the task: ");
-            tsk.Remarks = Console.ReadLine();
-            Console.WriteLine(@"Enter the level of the task: ");
-            tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
-            Console.WriteLine(@"Enter the Creat at Date of the task: ");
-            string dateString = Console.ReadLine()!;
-            if (DateTime.TryParse(dateString, out DateTime date))
-            {
-                tsk.CreatedAtDate = date;
-            }
-            else
-            {
-                throw new Exception("Invalid date format. Please enter again");
-            }
-            Console.WriteLine(@"Enter the Required Effort Time: ");
-            int requiredEffortDays = int.Parse(Console.ReadLine()!);
-            tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
-            Console.WriteLine(@"Enter the deliverables of the task: ");
-            tsk.Deliverables = Console.ReadLine();
-            Console.WriteLine(@"Enter number of dependencies: ");
-            int numberOfDependencies = int.Parse(Console.ReadLine()!);
-            tsk.Dependencies = new List<BO.TaskInList>();
-            for (int i = 0; i < numberOfDependencies; i++)
-            {
-                Console.WriteLine(@"Enter the Dependency id: ");
-                int idDep = int.Parse(Console.ReadLine()!);
-                BO.TaskInList dependency = new BO.TaskInList
+
+            
+                Console.WriteLine(@"Enter the description of the task if there: ");
+                tsk.Description = Console.ReadLine() ?? throw new Exception("Task description cannot be null.");
+
+                Console.WriteLine(@"Enter the alias of the task");
+                tsk.Alias = Console.ReadLine() ?? throw new Exception("Task alias cannot be null.");
+
+                Console.WriteLine(@"Enter the Remarks of the task: ");
+                tsk.Remarks = Console.ReadLine() ?? throw new Exception("Task remarks cannot be null.");
+
+                Console.WriteLine(@"Enter the level of the task: ");
+                if (int.TryParse(Console.ReadLine(), out int complexityValue) && Enum.IsDefined(typeof(BO.EngineerExperience), complexityValue))
                 {
-                    Id = idDep,
-                };
-                tsk.Dependencies?.Add(dependency);
-            }
+                    tsk.Copmlexity = (BO.EngineerExperience)complexityValue;
+                }
+                else
+                {
+                    throw new Exception("Invalid complexity level.");
+                }
+                Console.WriteLine(@"Enter the Create at Date of the task: ");
+                if (DateTime.TryParse(Console.ReadLine()!, out DateTime date))
+                {
+                    tsk.CreatedAtDate = date;
+                }
+                else
+                {
+                    throw new Exception("Invalid date format.");
+                }
+                Console.WriteLine(@"Enter the Required Effort Time: ");
+                int requiredEffortDays;
+                if (int.TryParse(Console.ReadLine(), out requiredEffortDays))
+                {
+                    tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
+                }
+                else
+                {
+                    throw new Exception("Invalid input for required effort time.");
+                }
+
+                Console.WriteLine(@"Enter the deliverables of the task: ");
+                tsk.Deliverables = Console.ReadLine();
+
+                Console.WriteLine(@"Enter the number of dependencies: ");
+                int numberOfDependencies;
+                if (int.TryParse(Console.ReadLine(), out numberOfDependencies))
+                {
+                    tsk.Dependencies = new List<BO.TaskInList>();
+                    for (int i = 0; i < numberOfDependencies; i++)
+                    {
+                        Console.WriteLine(@"Enter the Dependency id: ");
+                        if (int.TryParse(Console.ReadLine(), out int idDep))
+                        {
+                            BO.TaskInList dependency = new BO.TaskInList
+                            {
+                                Id = idDep,
+                            };
+                            tsk.Dependencies.Add(dependency);
+                        }
+                        else
+                        {
+                            throw new Exception("Invalid input for dependency id.");
+                        }
+                    }
+                }
+                else
+                {
+                    throw new Exception("Invalid input for number of dependencies.");
+                }
             s_bl!.Task.Create(tsk);
         }
+
+           
+        
         static void ReadTaskById()
         {
 
@@ -359,12 +428,18 @@ namespace BlTest
                 Console.WriteLine(@"Enter the Remarks of the task: ");
                 tsk.Remarks = Console.ReadLine();
                 Console.WriteLine(@"Enter the level of the task: ");
-                tsk.Copmlexity = (BO.EngineerExperience)int.Parse(Console.ReadLine()!);
+                if (int.TryParse(Console.ReadLine(), out int complexityValue) && Enum.IsDefined(typeof(BO.EngineerExperience), complexityValue))
+                {
+                    tsk.Copmlexity = (BO.EngineerExperience)complexityValue;
+                }
+                else
+                {
+                    throw new Exception("Invalid complexity level.");
+                }
                 Console.WriteLine(@"Enter the deliverables of the task: ");
                 tsk.Deliverables = Console.ReadLine();
                 Console.WriteLine(@"Enter the Creat at Date of the task: ");
-                string dateString = Console.ReadLine()!;
-                if (DateTime.TryParse(dateString, out DateTime date))
+                if (DateTime.TryParse(Console.ReadLine()!, out DateTime date))
                 {
                     tsk.CreatedAtDate = date;
                 }
@@ -373,8 +448,15 @@ namespace BlTest
                     throw new Exception("Invalid date format. Please enter again");
                 }
                 Console.WriteLine(@"Enter the Required Effort Time: ");
-                int requiredEffortDays = int.Parse(Console.ReadLine()!);
-                tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
+                int requiredEffortDays;
+                if (int.TryParse(Console.ReadLine(), out requiredEffortDays))
+                {
+                    tsk.RequiredEffortTime = TimeSpan.FromDays(requiredEffortDays);
+                }
+                else
+                {
+                    throw new Exception("Invalid input for required effort time.");
+                }
                 Console.WriteLine(@"Enter the Scheduled Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime scheduledDate))
                 {
