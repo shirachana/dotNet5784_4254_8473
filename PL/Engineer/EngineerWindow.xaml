@@ -5,40 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="400">
+        Title="EngineerWindow" Height="450" Width="400"
+        DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
-        <Grid.ColumnDefinitions>
+        <Label Content="Id:" HorizontalAlignment="Left" Margin="65,65,0,0" VerticalAlignment="Top" Height="26" Width="25" RenderTransformOrigin="2.661,0.532"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="65,105,0,0" VerticalAlignment="Top" Height="26" Width="45" RenderTransformOrigin="2.661,0.532"/>
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="65,145,0,0" VerticalAlignment="Top" Height="26" Width="45" RenderTransformOrigin="2.661,0.532"/>
+        <Label Content="Level:" HorizontalAlignment="Left" Margin="65,185,0,0" VerticalAlignment="Top" Height="26" Width="45" RenderTransformOrigin="2.661,0.532"/>
+        <Label Content="Cost:" HorizontalAlignment="Left" Margin="65,225,0,0" VerticalAlignment="Top" Height="26" Width="36" RenderTransformOrigin="2.661,0.532"/>
+        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="170,70,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="20" Width="120"/>
+        <TextBox Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="170,110,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="20" Width="120"/>
+        <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="170,150,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="20" Width="120"/>
+        <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="170,230,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="20" Width="120"/>
+        <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, 
+         ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Margin="170,190,0,0" VerticalAlignment="Top" Height="20" Width="120"/>
+        <Button Content="Add" HorizontalAlignment="Left" Margin="65,275,0,0" VerticalAlignment="Top" Height="29" Width="61"/>
+        <Button Content="Update" HorizontalAlignment="Left" Margin="170,275,0,0" VerticalAlignment="Top" Height="29" Width="61"/>
 
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!-- Controls for Id -->
-        <Label VerticalAlignment="Top" Margin="100,32,50,0"  Content="Id:" Grid.Row="4"/>
-        <TextBox VerticalAlignment="Center" Margin="267,0,0,0" Text="{Binding Id, Mode=TwoWay}"/>
-
-        <!-- Controls for Cost -->
-        <Label  VerticalAlignment="Center" Margin="267,0,0,0" Content="Name:"/>
-        <TextBox  Text="{Binding Cost, Mode=TwoWay}" Margin="-10,58,10,-26" Grid.Row="4" TextChanged="TextBox_TextChanged"/>
-
-        <!-- Controls for Email -->
-        <Label Grid.Column="0" Grid.Row="2" Content="Email:"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Email, Mode=TwoWay}"/>
-
-        <!-- Controls for Name -->
-        <Label VerticalAlignment="Center"  Grid.Column="0" Grid.Row="4" Content="Cost:" Margin="123,206,125,-206" RenderTransformOrigin="0.763,0.451"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding Name, Mode=TwoWay}"/>
-
-        <!-- Controls for Level (assuming it's an enum) -->
-        <Label Grid.Column="0"  Grid.Row="4" Content="Level:" Margin="118,159,66,-157"/>
-        <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Levels}" SelectedItem="{Binding Level, Mode=TwoWay}"/>
     </Grid>
-
 </Window>

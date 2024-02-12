@@ -19,14 +19,39 @@ namespace PL.Engineer
     /// </summary>
     public partial class EngineerWindow : Window
     {
-        public EngineerWindow()
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+        public BO.Engineer Engineer
         {
-            InitializeComponent();
+            get { return (BO.Engineer)GetValue(EngineerProperty); }
+            set { SetValue(EngineerProperty, value); }
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        public static readonly DependencyProperty EngineerProperty =
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
+        public EngineerWindow(int engineerId = 0)
         {
+            InitializeComponent();
+            if (engineerId == 0)
+            {
+                // Create a new object with default values
+                Engineer = new BO.Engineer();
+            }
+            else
+            {
+                try
+                {
+                    // Retrieve the existing engineer object from the BL based on the engineerId
+                    Engineer = s_bl.Engineer.Read(engineerId)!;
+                }
+                catch (Exception ex)
+                {
+                    // Handle exceptions, e.g., display an error message
+                    MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Close the window or handle the error as appropriate
+                    Close();
+                }
 
+            }
         }
     }
 }
