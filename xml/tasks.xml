@@ -3200,4 +3200,2244 @@
     <Deliverables>Market Trend Analysis Software</Deliverables>
     <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
   </Task>
+  <Task>
+    <Id>201</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-15T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P82D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>None</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>202</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P312D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>203</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P145D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>204</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P186D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>205</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P248D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>206</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-01-14T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P354D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>207</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-01-19T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P278D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>208</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-01-17T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P282D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>209</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P305D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>None</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>210</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-24T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P9D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>211</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-02-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P77D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>212</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-23T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P110D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>213</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P351D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>214</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P143D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>215</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P211D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>216</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P49D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>217</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P77D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>218</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-27T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P70D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>219</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P45D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>220</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-26T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P256D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>221</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P65D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>222</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P215D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>223</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P259D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>224</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P331D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>225</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-02-03T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P123D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>226</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P59D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>227</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P187D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>228</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-01-29T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P185D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>229</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P281D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>230</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P272D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>231</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-02-02T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P116D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>232</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P82D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>233</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-02-02T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P269D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>234</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-02-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P168D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>235</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P314D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>236</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P184D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>237</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P279D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>238</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P30D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>239</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P295D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>240</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-14T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P341D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>241</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P6D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>242</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P245D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>243</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-02-03T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P48D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>244</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-28T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P281D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>245</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-01-25T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P146D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>246</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-02-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P332D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>247</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-01-14T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P211D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>248</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P299D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>249</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P314D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>250</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P89D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>251</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-01-24T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P147D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>252</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P121D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>253</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-18T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P40D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>254</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-01-23T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P175D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>255</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-02-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P239D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>256</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-24T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P103D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>257</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P277D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>258</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P39D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>259</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-27T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P137D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>260</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P268D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>261</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-02-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P365D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>262</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P82D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>263</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P121D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>264</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-15T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P361D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>265</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P333D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>266</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-02-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P157D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>267</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-01-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P342D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>268</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P311D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>269</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P181D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>270</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-12T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P87D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>271</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-01-14T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P113D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>272</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P172D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>273</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P344D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>274</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P73D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>275</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-02-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P229D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>276</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P47D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>277</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-28T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P225D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>278</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P1D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>279</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-25T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P352D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>280</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-23T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P133D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>281</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-29T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P218D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>282</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-02-11T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P119D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>283</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P313D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>284</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-27T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P2D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>285</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P223D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>286</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-01-15T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P193D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>287</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-02-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P190D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>288</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P225D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>289</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-01-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P51D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>290</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-16T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P358D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>291</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-02-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P365D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>292</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-12T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P23D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>293</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P315D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>294</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-01-27T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P127D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>295</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-01-12T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P107D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>296</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P338D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>297</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-21T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P1D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>298</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-21T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P74D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>299</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-29T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P205D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>300</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P243D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>301</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-25T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P225D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>302</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-02-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P217D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>303</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-02-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P25D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>304</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P18D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>305</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P20D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>306</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-01-26T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P268D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>307</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P235D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>308</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-02-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P200D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>309</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P88D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>310</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-03T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P76D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>311</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-01-19T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P342D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>312</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-03T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P315D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>313</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-14T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P215D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>314</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-02-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P329D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>315</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-01-08T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P168D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>316</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-02-11T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P32D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>317</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P269D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>318</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-16T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P292D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>319</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-02-11T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P101D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>320</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-21T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P328D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
+  <Task>
+    <Id>321</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-design</Alias>
+    <Description>Design a new recipe for a food product.</Description>
+    <CreatedAtDate>2024-01-09T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P147D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Design Software</Deliverables>
+    <Remarks>Include details about ingredients, quantities, and preparation steps.</Remarks>
+  </Task>
+  <Task>
+    <Id>322</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>ingredient-sourcing</Alias>
+    <Description>Source and procure high-quality ingredients for recipes</Description>
+    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P258D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Sourcing Tool</Deliverables>
+    <Remarks>Keep track of suppliers and ingredient quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>323</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>cost-analysis</Alias>
+    <Description>Analyze the cost of ingredients and production for a recipe.</Description>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P252D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Cost Analysis Software</Deliverables>
+    <Remarks>Consider factors like labor, packaging, and overhead costs</Remarks>
+  </Task>
+  <Task>
+    <Id>324</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>quality-control</Alias>
+    <Description>Implement and monitor quality control measures in food production.</Description>
+    <CreatedAtDate>2024-01-11T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P95D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Quality Control System</Deliverables>
+    <Remarks>Set standards and ensure compliance with quality regulations.</Remarks>
+  </Task>
+  <Task>
+    <Id>325</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>production-scheduling</Alias>
+    <Description>Schedule and manage production processes for multiple recipes.</Description>
+    <CreatedAtDate>2024-01-18T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P58D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Production Scheduling Tool</Deliverables>
+    <Remarks>Optimize production efficiency and minimize downtime.</Remarks>
+  </Task>
+  <Task>
+    <Id>326</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>batch-tracking</Alias>
+    <Description>Track batches of food products throughout the production process.</Description>
+    <CreatedAtDate>2024-01-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P332D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Batch Tracking System</Deliverables>
+    <Remarks>Monitor quality, traceability, and compliance</Remarks>
+  </Task>
+  <Task>
+    <Id>327</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>equipment-maintenance</Alias>
+    <Description>Schedule and perform maintenance on production equipment.</Description>
+    <CreatedAtDate>2024-01-06T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P188D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Equipment Maintenance Software</Deliverables>
+    <Remarks>Ensure equipment reliability and prevent breakdowns</Remarks>
+  </Task>
+  <Task>
+    <Id>328</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>regulatory-compliance</Alias>
+    <Description>Ensure compliance with food safety and labeling regulations.</Description>
+    <CreatedAtDate>2024-02-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P352D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Regulatory Compliance Tool</Deliverables>
+    <Remarks>Stay informed about regulatory changes and updates.</Remarks>
+  </Task>
+  <Task>
+    <Id>329</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>new-ingredient-evaluation</Alias>
+    <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
+    <CreatedAtDate>2024-01-11T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P129D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Beginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Ingredient Evaluation System</Deliverables>
+    <Remarks>Consider factors like taste, texture, and shelf life.</Remarks>
+  </Task>
+  <Task>
+    <Id>330</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>allergen-management</Alias>
+    <Description>Manage and control allergen information for food products.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P114D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Allergen Management Software</Deliverables>
+    <Remarks>Ensure accurate allergen labeling and prevent cross-contamination.</Remarks>
+  </Task>
+  <Task>
+    <Id>331</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>packaging-design</Alias>
+    <Description>Design and choose packaging for food products.</Description>
+    <CreatedAtDate>2024-01-16T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P108D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Packaging Design Tool</Deliverables>
+    <Remarks>Consider branding, shelf life, and environmental impact.</Remarks>
+  </Task>
+  <Task>
+    <Id>332</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>supplier-performance</Alias>
+    <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P223D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Supplier Performance Evaluation System</Deliverables>
+    <Remarks>Consider factors like reliability, quality, and pricing.</Remarks>
+  </Task>
+  <Task>
+    <Id>333</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>shelf-life-testing</Alias>
+    <Description>Conduct tests to determine the shelf life of food products.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P35D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Shelf Life Testing Software</Deliverables>
+    <Remarks>Consider storage conditions, packaging, and quality over time.</Remarks>
+  </Task>
+  <Task>
+    <Id>334</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>sustainability-assessment</Alias>
+    <Description>Assess and improve the sustainability of food production processes.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P202D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Sustainability Assessment Tool</Deliverables>
+    <Remarks>Consider environmental impact, waste reduction, and energy efficiency</Remarks>
+  </Task>
+  <Task>
+    <Id>335</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>recipe-scaling</Alias>
+    <Description>Scale up or down recipes to meet production requirements.</Description>
+    <CreatedAtDate>2024-01-20T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P320D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Recipe Scaling Calculator</Deliverables>
+    <Remarks>Adjust ingredient quantities while maintaining quality.</Remarks>
+  </Task>
+  <Task>
+    <Id>336</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>traceability-system</Alias>
+    <Description>Implement a system for tracing ingredients from source to final product.</Description>
+    <CreatedAtDate>2024-01-12T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P9D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Traceability System</Deliverables>
+    <Remarks>Enhance transparency and respond to recalls effectively.</Remarks>
+  </Task>
+  <Task>
+    <Id>337</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>food-safety-training</Alias>
+    <Description>Provide training on food safety practices for production staff.</Description>
+    <CreatedAtDate>2024-01-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P158D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Food Safety Training Module</Deliverables>
+    <Remarks>Keep staff informed about hygiene, sanitation, and safety protocols</Remarks>
+  </Task>
+  <Task>
+    <Id>338</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>inventory-management</Alias>
+    <Description>Manage and optimize ingredient and product inventory levels</Description>
+    <CreatedAtDate>2024-01-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P84D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>AdvancedBeginner</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Inventory Management System</Deliverables>
+    <Remarks>Minimize waste, prevent shortages, and track expiration dates.</Remarks>
+  </Task>
+  <Task>
+    <Id>339</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>product-launch-planning</Alias>
+    <Description>Plan and coordinate the launch of new food products.</Description>
+    <CreatedAtDate>2024-01-10T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P172D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Advanced</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Product Launch Planning Tool</Deliverables>
+    <Remarks>Consider marketing, distribution, and customer feedback.</Remarks>
+  </Task>
+  <Task>
+    <Id>340</Id>
+    <Engineerld>0</Engineerld>
+    <Alias>market-trend-analysis</Alias>
+    <Description>Analyze market trends to inform new product development.</Description>
+    <CreatedAtDate>2024-01-21T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P346D</RequiredEffortTime>
+    <IsMilestone>false</IsMilestone>
+    <Copmlexity>Intermediate</Copmlexity>
+    <StartDate xsi:nil="true" />
+    <ScheduledDate xsi:nil="true" />
+    <DeadlineDate xsi:nil="true" />
+    <CompleteDate xsi:nil="true" />
+    <Deliverables>Market Trend Analysis Software</Deliverables>
+    <Remarks>Stay ahead of consumer preferences and industry developments.</Remarks>
+  </Task>
 </ArrayOfTask>

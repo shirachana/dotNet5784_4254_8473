@@ -52,6 +52,30 @@ namespace PL.Engineer
                 }
 
             }
+
         }
+        private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (Engineer.Id == 0)
+                {
+                    s_bl.Engineer.Create(Engineer);
+                    MessageBox.Show("Engineer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    s_bl.Engineer.Update(Engineer);
+                    MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
     }
 }

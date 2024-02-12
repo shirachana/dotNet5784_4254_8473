@@ -18,6 +18,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public MainWindow()
         {
             InitializeComponent();
@@ -30,11 +31,11 @@ namespace PL
 
         private void btnInitDB_Click(object sender, RoutedEventArgs e)
         {
-
             MessageBoxResult result = MessageBox.Show("Do you want to initialize the database?", "Confirmation", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
             {
+                s_bl.Engineer.Clear();
                 DalTest.Initialization.Do();
             }
 

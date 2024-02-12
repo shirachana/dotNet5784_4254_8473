@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="400"
+        Title="EngineerWindow" Height="380" Width="350"
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
-    <Grid>
+    <Grid Margin="0,0,0,0">
         <Label Content="Id:" HorizontalAlignment="Left" Margin="65,65,0,0" VerticalAlignment="Top" Height="26" Width="25" RenderTransformOrigin="2.661,0.532"/>
         <Label Content="Name:" HorizontalAlignment="Left" Margin="65,105,0,0" VerticalAlignment="Top" Height="26" Width="45" RenderTransformOrigin="2.661,0.532"/>
         <Label Content="Email:" HorizontalAlignment="Left" Margin="65,145,0,0" VerticalAlignment="Top" Height="26" Width="45" RenderTransformOrigin="2.661,0.532"/>
@@ -19,8 +19,10 @@
         <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Margin="170,230,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="20" Width="120"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, 
          ValidatesOnExceptions=true}"  HorizontalAlignment="Left" Margin="170,190,0,0" VerticalAlignment="Top" Height="20" Width="120"/>
-        <Button Content="Add" HorizontalAlignment="Left" Margin="65,275,0,0" VerticalAlignment="Top" Height="29" Width="61"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="170,275,0,0" VerticalAlignment="Top" Height="29" Width="61"/>
+        <Button Grid.Row="9" Grid.Column="0" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+                HorizontalAlignment="Left" Margin="3,0,0,0"  VerticalAlignment="Top" Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdate_Click"/>
+
+
 
     </Grid>
 </Window>
