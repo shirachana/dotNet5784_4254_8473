@@ -15,8 +15,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="יד מיניפ.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
     <ProjectReference Include="..\DalTest\DalTest.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="יד מיניפ.jpg" />
   </ItemGroup>
 
 </Project>

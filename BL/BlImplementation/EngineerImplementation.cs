@@ -153,12 +153,21 @@ internal class EngineerImplementation : IEngineer
                 engineer = new DO.Engineer
                 (item!.Id, item.Cost, item.Email, item.Name, (DO.EngineerExperience?)item.Level);
 
+                if (item.Task != null && item.Task.Id > 0)
+                {
+                    // Retrieve the task from the data storage
+                    DO.Task existingTask = _dal.Task.Read(item.Task.Id)!;
 
-                DO.Task existingTask = _dal.Task.Read(item.Task!.Id) ?? throw new BlDoesNotExistException("The Task does not Exist");
-                existingTask = existingTask with { Engineerld = item.Id };
+                    if (existingTask == null)
+                    {
+                        throw new BlDoesNotExistException("Task not found");
+                    }
+                    existingTask = existingTask with { Engineerld = item.Id };
+                    _dal.Task.Update(existingTask);
+                }
+                //DO.Task existingTask = _dal.Task.Read(item.Task!.Id) ?? throw new BlDoesNotExistException("The Task does not Exist")
 
                 _dal.Engineer.Update(engineer);
-                _dal.Task.Update(existingTask);
             }
         }
         catch (DO.DalDoesNotExistException ex)

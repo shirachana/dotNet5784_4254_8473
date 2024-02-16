@@ -70,7 +70,9 @@ namespace PL.Engineer
                 else 
                 {
                     s_bl.Engineer.Update(Engineer);
+                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
                     MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _engineerListWindow.EngineerList = updatedEngineerList;
                 }
                 this.Close();
             }
