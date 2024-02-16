@@ -28,9 +28,11 @@ namespace PL.Engineer
 
         public static readonly DependencyProperty EngineerProperty =
             DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        public EngineerWindow(int engineerId = 0)
+        private EngineerListWindow _engineerListWindow;
+        public EngineerWindow(EngineerListWindow engineerListWindow, int engineerId = 0)
         {
             InitializeComponent();
+            _engineerListWindow = engineerListWindow;
             if (engineerId == 0)
             {
                 // Create a new object with default values
@@ -58,12 +60,14 @@ namespace PL.Engineer
         {
             try
             {
-                if (Engineer.Id == 0)
+                if ((sender as Button)!.Content.ToString()=="Add")
                 {
                     s_bl.Engineer.Create(Engineer);
+                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
                     MessageBox.Show("Engineer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _engineerListWindow.EngineerList = updatedEngineerList;
                 }
-                else
+                else 
                 {
                     s_bl.Engineer.Update(Engineer);
                     MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -72,7 +76,7 @@ namespace PL.Engineer
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

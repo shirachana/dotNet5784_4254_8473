@@ -44,8 +44,19 @@ namespace PL.Engineer
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
+            new EngineerWindow(this).ShowDialog();
+        }
 
+        private void UpdateBtn_Click(object sender, MouseButtonEventArgs e)
+        {
+
+            BO.Engineer? EngineerList = (sender as ListView)?.SelectedItem as BO.Engineer;
+            if (EngineerList != null)
+            {
+                // Create a new window with the selected item in update mode
+                EngineerWindow window = new EngineerWindow(this,EngineerList.Id);
+                window.ShowDialog();
+            }
         }
     }
-
 }

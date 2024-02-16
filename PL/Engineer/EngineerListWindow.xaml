@@ -9,12 +9,16 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="119*"/>
+            <ColumnDefinition Width="41*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Height="auto" Grid.Row="0" Width="auto">
+        <Grid Height="auto" Grid.Row="0" Width="auto" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width= "*"/>
@@ -25,14 +29,14 @@
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" Grid.Column="1" 
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding experience, Mode=TwoWay}" SelectionChanged="cbExperienceSelector_SelectionChanged"/>
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding EngineerList}">
+        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding EngineerList}" Grid.ColumnSpan="2" MouseDoubleClick="UpdateBtn_Click">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100" Click="AddBtn_Click"/>
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="AddBtn_Click" Margin="350,480,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
