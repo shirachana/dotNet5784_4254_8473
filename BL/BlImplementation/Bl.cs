@@ -43,6 +43,7 @@ internal class Bl : IBl
     {
         dal.Engineer.Clear();
         dal.Task.Clear();
+        dal.Dependency.Clear();
     }
 
 }

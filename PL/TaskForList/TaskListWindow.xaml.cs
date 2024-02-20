@@ -37,16 +37,26 @@ namespace PL.TaskForList
             DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
 
         public BO.Status TaskStatus { get; set; } = BO.Status.None;
-        private void UpdateBtn_Click(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TaskList = (TaskStatus == BO.Status.None) ?
                 s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Status == TaskStatus)!;
 
+        }
+        private void UpdateBtn_Click(object sender, SelectionChangedEventArgs e)
+        {
+            BO.Task? TaskList = (sender as ListView)?.SelectedItem as BO.Task;
+            if (TaskList != null)
+            {
+                // Create a new window with the selected item in update mode
+                TaskWindow window = new TaskWindow(this, TaskList.Id);
+                window.ShowDialog();
+            }
+        }
+
+        private void ButtonAddUppT_Click(object sender, RoutedEventArgs e)
+        {
+            new TaskWindow(this).ShowDialog();
         }
     }
 }

@@ -32,7 +32,6 @@ namespace PL.TaskForList
         private TaskListWindow _taskListWindow;
         public TaskWindow(TaskListWindow taskListWindow, int taskId = 0)
         {
-            InitializeComponent();
             _taskListWindow = taskListWindow;
             if (taskId == 0)
             {
@@ -45,6 +44,7 @@ namespace PL.TaskForList
                 {
                     // Retrieve the existing engineer object from the BL based on the engineerId
                     Task =s_bl.Task.Read(taskId)!;
+                    
                 }
                 catch (Exception ex)
                 {
@@ -56,8 +56,35 @@ namespace PL.TaskForList
 
             }
 
+            if (Task.Engineer == null)
+                Task.Engineer = new();
+            InitializeComponent();
         }
 
-
+        private void btnAddUpdateTask_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if ((sender as Button)!.Content.ToString() == "Add")
+                {
+                    s_bl.Task.Create(Task);
+                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                    MessageBox.Show("Engineer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _taskListWindow.TaskList = updatedTaskList;
+                }
+                else
+                {
+                    s_bl.Task.Update(Task);
+                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                    MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _taskListWindow.TaskList = updatedTaskList;
+                }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

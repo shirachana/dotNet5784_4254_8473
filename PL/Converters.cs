@@ -14,6 +14,8 @@ public class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        if (value == null)
+            return true;
         return (int)value == 0 ? "Add" : "Update";
     }
 
@@ -22,17 +24,19 @@ public class ConvertIdToContent : IValueConverter
         throw new NotImplementedException();
     }
 }
-   public class ConvertIdToVisibility : IValueConverter
+public class ConvertIdToVisibility : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            bool isAddMode = (int)value == 0;
+        if (value == null)
+            return true;
+        bool isAddMode = (int)value == 0;
         return isAddMode;
     }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
+}
 

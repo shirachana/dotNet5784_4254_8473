@@ -162,16 +162,19 @@ internal class TaskImplementation : BlApi.ITask
     /// </summary>
     /// <param name="filter"></param>the filter if there
     /// <returns></returns>
-    public IEnumerable<TaskInList> ReadAll(Func<BO.Task, bool>? filter = null)
+    public IEnumerable<TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null)
     {
-        return from DO.Task doTask in _dal.Task.ReadAll((Func<DO.Task, bool>?)filter)
-               select new BO.TaskInList
-               {
-                   Id = doTask.Id,
-                   Description = doTask.Description,
-                   Alias = doTask.Alias,
-                   Status = Tools.GetStatus(doTask)
-               };
+        var tasks = _dal.Task.ReadAll()
+                             .OrderBy(doTask => doTask.Id) // Sort tasks by Id
+                             .Select(doTask => new BO.TaskInList
+                             {
+                                 Id = doTask.Id,
+                                 Description = doTask.Description,
+                                 Alias = doTask.Alias,
+                                 Status = Tools.GetStatus(doTask)
+                             }).Where(task => filter is null? true: filter(task));
+
+        return tasks;
     }
     /// <summary>
     /// Updating a task We will receive a task object for updating. 

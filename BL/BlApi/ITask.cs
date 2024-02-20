@@ -10,7 +10,7 @@
 /// </summary>
 public interface ITask
 {
-    public IEnumerable<BO.TaskInList> ReadAll(Func<BO.Task, bool>? filter = null);//not sure
+    public IEnumerable<BO.TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null);//not sure
     public BO.Task? Read(int id);
     public int Create(BO.Task? item);
     public void Update(BO.Task item);
