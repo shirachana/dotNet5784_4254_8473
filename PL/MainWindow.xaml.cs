@@ -1,5 +1,5 @@
-﻿using DalTest;
-using PL.Engineer;
+﻿using PL.Engineer;
+using PL.TaskForList;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +17,7 @@ namespace PL
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
+        
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public MainWindow()
@@ -29,16 +30,27 @@ namespace PL
             new EngineerListWindow().Show();
         }
 
+        private void btnTask_Click(object sender, RoutedEventArgs e) 
+        { 
+            
+            new TaskListWindow().Show();
+        }
+
         private void btnInitDB_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("Do you want to initialize the database?", "Confirmation", MessageBoxButton.YesNo);
 
             if (result == MessageBoxResult.Yes)
-            {
-                s_bl.Engineer.Clear();
-                DalTest.Initialization.Do();
-            }
-
+                s_bl.InitializeDB();
         }
+
+        private void btnReset_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to reset the database?", "Confirmation", MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+                s_bl.ResetDB();
+        }
+
     }
 }

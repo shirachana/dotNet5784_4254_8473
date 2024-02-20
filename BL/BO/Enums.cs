@@ -6,6 +6,7 @@ public enum Status
   Scheduled,
   OnTrack,
   Done,
+  None
 }
 public enum EngineerExperience
 {

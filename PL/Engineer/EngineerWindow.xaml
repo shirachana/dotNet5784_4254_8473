@@ -31,13 +31,17 @@
         <Label Content="Email:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"/>
         <Label Content="Level:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"/>
         <Label Content="Cost:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="5"/>
-        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
+        <TextBox  Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"
+                 Visibility="{Binding Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
+                 IsHitTestVisible="False"
+                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
         <TextBox Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" Grid.Row="4" Grid.Column="2"/>
-        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" 
+        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdate_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}"/>
+
 
 
     </Grid>

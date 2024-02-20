@@ -38,6 +38,12 @@ internal class Bl : IBl
         }
         get => dal.EndDate;
     }
+    public void InitializeDB() => DalTest.Initialization.Do();
+    public void ResetDB()
+    {
+        dal.Engineer.Clear();
+        dal.Task.Clear();
+    }
 
 }
 

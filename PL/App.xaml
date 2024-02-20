@@ -4,7 +4,11 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+
+        <local:ConvertIdToVisibility x:Key="ConvertIdToVisibilityKey" />
         <local:EngineersCollection x:Key="EngineersCollectionKey" />
-        <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+        <local:ConvertIdToContent x:Key="ConverIdToContentKey" />
+        <local:TasksCollection x:Key="TasksCollectionKey" />
+
     </Application.Resources>
 </Application>

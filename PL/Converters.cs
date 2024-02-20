@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 
 namespace PL;
 
-class ConvertIdToContent : IValueConverter
+public class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -20,17 +21,18 @@ class ConvertIdToContent : IValueConverter
     {
         throw new NotImplementedException();
     }
-    class ConvertIdToIsEnabled : IValueConverter
+}
+   public class ConvertIdToVisibility : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool isAddMode = (int)value == 0;
-            return isAddMode;
-        }
+        return isAddMode;
+    }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
-}
+

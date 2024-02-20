@@ -16,8 +16,12 @@
             <ColumnDefinition Width= "*"/>
         </Grid.ColumnDefinitions>
         <!--Engineer-->
-        <Button Content="Engineers" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Grid.Column="0"  Click="btnEngineer_Click" Height="100" Width="150" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" />
+        <Button Content="Handle Engineers" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Grid.Column="0"  Click="btnEngineer_Click" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" />
+        <!--Tasks-->
+        <Button Content="Handle Tasks" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top"   Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Click="btnTask_Click" />
         <!--Initialization-->
-        <Button Content="InitDB" HorizontalAlignment="Center" Margin="0,150,0,0" VerticalAlignment="Top" Grid.Column="1" Height="100" Width="150" Click="btnInitDB_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}"/>
+        <Button Content="Initialize" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Height="100" Width="222" Click="btnInitDB_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1"/>
+        <!--Reset-->
+        <Button Content="Reset" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1" Click="btnReset_Click"/>
     </Grid>
 </Window>

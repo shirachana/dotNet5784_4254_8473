@@ -145,7 +145,7 @@ internal class EngineerImplementation : IEngineer
         {
             if (Tools.CheckEngineerHealth(item!))
             {
-                DO.Engineer engineer = _dal.Engineer.Read(item!.Id)  ?? throw new BlDoesNotExistException("The Engineer to update does not Exist");
+                DO.Engineer engineer = _dal.Engineer.Read(item!.Id)! ?? throw new BlDoesNotExistException("The Engineer to update does not Exist");
                 if (engineer.Level < (DO.EngineerExperience)item.Level!)
                 {
                     throw new BlDoesNotExistException($"Engineer level it's not Upwards ");
@@ -168,6 +168,7 @@ internal class EngineerImplementation : IEngineer
                 //DO.Task existingTask = _dal.Task.Read(item.Task!.Id) ?? throw new BlDoesNotExistException("The Task does not Exist")
 
                 _dal.Engineer.Update(engineer);
+                
             }
         }
         catch (DO.DalDoesNotExistException ex)

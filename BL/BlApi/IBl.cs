@@ -6,6 +6,8 @@ public interface IBl
     public ITask Task { get; }
     public DateTime? StartDate { set; get; }
     public DateTime? EndDate { set; get; }
+    public void InitializeDB();
+    public void ResetDB();
 
 }
 
