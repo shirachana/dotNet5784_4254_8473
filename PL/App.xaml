@@ -14,7 +14,10 @@
             <local:ConvertIdToVisibility x:Key="ConvertIdToVisibilityKey" />
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:ConvertIdToContent x:Key="ConverIdToContentKey" />
+            <local:ConvertDateStatusToVisibility x:Key="ConvertDateStatusToVisibilityKey" />
+            <local:ConvertDateToContent x:Key="ConvertDateToContentKey" />
             <local:TasksCollection x:Key="TasksCollectionKey" />
+            <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

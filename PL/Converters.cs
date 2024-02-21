@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -32,6 +33,38 @@ public class ConvertIdToVisibility : IValueConverter
             return true;
         bool isAddMode = (int)value == 0;
         return isAddMode;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class ConvertDateToContent : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null || !(value is DateTime))
+            return "Not Set";
+
+        DateTime date = (DateTime)value;
+        return date != DateTime.MinValue ? "Set" : "Not Set";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class ConvertDateStatusToVisibility : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return true;
+       if(Tools.CheckStatusProject()==BO.StatusProject.Mid)
+            return true;
+       return false;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

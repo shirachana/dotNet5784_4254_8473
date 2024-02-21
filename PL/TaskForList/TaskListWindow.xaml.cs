@@ -43,9 +43,9 @@ namespace PL.TaskForList
                 s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Status == TaskStatus)!;
 
         }
-        private void UpdateBtn_Click(object sender, SelectionChangedEventArgs e)
+        private void UpdateBtn_Click(object sender, MouseButtonEventArgs e)
         {
-            BO.Task? TaskList = (sender as ListView)?.SelectedItem as BO.Task;
+            BO.TaskInList? TaskList = (sender as ListView)?.SelectedItem as BO.TaskInList;
             if (TaskList != null)
             {
                 // Create a new window with the selected item in update mode
