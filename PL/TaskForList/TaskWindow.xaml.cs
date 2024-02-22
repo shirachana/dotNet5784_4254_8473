@@ -69,14 +69,34 @@ namespace PL.TaskForList
                 {
                     s_bl.Task.Create(Task);
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
-                    MessageBox.Show("Engineer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Task added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     _taskListWindow.TaskList = updatedTaskList;
                 }
                 else
                 {
                     s_bl.Task.Update(Task);
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
-                    MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _taskListWindow.TaskList = updatedTaskList;
+                }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void DelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to delete the Task?", "Confirmation", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes && (sender as Button)!.Content.ToString() == "Delete")
+                {
+                    s_bl.Task.Delete(Task.Id);
+                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                    MessageBox.Show("Task delete successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     _taskListWindow.TaskList = updatedTaskList;
                 }
                 this.Close();

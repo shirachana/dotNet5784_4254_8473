@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <local:ConvertIdToVisibility x:Key="ConvertIdToVisibilityKey" />
+            <local:ConvertIdToVisibilityDel x:Key="ConverIdToVisibilityDelKey" />
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:ConvertIdToContent x:Key="ConverIdToContentKey" />
             <local:ConvertDateStatusToVisibility x:Key="ConvertDateStatusToVisibilityKey" />

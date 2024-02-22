@@ -40,6 +40,23 @@ public class ConvertIdToVisibility : IValueConverter
         throw new NotImplementedException();
     }
 }
+public class ConvertIdToVisibilityDel : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value == null)
+            return false; // Return false to hide the button if value is null or not an integer
+
+        int id = (int)value;
+        return id != 0;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class ConvertDateToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

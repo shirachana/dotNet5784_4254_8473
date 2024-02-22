@@ -120,5 +120,7 @@
 
         <Button Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
           HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
+        <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
+                IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2" VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
     </Grid>
 </Window>

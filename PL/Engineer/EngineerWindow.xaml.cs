@@ -83,6 +83,24 @@ namespace PL.Engineer
             }
         }
 
-        
+        private void DelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to delete the Engineer?", "Confirmation", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes && (sender as Button)!.Content.ToString() == "Delete")
+                {
+                    s_bl.Engineer.Delete(Engineer.Id);
+                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
+                    MessageBox.Show("Engineer delete successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    _engineerListWindow.EngineerList = updatedEngineerList;
+                }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

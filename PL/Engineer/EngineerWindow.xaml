@@ -40,7 +40,9 @@
         <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" Grid.Row="4" Grid.Column="2"/>
         <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
-               HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdate_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}"/>
+               HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5"   Click="btnAddUpdate_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}"/>
+        <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
+                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Grid.Row="6" Grid.Column="2" Width="86" Click="DelBtn_Click"  Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Margin="1,8,0,8" />
 
 
 
