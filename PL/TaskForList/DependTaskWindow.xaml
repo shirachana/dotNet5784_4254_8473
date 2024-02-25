@@ -4,19 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.TaskForList"
+        xmlns:converter="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DependTaskWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <converter:IsDependToCheckConverter x:Key="IsCheckConverter"/>
+    </Window.Resources>
     <Grid>
         <DataGrid ItemsSource="{Binding DepTaskList}" AutoGenerateColumns="True" >
             <DataGrid.Columns>
-                <!--<DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
-                <DataGridTextColumn Header="Task Alias" Binding="{Binding Alias}" Width="*" />-->
-                <!-- Add more columns as needed -->
                 <DataGridTemplateColumn Header="Add Dependency" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <CheckBox x:Name="CheckBox" HorizontalAlignment="Center" Click="CheckBox_Click"/>
+                            <CheckBox x:Name="CheckBox" HorizontalAlignment="Center" Tag="{Binding}" Click="CheckBox_Click">
+                                <CheckBox.IsChecked>
+                                    <MultiBinding Converter="{StaticResource IsCheckConverter}" >
+                                        <Binding ElementName="CheckBox" Path="Tag"/>
+                                        <Binding Path="DataContext.selectedTasks" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
+                                    </MultiBinding>
+                                </CheckBox.IsChecked>
+                            </CheckBox>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

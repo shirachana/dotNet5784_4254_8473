@@ -3,6 +3,7 @@ using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -22,6 +23,9 @@ internal class EngineerImplementation : IEngineer
 
         engineers.Add(item);
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
+        //string code = item.Id.ToString();
+        //User user = new(item.Name, code, false);
+        //Users.Add(user);
 
         return item.Id;
         

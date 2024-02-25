@@ -20,7 +20,9 @@ internal class EngineerImplementation : IEngineer
                 throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exist");
             }
         }
-        DataSource.Engineers.Add(item);
+        DataSource.Engineers.Add(item); string code= item.Id.ToString();
+        User user = new(item.Name, code, false);
+        DataSource.Users.Add(user);
         return item.Id;
     }
     /// <summary>

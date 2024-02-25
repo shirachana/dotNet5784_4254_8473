@@ -110,7 +110,7 @@ namespace PL.TaskForList
 
         private void AddDepBtn_Click(object sender, RoutedEventArgs e)
         {
-            new DependTaskWindow(Task.Id).ShowDialog();
+            new DependTaskWindow(Task.Dependencies).ShowDialog();
         }
     }
 }

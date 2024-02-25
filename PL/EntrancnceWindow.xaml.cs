@@ -19,55 +19,54 @@ namespace PL
     /// </summary>
     public partial class EntrancnceWindow : Window
     {
-        //    private DateTime currentTime;
-        //    public EntrancnceWindow()
-        //    {
-        //        InitializeComponent();
-        //        currentTime = DateTime.Now;
-        //        UpdateTimeDisplay();
-        //    }
+        private DateTime currentTime;
+        public EntrancnceWindow()
+        {
+            InitializeComponent();
+            currentTime = DateTime.Now;
+            UpdateTimeDisplay();
+        }
 
-        //    private void GoToManagerViewButton_Click(object sender, RoutedEventArgs e)
-        //    {
-        //        MainWindow managerWindow = new MainWindow();
-        //        managerWindow.Show();
-        //        this.Close();
-        //    }
+        private void GoToManagerViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow managerWindow = new MainWindow();
+            managerWindow.Show();
+            this.Close();
+        }
 
-        //    private void GoToEngineerViewButton_Click(object sender, RoutedEventArgs e)
-        //    {
-        //        MessageBoxResult result = MessageBox.Show("Do you have permission to access the engineer view?", "Confirmation", MessageBoxButton.YesNo);
-        //        if (result== MessageBoxResult.Yes)
-        //        {
-        //            // Navigate to the engineer view window
-        //            EngineerViewWindow engineerWindow = new EngineerViewWindow();
-        //            engineerWindow.Show();
-        //            this.Close();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("You do not have permission to access the engineer view.");
-        //        }
-        //    }
+        private void GoToEngineerViewButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you have permission to access the engineer view?", "Confirmation", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                // Navigate to the engineer view window
+                EngineerViewWindow engineerWindow = new EngineerViewWindow();
+                engineerWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("You do not have permission to access the engineer view.");
+            }
+        }
 
-        //    private void AdvanceHourButton_Click(object sender, RoutedEventArgs e)
-        //    {
-        //        // Advance time by one hour
-        //        currentTime = currentTime.AddHours(1);
-        //        UpdateTimeDisplay();
-        //    }
+        private void AdvanceHourButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Advance time by one hour
+            currentTime = currentTime.AddHours(1);
+            UpdateTimeDisplay();
+        }
 
-        //    private void AdvanceDayButton_Click(object sender, RoutedEventArgs e)
-        //    {
-        //        // Advance time by one day
-        //        currentTime = currentTime.AddDays(1);
-        //        UpdateTimeDisplay();
-        //    }
-        //    private void UpdateTimeDisplay()
-        //    {
-        //        // Update the time display in the UI
-        //       // TimeDisplayLabel.Content = currentTime.ToString("dddd, MMMM dd, yyyy HH:mm:ss");
-        //    }
-        //}
+        private void AdvanceDayButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Advance time by one day
+            currentTime = currentTime.AddDays(1);
+            UpdateTimeDisplay();
+        }
+        private void UpdateTimeDisplay()
+        {
+            // Update the time display in the UI
+            // TimeDisplayLabel.Content = currentTime.ToString("dddd, MMMM dd, yyyy HH:mm:ss");
+        }
     }
 }

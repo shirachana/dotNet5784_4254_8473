@@ -167,9 +167,18 @@ public static class Initialization
             Engineer eng = new(_id, _cost, _mail, _name, _experience);
 
             s_dal?.Engineer.Create(eng);
+
+            string code=_id.ToString();
+            User newUser = new(_name, code, false);
+            s_dal?.User.Create(newUser);
         }
+        User newAdmin1 = new("Adi", "5784", true);
+        User newAdmin2 = new("Shira", "4254", true);
+        s_dal?.User.Create(newAdmin1);
+        s_dal?.User.Create(newAdmin2);
 
     }
+
     //public static void Do(IDal dal) //stage 2
     public static void Do() //stage 4
     {
@@ -180,7 +189,7 @@ public static class Initialization
         s_dal = DalApi.Factory.Get; //stage 4
         CreatEngineer();
         CreatTask();
-        CreateDependencies();
+        CreateDependencies(); 
 
     }
 }

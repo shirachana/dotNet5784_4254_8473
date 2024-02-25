@@ -79,12 +79,27 @@ public class ConvertDateStatusToVisibility : IValueConverter
     {
         if (value == null)
             return true;
-       if(Tools.CheckStatusProject()==BO.StatusProject.Mid)
+        if (Tools.CheckStatusProject() == BO.StatusProject.Mid)
             return true;
-       return false;
+        return false;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class IsDependToCheckConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        TaskInList taskInList = (TaskInList)values[0];
+        List<TaskInList> dependList = (List<TaskInList>)values[1];
+        return dependList.Any(x => x.Id == taskInList.Id);
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }

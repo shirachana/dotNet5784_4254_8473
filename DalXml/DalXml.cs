@@ -11,6 +11,7 @@ sealed internal class DalXml : IDal
     public ITask Task => new TaskImplementation();
 
     public IDependency Dependency => new DependencyImplementation();
+    public IUser User => new UserImplementation();
 
     public DateTime? StartDate { set=> Config.SetDate("StartDate", value); get => Config.GetDate("StartDate"); }
     public DateTime? EndDate { set => Config.SetDate("EndDate", value); get => Config.GetDate("EndDate"); }
