@@ -1,6 +1,8 @@
-﻿using PL.Engineer;
+﻿using DO;
+using PL.Engineer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +28,6 @@ namespace PL.TaskForList
             get { return (BO.Task)GetValue(TaskProperty); }
             set { SetValue(TaskProperty, value); }
         }
-
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
         private TaskListWindow _taskListWindow;
@@ -106,13 +107,10 @@ namespace PL.TaskForList
                 MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private void ButtonAddDep_Click(object sender, RoutedEventArgs e) 
-        {
 
-        }
-        private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        private void AddDepBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            new DependTaskWindow(Task.Id).ShowDialog();
         }
     }
 }

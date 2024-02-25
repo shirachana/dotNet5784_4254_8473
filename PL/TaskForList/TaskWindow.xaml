@@ -122,17 +122,7 @@
           HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
         <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2" VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
-        <ListBox ItemsSource="{Binding Dependencies, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
-             HorizontalAlignment="Center" Grid.Column="2" Grid.Row="6" VerticalAlignment="Top" 
-             Height="100" Width="200" SelectionMode="Multiple" SelectionChanged="ListBox_SelectionChanged">
-            <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-                            <Button Content="Add to the Dependencies list" Click="ButtonAddDep_Click" Tag="{Binding Id}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+        <Button  Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
+
     </Grid>
 </Window>

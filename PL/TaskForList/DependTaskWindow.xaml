@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.TaskForList.DependTaskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.TaskForList"
+        mc:Ignorable="d"
+        Title="DependTaskWindow" Height="450" Width="800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Grid>
+        <DataGrid ItemsSource="{Binding DepTaskList}" AutoGenerateColumns="True" >
+            <DataGrid.Columns>
+                <!--<DataGridTextColumn Header="Task id" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="Task Alias" Binding="{Binding Alias}" Width="*" />-->
+                <!-- Add more columns as needed -->
+                <DataGridTemplateColumn Header="Add Dependency" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox x:Name="CheckBox" HorizontalAlignment="Center" Click="CheckBox_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Select" Click="SelectButton_Click" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,10,0,0" />
+
+    </Grid>
+</Window>
+
