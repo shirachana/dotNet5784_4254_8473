@@ -15,21 +15,21 @@ internal class EngineerImplementation : IEngineer
     public int Create(Engineer item)
     {
         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-            
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>("users");
 
         if (engineers.Any(e => e.Id == item.Id))
         {
             throw new DalAlreadyExistsException($"Engineer with ID={item.Id} already exists");
         }
 
-        engineers.Add(item);
-        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
-        List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        
         string code = item.Id.ToString();
         User user = new(item.Name, code, false);
-        XMLTools.SaveListToXMLSerializer(users, s_users_xml);
         users.Add(user);
+        XMLTools.SaveListToXMLSerializer(users, "users");
 
+        engineers.Add(item);
+        XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
         return item.Id;
         
     }

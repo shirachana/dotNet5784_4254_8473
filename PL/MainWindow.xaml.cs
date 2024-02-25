@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using BO;
+using PL.Engineer;
 using PL.TaskForList;
 using System.Text;
 using System.Windows;
@@ -20,7 +21,7 @@ namespace PL
         
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public MainWindow()
+        public MainWindow(User user)
         {
             InitializeComponent();
         }

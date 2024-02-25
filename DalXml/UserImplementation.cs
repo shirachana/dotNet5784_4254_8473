@@ -23,11 +23,6 @@ internal class UserImplementation : IUser
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
 
 
-        if (users.Any(e => e.Id == item.Id))
-        {
-            throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
-        }
-
         users.Add(item);
         XMLTools.SaveListToXMLSerializer(users, s_users_xml);
         

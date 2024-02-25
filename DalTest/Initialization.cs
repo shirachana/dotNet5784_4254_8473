@@ -168,28 +168,30 @@ public static class Initialization
 
             s_dal?.Engineer.Create(eng);
 
-            string code=_id.ToString();
+            string code = _id.ToString();
             User _newUser = new(_name, code, false);
             s_dal?.User.Create(_newUser);
+            //}
+            //User newAdmin1 = new("Adi", "5784", true);
+            //User newAdmin2 = new("Shira", "4254", true);
+            //s_dal?.User.Create(newAdmin1);
+            //s_dal?.User.Create(newAdmin2);
+
+        } 
+    }
+
+        //public static void Do(IDal dal) //stage 2
+        public static void Do() //stage 4
+        {
+            //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+            //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+            //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+            //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+            s_dal = DalApi.Factory.Get; //stage 4
+            CreatEngineer();
+            CreatTask();
+            CreateDependencies();
+
         }
-        //User newAdmin1 = new("Adi", "5784", true);
-        //User newAdmin2 = new("Shira", "4254", true);
-        //s_dal?.User.Create(newAdmin1);
-        //s_dal?.User.Create(newAdmin2);
-
-    }
-
-    //public static void Do(IDal dal) //stage 2
-    public static void Do() //stage 4
-    {
-        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-        s_dal = DalApi.Factory.Get; //stage 4
-        CreatEngineer();
-        CreatTask();
-        CreateDependencies(); 
-
-    }
+    
 }
