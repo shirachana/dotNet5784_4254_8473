@@ -169,13 +169,13 @@ public static class Initialization
             s_dal?.Engineer.Create(eng);
 
             string code=_id.ToString();
-            User newUser = new(_name, code, false);
-            s_dal?.User.Create(newUser);
+            User _newUser = new(_name, code, false);
+            s_dal?.User.Create(_newUser);
         }
-        User newAdmin1 = new("Adi", "5784", true);
-        User newAdmin2 = new("Shira", "4254", true);
-        s_dal?.User.Create(newAdmin1);
-        s_dal?.User.Create(newAdmin2);
+        //User newAdmin1 = new("Adi", "5784", true);
+        //User newAdmin2 = new("Shira", "4254", true);
+        //s_dal?.User.Create(newAdmin1);
+        //s_dal?.User.Create(newAdmin2);
 
     }
 

@@ -10,6 +10,7 @@ using System.Xml.Linq;
 internal class EngineerImplementation : IEngineer
 {
     readonly string s_engineers_xml = "engineers";
+    readonly string s_users_xml = "users";
 
     public int Create(Engineer item)
     {
@@ -23,9 +24,11 @@ internal class EngineerImplementation : IEngineer
 
         engineers.Add(item);
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
-        //string code = item.Id.ToString();
-        //User user = new(item.Name, code, false);
-        //Users.Add(user);
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        string code = item.Id.ToString();
+        User user = new(item.Name, code, false);
+        XMLTools.SaveListToXMLSerializer(users, s_users_xml);
+        users.Add(user);
 
         return item.Id;
         

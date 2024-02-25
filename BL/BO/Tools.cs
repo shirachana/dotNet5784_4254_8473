@@ -78,6 +78,16 @@ public static class Tools
            delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
            Status.Done;
     }
+    public static bool CheckUserHealth(User item)
+    {
+        if (item.Id is null)
+            throw new BlArgumentOutOfRangeException("User code must be a positive number");
+        if ((item.userName) is null)
+            throw new BlArgumentOutOfRangeException("User name cannot be empty");
+
+        // If all checks pass, return true
+        return true;
+    }
     public static bool CheckEngineerHealth(Engineer item)
     {
         if (item.Id <= 0)
