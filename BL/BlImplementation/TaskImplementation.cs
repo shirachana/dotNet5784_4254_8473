@@ -84,7 +84,7 @@ internal class TaskImplementation : BlApi.ITask
                 bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
 
                 // Attempt to delete the task Check if the task has dependencies
-                if (canDelete == false)
+                if (canDelete == true)
                     _dal.Task.Delete(id);
                 else
                     throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");

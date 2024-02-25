@@ -106,5 +106,13 @@ namespace PL.TaskForList
                 MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void ButtonAddDep_Click(object sender, RoutedEventArgs e) 
+        {
+
+        }
+        private void ListBox_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
