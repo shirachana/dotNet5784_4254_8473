@@ -17,7 +17,7 @@ internal class UserImplementation : IUser
         List<User> admin = new();
         foreach(User user in users)
         {
-            if(user.isAdmin) 
+            if(user.IsAdmin) 
                 admin.Add(user);
         }
         XMLTools.SaveListToXMLSerializer(admin, s_users_xml);
@@ -28,7 +28,7 @@ internal class UserImplementation : IUser
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
         foreach (User tempUser in users) 
         {
-            if(tempUser.userName==item.userName)
+            if(tempUser.UserName==item.UserName)
             {
                 throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
             }
@@ -39,7 +39,7 @@ internal class UserImplementation : IUser
         //User user = new(item.userName, code, false);
         users.Add(item);
         XMLTools.SaveListToXMLSerializer(users, s_users_xml);
-        return item.userName!;
+        return item.UserName!;
     }
 
     public void Delete(string id)
@@ -56,14 +56,15 @@ internal class UserImplementation : IUser
         }
         else
         {
-            throw new DalDoesNotExistException($"User with ID={id} does not exist");
+            throw new DalDoesNotExistException($" User name or password is incorrect");
         }
     }
 
     public User? Read(string id)
     {
         List<User> UserElem = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        return UserElem.FirstOrDefault(it => it.Id == id) ?? throw new DalDoesNotExistException($"User with ID={id} does Not exist");
+
+        return UserElem.FirstOrDefault(it => it.Id == id) ?? throw new DalDoesNotExistException($" User name or password is incorrect");
     }
 
     public IEnumerable<User> ReadAll(Func<User, bool>? filter = null)

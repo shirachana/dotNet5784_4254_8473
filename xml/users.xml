@@ -1,38 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
-    <userName>Adi</userName>
+    <UserName>Adi</UserName>
     <Id>5784</Id>
-    <isAdmin>true</isAdmin>
+    <Password>a2004</Password>
+    <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <userName>Shira</userName>
+    <UserName>Shira</UserName>
     <Id>4254</Id>
-    <isAdmin>true</isAdmin>
+    <Password>Shira222</Password>
+    <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <userName>Shir</userName>
-    <Id>66562321</Id>
-    <isAdmin>false</isAdmin>
+    <UserName>Shir</UserName>
+    <Id>23028097</Id>
+    <Password />
+    <IsAdmin>false</IsAdmin>
   </User>
   <User>
-    <userName>Efrat</userName>
-    <Id>41738478</Id>
-    <isAdmin>false</isAdmin>
+    <UserName>Efrat</UserName>
+    <Id>46967391</Id>
+    <Password />
+    <IsAdmin>false</IsAdmin>
   </User>
   <User>
-    <userName>Adina</userName>
-    <Id>54867178</Id>
-    <isAdmin>false</isAdmin>
+    <UserName>Adina</UserName>
+    <Id>23153929</Id>
+    <Password />
+    <IsAdmin>false</IsAdmin>
   </User>
   <User>
-    <userName>Moti</userName>
-    <Id>93965566</Id>
-    <isAdmin>false</isAdmin>
+    <UserName>Moti</UserName>
+    <Id>67435114</Id>
+    <Password />
+    <IsAdmin>false</IsAdmin>
   </User>
   <User>
-    <userName>Israel</userName>
-    <Id>52128129</Id>
-    <isAdmin>false</isAdmin>
+    <UserName>Israel</UserName>
+    <Id>43364860</Id>
+    <Password />
+    <IsAdmin>false</IsAdmin>
   </User>
 </ArrayOfUser>

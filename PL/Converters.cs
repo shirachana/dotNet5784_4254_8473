@@ -101,7 +101,11 @@ public class IsDependToCheckConverter : IMultiValueConverter
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        return null; 
+        bool isChecked = (bool)value;
+        object[] result = new object[targetTypes.Length];
+        result[0] = null!;
+        result[1] = isChecked;
+        return result;
     }
 }
 

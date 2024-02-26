@@ -24,7 +24,7 @@ internal class UserImplementation : IUser
             if (Tools.CheckUserHealth(item))//its good
             {
                 DO.User doUser = new DO.User
-                (item!.Id, item.userName, item.isAdmin);
+                (item.UserName,item!.Id, item.Password, item.IsAdmin);
                 _dal.User.Create(doUser);
                 // Proceed with other operations if the engineer is healthy
             }
@@ -56,9 +56,10 @@ internal class UserImplementation : IUser
         {
             return new BO.User()
             {
+                UserName = doUser.UserName,
                 Id = id,
-                userName = doUser.userName,
-                isAdmin = doUser.isAdmin
+                Password=doUser.Password!,
+                IsAdmin = doUser.IsAdmin
             };
         }
         catch (DO.DalDoesNotExistException)
@@ -74,13 +75,20 @@ internal class UserImplementation : IUser
             return (from DO.User doUser in _dal.User.ReadAll()
                     select new  BO.User()
                     {
+                        UserName = doUser.UserName,
                         Id = doUser.Id,
-                        userName = doUser.userName,
-                        isAdmin = doUser.isAdmin
+                        Password = doUser.Password!,
+                        IsAdmin = doUser.IsAdmin
                     });
         else
             return (from DO.User doUser in _dal.User.ReadAll()
-                    let boUser = new BO.User() { Id = doUser.Id, userName = doUser.userName, isAdmin = doUser.isAdmin }
+                    let boUser = new BO.User() 
+                    {
+                        UserName = doUser.UserName,
+                        Id = doUser.Id,
+                        Password = doUser.Password!,
+                        IsAdmin = doUser.IsAdmin
+                    }
                     where filter(boUser)
                     select boUser);
     }

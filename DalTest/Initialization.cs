@@ -168,12 +168,13 @@ public static class Initialization
 
             s_dal?.Engineer.Create(eng);
 
-            string code = _id.ToString();
-            User _newUser = new(_name, code, false);
+            string id = _id.ToString();
+            string password="";
+            User _newUser = new(_name, id, password, false);
             s_dal?.User.Create(_newUser);
         }
-        //User newAdmin1 = new("Adi", "5784", true);
-        //User newAdmin2 = new("Shira", "4254", true);
+        //User newAdmin1 = new("Adi", "5784", "a2004", true);
+        //User newAdmin2 = new("Shira", "4254", "Shira222", true);
         //s_dal?.User.Create(newAdmin1);
         //s_dal?.User.Create(newAdmin2);
 

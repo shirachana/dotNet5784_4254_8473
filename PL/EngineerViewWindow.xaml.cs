@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace PL
     /// </summary>
     public partial class EngineerViewWindow : Window
     {
-        public EngineerViewWindow()
+        public EngineerViewWindow(BO.User user)
         {
             InitializeComponent();
         }

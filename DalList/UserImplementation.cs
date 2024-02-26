@@ -13,7 +13,7 @@ internal class UserImplementation : IUser
         List<User> admin = new();
         foreach (User user in users)
         {
-            if (user.isAdmin)
+            if (user.IsAdmin)
                 admin.Add(user);
         }
         DataSource.Users.Clear();

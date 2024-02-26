@@ -47,11 +47,23 @@ namespace PL
         //    // Update CurrentTime property with current time
         //    CurrentTime = DateTime.Now;
         //}
-        public BO.User User
-        {
-            get { return (BO.User)GetValue(UserProperty); }
-            set { SetValue(UserProperty, value); }
-        }
+
+            private User _user;
+
+            public User User
+            {
+                get { return _user; }
+                set{if (value is User)
+                        _user = value;
+                    else
+                        throw new ArgumentException("Invalid user type");}
+            }
+
+        //public BO.User User
+        //{
+        //    get { return (BO.User)GetValue(UserProperty); }
+        //    set { SetValue(UserProperty, value); }
+        //}
         public static readonly DependencyProperty UserProperty =
             DependencyProperty.Register(nameof(BO.User), typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
 
@@ -69,19 +81,23 @@ namespace PL
                 string codeUser = passwordBoxUser.Password;
 
                 User = s_bl.User.Read(codeUser)!;
-                if (User.Id != codeUser) 
+                if (User.Id != codeUser||User.UserName!= nameUser) 
                 {
-                    MessageBox.Show("Wrong Code", "Pleasr try again", MessageBoxButton.OK);
+                    MessageBox.Show( "Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
-                else
+                else if(User.IsAdmin)
                 {
                     new MainWindow(User).Show();
                 }
-                this.Close();
+                else if (!User.IsAdmin)
+                {
+                    new EngineerViewWindow(User).Show();
+                }
+                    this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Please try again", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
