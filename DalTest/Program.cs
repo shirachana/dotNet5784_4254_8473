@@ -44,6 +44,7 @@ namespace DalTest
                     s_dal!.Dependency.Clear();
                     s_dal!.Task.Clear();
                     s_dal!.Engineer.Clear();
+                    s_dal!.User.Clear();
                     Initialization.Do();
                     validInput = true;
                 }

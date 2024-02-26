@@ -14,23 +14,32 @@ internal class UserImplementation : IUser
     public void Clear()
     {
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        users.Clear();
-        XMLTools.SaveListToXMLSerializer(users, s_users_xml);
+        List<User> admin = new();
+        foreach(User user in users)
+        {
+            if(user.isAdmin) 
+                admin.Add(user);
+        }
+        XMLTools.SaveListToXMLSerializer(admin, s_users_xml);
     }
 
     public string Create(User item)
     {
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
-        //if (users.Any(e => e.Id == item.Id))
-        //{
-        //    throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
-        //}
+        foreach (User tempUser in users) 
+        {
+            if(tempUser.userName==item.userName)
+            {
+                throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
+            }
+        }
 
-        string code = item.Id!.ToString();
-        User user = new(item.userName, code, false);
-        users.Add(user);
+
+        //string code = item.Id!.ToString();
+        //User user = new(item.userName, code, false);
+        users.Add(item);
         XMLTools.SaveListToXMLSerializer(users, s_users_xml);
-        return code;
+        return item.userName!;
     }
 
     public void Delete(string id)

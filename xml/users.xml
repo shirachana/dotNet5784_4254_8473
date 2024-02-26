@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <userName>Adi</userName>
+    <Id>5784</Id>
+    <isAdmin>true</isAdmin>
+  </User>
+  <User>
+    <userName>Shira</userName>
+    <Id>4254</Id>
+    <isAdmin>true</isAdmin>
+  </User>
+  <User>
+    <userName>Shir</userName>
+    <Id>66562321</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Efrat</userName>
+    <Id>41738478</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Adina</userName>
+    <Id>54867178</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Moti</userName>
+    <Id>93965566</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+  <User>
+    <userName>Israel</userName>
+    <Id>52128129</Id>
+    <isAdmin>false</isAdmin>
+  </User>
+</ArrayOfUser>

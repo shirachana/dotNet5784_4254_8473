@@ -172,16 +172,16 @@ public static class Initialization
             User _newUser = new(_name, code, false);
             s_dal?.User.Create(_newUser);
         }
-        User newAdmin1 = new("Adi", "5784", true);
-        User newAdmin2 = new("Shira", "4254", true);
-        s_dal?.User.Create(newAdmin1);
-        s_dal?.User.Create(newAdmin2);
+        //User newAdmin1 = new("Adi", "5784", true);
+        //User newAdmin2 = new("Shira", "4254", true);
+        //s_dal?.User.Create(newAdmin1);
+        //s_dal?.User.Create(newAdmin2);
 
-    } 
+    }
 
 
-        //public static void Do(IDal dal) //stage 2
-        public static void Do() //stage 4
+    //public static void Do(IDal dal) //stage 2
+    public static void Do() //stage 4
         {
             //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
             //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");

@@ -9,7 +9,15 @@ internal class UserImplementation : IUser
 {
     public void Clear()
     {
+        List<User> users = DataSource.Users;
+        List<User> admin = new();
+        foreach (User user in users)
+        {
+            if (user.isAdmin)
+                admin.Add(user);
+        }
         DataSource.Users.Clear();
+        DataSource.Users.AddRange(admin);
     }
 
     public string Create(User item)
