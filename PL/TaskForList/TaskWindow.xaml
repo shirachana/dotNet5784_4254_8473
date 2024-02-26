@@ -3,126 +3,160 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL.TaskForList"
+        xmlns:converter="clr-namespace:PL"
         mc:Ignorable="d"
         Title="TaskWindow" Height="800" Width="450"
         DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
 
+    <Window.Resources>
+        <converter:IsDependToCheckConverter x:Key="IsCheckConverter"/>
+    </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
 
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width= "*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width= "*"/>
-        </Grid.ColumnDefinitions>
-        <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="1" />
-        <Label Content="Description:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="2"/>
-        <Label Content="Alias:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"/>
-        <Label Content="CreatedAtDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"/>
-        <Label Content="Status:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="5"/>
-        <Label Content="Dependencies:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Row="6" Grid.Column="1" />
-        <Label Content="RequiredEffortTime:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="117" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="7"/>
-        <Label Content="ScheduledDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="8"/>
-        <Label Content="StartDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="9"/>
-        <Label Content="DeadlineDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="10"/>
-        <Label Content="CompleteDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="11" />
-        <Label Content="ForecastDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="12"/>
-        <Label Content="Deliverables:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="13"/>
-        <Label Content="Remarks:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="14"/>
-        <Label Content="Engineer:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="15"/>
-        <Label Content="Copmlexity:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="16"/>
-        <Label Grid.Column="1" Content="Dependencies List" HorizontalAlignment="Center"  Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Row="17" VerticalAlignment="Center"/>
-        <ListView ItemsSource="{Binding Dependencies}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="16" Width="300" 
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width= "*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width= "*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="1" />
+            <Label Content="Description:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="2"/>
+            <Label Content="Alias:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"/>
+            <Label Content="CreatedAtDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"/>
+            <Label Content="Status:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="5"/>
+            <Label Content="Dependencies:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="113" RenderTransformOrigin="2.661,0.532" Grid.Row="6" Grid.Column="1" />
+            <Label Content="RequiredEffortTime:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="117" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="7"/>
+            <Label Content="ScheduledDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="8"/>
+            <Label Content="StartDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="9"/>
+            <Label Content="DeadlineDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="10"/>
+            <Label Content="CompleteDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="11" />
+            <Label Content="ForecastDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="12"/>
+            <Label Content="Deliverables:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="13"/>
+            <Label Content="Remarks:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="14"/>
+            <Label Content="Engineer:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="15"/>
+            <Label Content="Copmlexity:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="16"/>
+            <Label Grid.Column="1" Content="Dependencies List" HorizontalAlignment="Center"  Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Row="17" VerticalAlignment="Center"/>
+            <ListView ItemsSource="{Binding Tasks,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="16" Width="300" 
           IsEnabled="{Binding TargetNullValue, Mode=OneTime, Converter={StaticResource ConverIdToContentKey }}" 
           Margin="0,34,0,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="3">
-            <ListView.RenderTransform>
-                <TransformGroup>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ListView.RenderTransform>
-        </ListView>
-        <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" 
+                <ListView.RenderTransform>
+                    <TransformGroup>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </ListView.RenderTransform>
+            </ListView>
+            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" 
                              Visibility="{Binding Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                              IsHitTestVisible="False"
                              IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-        <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
-        <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
-        <TextBox Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="13" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
-        <TextBox Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="14" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
-        <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap"  VerticalAlignment="Center" Width="112" Height="30"
+            <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
+            <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
+            <TextBox Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="13" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
+            <TextBox Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="14" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
+            <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap"  VerticalAlignment="Center" Width="112" Height="30"
                  Visibility="{Binding Engineer.Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                  IsHitTestVisible="False"
                  IsEnabled="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-        <!--<TextBox Text="{Binding Dependencies, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" Grid.ColumnSpan="2" Margin="110,0,0,0"/>-->
-        <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
-        <ComboBox Grid.Column="2" HorizontalAlignment="Center" Grid.Row="16" VerticalAlignment="Center" Width="112" Height="30" ItemsSource="{Binding Source={StaticResource TasksCollectionExKey}}" SelectedValue="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
-        <ComboBox Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="112" Height="34" ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
+            <!--<TextBox Text="{Binding Dependencies, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" Grid.ColumnSpan="2" Margin="110,0,0,0"/>-->
+            <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"/>
+            <ComboBox Grid.Column="2" HorizontalAlignment="Center" Grid.Row="16" VerticalAlignment="Center" Width="112" Height="30" ItemsSource="{Binding Source={StaticResource TasksCollectionExKey}}" SelectedValue="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"/>
+            <ComboBox Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="112" Height="34" ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
                     Visibility="{Binding Status, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                     IsHitTestVisible="False"
                     IsEnabled="{Binding Status, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="34" Width="112"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="34" Width="112"
             SelectedDate="{Binding CreatedAtDate, Mode=TwoWay}"/>
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Height="34" Width="112"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Height="34" Width="112"
             SelectedDate="{Binding ScheduledDate, Mode=TwoWay}"                    
                    Visibility="{Binding ScheduledDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding ScheduledDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Height="34" Width="112"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Height="34" Width="112"
             SelectedDate="{Binding StartDate, Mode=TwoWay}"
                    Visibility="{Binding StartDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding StartDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Height="34" Width="112"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Height="34" Width="112"
             SelectedDate="{Binding DeadlineDate, Mode=TwoWay}"
                    Visibility="{Binding DeadlineDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding DeadlineDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Height="34" Width="113"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Height="34" Width="113"
             SelectedDate="{Binding CompleteDate, Mode=TwoWay}"
                    Visibility="{Binding CompleteDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding CompleteDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-        <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="12" VerticalAlignment="Center" Height="34" Width="107"
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="12" VerticalAlignment="Center" Height="34" Width="107"
             SelectedDate="{Binding ForecastDate, Mode=TwoWay}"
                    Visibility="{Binding ForecastDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding ForecastDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-        <Button Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
+            <Button Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
           HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
-        <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
+            <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2" VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
-        <Button  Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
+            <Button Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
 
+
+        </Grid>
+
+        <materialDesign:DialogHost DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"  IsOpen="{Binding OpenDialogHost}"  CloseOnClickAway="True" >
+            <materialDesign:DialogHost.DialogContent >
+                <Grid  Width="800" Height="400" Background="Black">
+                    <DataGrid ItemsSource="{Binding TasksList}" AutoGenerateColumns="True" >
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Add Dependency" Width="*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox x:Name="CheckBox" HorizontalAlignment="Center" Tag="{Binding}" Click="CheckBox_Click">
+                                            <CheckBox.IsChecked>
+                                                <MultiBinding Converter="{StaticResource IsCheckConverter}" >
+                                                    <Binding ElementName="CheckBox" Path="Tag"/>
+                                                    <Binding Path="Task.Dependencies" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
+                                                </MultiBinding>
+                                            </CheckBox.IsChecked>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>

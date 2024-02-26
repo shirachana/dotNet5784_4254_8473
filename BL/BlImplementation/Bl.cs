@@ -43,6 +43,7 @@ internal class Bl : IBl
     public void ResetDB()
     {
         dal.Engineer.Clear();
+        dal.User.Clear();
         dal.Task.Clear();
         dal.Dependency.Clear();
     }
