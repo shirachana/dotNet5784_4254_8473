@@ -14,6 +14,8 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 internal class TaskImplementation : BlApi.ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    private readonly Bl _bl;
+    internal TaskImplementation(Bl bl) => _bl = bl;
     /// <summary>
     /// Adding a task will receive (as a parameter) an object of a task will check for correctness will add dependencies
     /// for previous tasks from the existing task list if the data is correct - 

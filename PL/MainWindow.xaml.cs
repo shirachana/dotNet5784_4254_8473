@@ -52,5 +52,9 @@ namespace PL
                 s_bl.ResetDB();
         }
 
+        //private void btnSchedul_Click(object sender, RoutedEventArgs e)
+        //{
+
+        //}
     }
 }

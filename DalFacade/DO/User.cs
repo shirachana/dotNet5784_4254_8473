@@ -1,6 +1,6 @@
 ﻿namespace DO;
 
-public record User(string? userName, string?Id, bool isAdmin)
+public record User(string? userName, string? Id, bool isAdmin)
 {
     User(): this(null, null, false){ }
 }

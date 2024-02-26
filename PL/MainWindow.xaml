@@ -16,12 +16,16 @@
             <ColumnDefinition Width= "*"/>
         </Grid.ColumnDefinitions>
         <!--Engineer-->
-        <Button Content="Handle Engineers" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Grid.Column="0"  Click="btnEngineer_Click" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" />
+        <Button Content="Handle Engineers" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top"  Click="btnEngineer_Click" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" />
         <!--Tasks-->
-        <Button Content="Handle Tasks" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top"   Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Click="btnTask_Click" />
+        <Button Content="Handle Tasks" HorizontalAlignment="Center" VerticalAlignment="Center"   Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Click="btnTask_Click" />
         <!--Initialization-->
-        <Button Content="Initialize" HorizontalAlignment="Center" Margin="0,100,0,0" VerticalAlignment="Top" Height="100" Width="222" Click="btnInitDB_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1"/>
+        <Button Content="Initialize" HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" Height="100" Width="222" Click="btnInitDB_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1" RenderTransformOrigin="0.504,-0.397"/>
         <!--Reset-->
-        <Button Content="Reset" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1" Click="btnReset_Click"/>
+        <Button Content="Reset" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1" Click="btnReset_Click" RenderTransformOrigin="0.543,-0.815"/>
+        <!--Gant-->
+        <!--<Button Content="Gantt chart" HorizontalAlignment="Center" Margin="0,292,0,0" VerticalAlignment="Top" Height="100" Width="222" Click="btnGant_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" RenderTransformOrigin="0.504,-0.397"/>
+        --><!--lous--><!--
+        <Button Content="Create a schedule" HorizontalAlignment="Center" VerticalAlignment="Top" Height="100" Width="222" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Grid.Column="1" Click="btnSchedul_Click" RenderTransformOrigin="0.543,-0.815" Margin="0,292,0,0"/>-->
     </Grid>
 </Window>

@@ -9,7 +9,7 @@ internal class Bl : IBl
     private readonly DalApi.IDal dal = DalApi.Factory.Get;
     public IEngineer Engineer => new EngineerImplementation();
 
-    public ITask Task => new TaskImplementation();
+    public ITask Task => new TaskImplementation(this);
     public IUser User => new UserImplementation();
 
     public DateTime? StartDate
@@ -39,7 +39,36 @@ internal class Bl : IBl
         }
         get => dal.EndDate;
     }
+    private static DateTime s_Clock = DateTime.Now.Date;
+
+    public DateTime Clock
+    {
+        get { return s_Clock; }
+        private set { s_Clock = value; }
+    }
+
+    public void AdvanceTimeByDay(int days)
+    {
+        s_Clock = s_Clock.AddDays(days);
+    }
+
+    public void AdvanceTimeByHour(int hours)
+    {
+        s_Clock = s_Clock.AddHours(hours);
+    }
+
+    public void AdvanceTimeByYear(int years)
+    {
+        s_Clock = s_Clock.AddYears(years);
+    }
+
     public void InitializeDB() => DalTest.Initialization.Do();
+
+    public void InitializeTime(DateTime initialDateTime)
+    {
+        s_Clock = initialDateTime;
+    }
+
     public void ResetDB()
     {
         dal.Engineer.Clear();

@@ -54,7 +54,12 @@ internal class UserImplementation : IUser
             throw new BlDoesNotExistException($"User with ID={id} does Not exist");
         try
         {
-            return new BO.User(id, doUser.userName, doUser.isAdmin);
+            return new BO.User()
+            {
+                Id = id,
+                userName = doUser.userName,
+                isAdmin = doUser.isAdmin
+            };
         }
         catch (DO.DalDoesNotExistException)
         {
@@ -67,10 +72,15 @@ internal class UserImplementation : IUser
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
         if (filter == null)//if there no filter
             return (from DO.User doUser in _dal.User.ReadAll()
-                    select new BO.User(doUser.Id, doUser.userName, doUser.isAdmin));
+                    select new  BO.User()
+                    {
+                        Id = doUser.Id,
+                        userName = doUser.userName,
+                        isAdmin = doUser.isAdmin
+                    });
         else
             return (from DO.User doUser in _dal.User.ReadAll()
-                    let boUser = new BO.User(doUser.Id, doUser.userName, doUser.isAdmin)
+                    let boUser = new BO.User() { Id = doUser.Id, userName = doUser.userName, isAdmin = doUser.isAdmin }
                     where filter(boUser)
                     select boUser);
     }

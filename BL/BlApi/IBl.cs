@@ -10,5 +10,18 @@ public interface IBl
     public void InitializeDB();
     public void ResetDB();
 
+    #region Time Management
+
+    public DateTime Clock { get; }
+
+    public void AdvanceTimeByYear(int years);
+
+    public void AdvanceTimeByDay(int days);
+
+    public void AdvanceTimeByHour(int hours);
+
+    public void InitializeTime(DateTime initialDateTime);
+
+    #endregion
 }
 

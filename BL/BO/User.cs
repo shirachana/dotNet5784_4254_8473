@@ -1,7 +1,11 @@
 ﻿
 namespace BO;
 
-public record User(string? userName, string? Id, bool isAdmin)
+public record User()
 {
-    User() : this(null, null, false) { }
+    public string? userName { get; init; }
+    public string? Id { get; set; }
+    public bool isAdmin { get; set; }
+
+    public override string ToString() => this.ToStringProperty();
 }
