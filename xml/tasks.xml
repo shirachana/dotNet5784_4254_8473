@@ -5,8 +5,8 @@
     <Engineerld>0</Engineerld>
     <Alias>recipe-design</Alias>
     <Description>Design a new recipe for a food product.</Description>
-    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P184D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-17T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P157D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Beginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -21,8 +21,8 @@
     <Engineerld>0</Engineerld>
     <Alias>ingredient-sourcing</Alias>
     <Description>Source and procure high-quality ingredients for recipes</Description>
-    <CreatedAtDate>2024-02-14T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P92D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P171D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -37,8 +37,8 @@
     <Engineerld>0</Engineerld>
     <Alias>cost-analysis</Alias>
     <Description>Analyze the cost of ingredients and production for a recipe.</Description>
-    <CreatedAtDate>2024-01-16T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P313D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-04T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P360D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -53,8 +53,8 @@
     <Engineerld>0</Engineerld>
     <Alias>quality-control</Alias>
     <Description>Implement and monitor quality control measures in food production.</Description>
-    <CreatedAtDate>2024-02-01T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P42D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P284D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -69,8 +69,8 @@
     <Engineerld>0</Engineerld>
     <Alias>production-scheduling</Alias>
     <Description>Schedule and manage production processes for multiple recipes.</Description>
-    <CreatedAtDate>2024-02-16T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P207D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P322D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -85,8 +85,8 @@
     <Engineerld>0</Engineerld>
     <Alias>batch-tracking</Alias>
     <Description>Track batches of food products throughout the production process.</Description>
-    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P24D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-19T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P207D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -101,8 +101,8 @@
     <Engineerld>0</Engineerld>
     <Alias>equipment-maintenance</Alias>
     <Description>Schedule and perform maintenance on production equipment.</Description>
-    <CreatedAtDate>2024-02-02T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P92D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-07T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P296D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -117,8 +117,8 @@
     <Engineerld>0</Engineerld>
     <Alias>regulatory-compliance</Alias>
     <Description>Ensure compliance with food safety and labeling regulations.</Description>
-    <CreatedAtDate>2024-01-25T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P57D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P232D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -133,8 +133,8 @@
     <Engineerld>0</Engineerld>
     <Alias>new-ingredient-evaluation</Alias>
     <Description>Evaluate and test new ingredients for potential use in recipes.</Description>
-    <CreatedAtDate>2024-01-25T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P274D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P224D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Beginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -149,8 +149,8 @@
     <Engineerld>0</Engineerld>
     <Alias>allergen-management</Alias>
     <Description>Manage and control allergen information for food products.</Description>
-    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P339D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P357D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -165,8 +165,8 @@
     <Engineerld>0</Engineerld>
     <Alias>packaging-design</Alias>
     <Description>Design and choose packaging for food products.</Description>
-    <CreatedAtDate>2024-02-03T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P291D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-02T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P347D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -181,8 +181,8 @@
     <Engineerld>0</Engineerld>
     <Alias>supplier-performance</Alias>
     <Description>Evaluate and monitor the performance of ingredient suppliers.</Description>
-    <CreatedAtDate>2024-01-31T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P117D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-13T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P41D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -197,8 +197,8 @@
     <Engineerld>0</Engineerld>
     <Alias>shelf-life-testing</Alias>
     <Description>Conduct tests to determine the shelf life of food products.</Description>
-    <CreatedAtDate>2024-02-15T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P126D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-26T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P195D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -213,8 +213,8 @@
     <Engineerld>0</Engineerld>
     <Alias>sustainability-assessment</Alias>
     <Description>Assess and improve the sustainability of food production processes.</Description>
-    <CreatedAtDate>2024-01-30T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P93D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-01T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P261D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -229,8 +229,8 @@
     <Engineerld>0</Engineerld>
     <Alias>recipe-scaling</Alias>
     <Description>Scale up or down recipes to meet production requirements.</Description>
-    <CreatedAtDate>2024-01-24T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P115D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-23T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P5D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -245,8 +245,8 @@
     <Engineerld>0</Engineerld>
     <Alias>traceability-system</Alias>
     <Description>Implement a system for tracing ingredients from source to final product.</Description>
-    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P212D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-02T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P142D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -261,8 +261,8 @@
     <Engineerld>0</Engineerld>
     <Alias>food-safety-training</Alias>
     <Description>Provide training on food safety practices for production staff.</Description>
-    <CreatedAtDate>2024-01-05T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P247D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-26T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P275D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -277,8 +277,8 @@
     <Engineerld>0</Engineerld>
     <Alias>inventory-management</Alias>
     <Description>Manage and optimize ingredient and product inventory levels</Description>
-    <CreatedAtDate>2024-01-22T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P26D</RequiredEffortTime>
+    <CreatedAtDate>2024-01-16T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P154D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>AdvancedBeginner</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -293,8 +293,8 @@
     <Engineerld>0</Engineerld>
     <Alias>product-launch-planning</Alias>
     <Description>Plan and coordinate the launch of new food products.</Description>
-    <CreatedAtDate>2024-01-02T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P334D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-05T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P32D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Advanced</Copmlexity>
     <StartDate xsi:nil="true" />
@@ -309,8 +309,8 @@
     <Engineerld>0</Engineerld>
     <Alias>market-trend-analysis</Alias>
     <Description>Analyze market trends to inform new product development.</Description>
-    <CreatedAtDate>2024-02-21T00:00:00</CreatedAtDate>
-    <RequiredEffortTime>P60D</RequiredEffortTime>
+    <CreatedAtDate>2024-02-03T00:00:00</CreatedAtDate>
+    <RequiredEffortTime>P208D</RequiredEffortTime>
     <IsMilestone>false</IsMilestone>
     <Copmlexity>Intermediate</Copmlexity>
     <StartDate xsi:nil="true" />

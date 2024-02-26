@@ -25,7 +25,6 @@ namespace PL
         public EntrancnceWindow()
         {
             InitializeComponent();
-            DataContext = new EntrancnceWindow();
         }
         public BO.User user
         {

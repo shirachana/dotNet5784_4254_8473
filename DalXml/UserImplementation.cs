@@ -21,13 +21,16 @@ internal class UserImplementation : IUser
     public string Create(User item)
     {
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        //if (users.Any(e => e.Id == item.Id))
+        //{
+        //    throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
+        //}
 
-
-        users.Add(item);
+        string code = item.Id!.ToString();
+        User user = new(item.userName, code, false);
+        users.Add(user);
         XMLTools.SaveListToXMLSerializer(users, s_users_xml);
-        
-
-        return item.Id!;
+        return code;
     }
 
     public void Delete(string id)

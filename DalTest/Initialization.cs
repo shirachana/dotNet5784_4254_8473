@@ -151,7 +151,7 @@ public static class Initialization
     }
     private static void CreatEngineer()
     {
-        string[] namesOfEng = { "Shira", "Efrat", "Adi", "Moti", "Israel" };
+        string[] namesOfEng = { "Shir", "Efrat", "Adina", "Moti", "Israel" };
 
         foreach (var _name in namesOfEng)
         {
@@ -171,14 +171,14 @@ public static class Initialization
             string code = _id.ToString();
             User _newUser = new(_name, code, false);
             s_dal?.User.Create(_newUser);
-            //}
-            //User newAdmin1 = new("Adi", "5784", true);
-            //User newAdmin2 = new("Shira", "4254", true);
-            //s_dal?.User.Create(newAdmin1);
-            //s_dal?.User.Create(newAdmin2);
+        }
+        User newAdmin1 = new("Adi", "5784", true);
+        User newAdmin2 = new("Shira", "4254", true);
+        s_dal?.User.Create(newAdmin1);
+        s_dal?.User.Create(newAdmin2);
 
-        } 
-    }
+    } 
+
 
         //public static void Do(IDal dal) //stage 2
         public static void Do() //stage 4

@@ -15,7 +15,7 @@ internal class EngineerImplementation : IEngineer
     public int Create(Engineer item)
     {
         List<Engineer> engineers = XMLTools.LoadListFromXMLSerializer<Engineer>(s_engineers_xml);
-        List<User> users = XMLTools.LoadListFromXMLSerializer<User>("users");
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
 
         if (engineers.Any(e => e.Id == item.Id))
         {
@@ -26,7 +26,7 @@ internal class EngineerImplementation : IEngineer
         string code = item.Id.ToString();
         User user = new(item.Name, code, false);
         users.Add(user);
-        XMLTools.SaveListToXMLSerializer(users, "users");
+        XMLTools.SaveListToXMLSerializer(users, s_users_xml);
 
         engineers.Add(item);
         XMLTools.SaveListToXMLSerializer(engineers, s_engineers_xml);
