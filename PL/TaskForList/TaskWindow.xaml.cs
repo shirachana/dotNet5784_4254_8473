@@ -66,6 +66,8 @@ namespace PL.TaskForList
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
         private TaskListWindow _taskListWindow;
+        private string? id;
+
         public TaskWindow(TaskListWindow taskListWindow, int taskId = 0)
         {
             OpenDialogHost = false;
@@ -100,6 +102,38 @@ namespace PL.TaskForList
             if (Task.Engineer == null)
                 Task.Engineer = new();
             InitializeComponent();
+        }
+        public TaskWindow(TaskListWindow taskListWindow, string engId)
+        {
+            try
+            {
+                //InitializeComponent();
+
+                //OpenDialogHost = false;
+                //_taskListWindow = taskListWindow;
+
+                //// Fetch the engineer's task based on the specified ID
+                //int id = int.Parse(engId);
+                //BO.Task engineerTask = s_bl.Task.Read(t => t.Engineerld == doEng.Id);
+
+                //if (engineerTask != null)
+                //{
+                //    // Populate the Tasks collection with the engineer's task
+                //    Tasks = new ObservableCollection<BO.TaskInList> { engineerTask };
+                //}
+                //else
+                //{
+                //    MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                //    Close();
+                //}
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, e.g., display an error message
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                // Close the window or handle the error as appropriate
+                Close();
+            }
         }
 
         private void btnAddUpdateTask_Click(object sender, RoutedEventArgs e)

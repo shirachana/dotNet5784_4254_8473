@@ -329,7 +329,7 @@ internal class TaskImplementation : BlApi.ITask
     /// <param name="engineerId"></param>the engineeers id
     /// <returns></returns>
     /// <exception cref="BlDoesNotExistException"></exception>
-    private EngineerInTask? CalculateEngineerForTask(int engineerId)
+    public EngineerInTask? CalculateEngineerForTask(int engineerId)
     {
         try
         {

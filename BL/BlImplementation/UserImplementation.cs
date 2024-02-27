@@ -98,7 +98,7 @@ internal class UserImplementation : IUser
     }
     public void Update(BO.User? item)
     {
-        DO.User doUser=new(item!.Name, item.Id, item.UserName, item.Password,item.IsAdmin);
+        DO.User doUser=new(item!.Name, item!.Id, item.UserName, item.Password,item.IsAdmin);
         _dal.User.Update(doUser);
     }
     public User ReadByNameAndPassword(string userName, string password)

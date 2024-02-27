@@ -1,5 +1,6 @@
 ﻿using BO;
 using DO;
+using PL.TaskForList;
 using PL.User;
 using System;
 using System.Collections.Generic;
@@ -48,8 +49,13 @@ namespace PL
             userWindow.User = user;
             userWindow.Show();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private TaskListWindow _taskListWindow;
+        private void BtnCurrent_Click(object sender, RoutedEventArgs e)
+        {
+           // int id = int.Parse(user.Id!);
+            new TaskWindow(_taskListWindow, user.Id!).Show();
+        }
+        private void BtnAddTask_Click(object sender, RoutedEventArgs e)
         {
 
         }

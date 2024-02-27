@@ -19,13 +19,13 @@
         </Grid.ColumnDefinitions>
 
         <!-- Button to add a task to an employee -->
-        <Button Content="Add Task to Engineer" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Click="Button_Click"/>
+        <Button Content="Add Task to Engineer" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="197" Click="BtnAddTask_Click"/>
 
         <!-- Button to update the user -->
         <Button Content="Update User" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnUppUse_Click"/>
 
         <!-- Button for current task -->
-        <Button Content="Current Task" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150"/>
+        <Button Content="Current Task" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Click="BtnCurrent_Click"/>
 
         <!-- Button to exit -->
         <Button Content="Log Out" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnExit_Click"/>

@@ -1,4 +1,6 @@
-﻿namespace BlApi;
+﻿using BO;
+
+namespace BlApi;
 /// <summary>
 /// Task in BLAPi
 /// < func name="ReadAll"></read all the list of the tasks >
@@ -17,4 +19,5 @@ public interface ITask
     public void Delete(int id);
     public void UpdateStartDate(int id, DateTime startDate);
     public void Clear();//clear all the enitity
+    public EngineerInTask? CalculateEngineerForTask(int engineerId);
 }
