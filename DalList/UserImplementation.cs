@@ -52,4 +52,20 @@ internal class UserImplementation : IUser
         else
             return DataSource.Users.Where(filter);
     }
+    public void Update(DO.User item)
+    {
+        // Check if there is an object with the received ID
+        DO.User? existingItem = DataSource.Users.FirstOrDefault(x => x.Id == item.Id);
+        if (existingItem == null)
+        {
+            // If not present, throw an exception
+            throw new DalDoesNotExistException($"User with ID={item.Id} does Not exist");
+        }
+        else
+        {
+            // If exists, remove the existing object and add the updated object
+            DataSource.Users.Remove(existingItem);
+            DataSource.Users.Add(item);
+        }
+    }
 }

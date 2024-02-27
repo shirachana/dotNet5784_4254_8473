@@ -36,29 +36,40 @@
         </Grid.ColumnDefinitions>
 
         <!-- Username label -->
-        <Label Content="User Name" HorizontalAlignment="Left" Width="90" Grid.Column="1" Grid.Row="0" Margin="0,10,0,63" Grid.RowSpan="2"/>
+        <Label Content="User Name" HorizontalAlignment="Center" Width="98" Grid.Row="0" Margin="0,10,0,58" Grid.Column="2"/>
         <!-- Password label -->
-        <Label Content="Password" HorizontalAlignment="Left" Width="133" Grid.Column="1" Margin="10,53,0,0" Grid.ColumnSpan="2" Grid.Row="1"/>
+        <Label Content="Password" HorizontalAlignment="Left" Width="77" Grid.Column="2" Margin="17,14,0,48" Grid.Row="1"/>
 
         <!-- Username textbox -->
-        <TextBox Text="{Binding userName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,0,0,27"/>
+        <TextBox Text="{Binding userName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,30,0,27"/>
         <!-- Password textbox -->
         <PasswordBox DataContext="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
              HorizontalAlignment="Center" 
              Grid.Column="2" 
-             Width="134" 
-             Margin="0,28,0,10" 
+             Width="110" 
+             Margin="0,49,0,10" 
              Grid.Row="1"/>
         <!-- Login button -->
-        <Button Content="Log In" HorizontalAlignment="Left" Grid.Column="3" Width="150" Click="BtnLogIn_Click" Margin="67,66,0,97" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button Content="Log In" HorizontalAlignment="Left" Grid.Column="3" Width="79" Click="BtnLogIn_Click" Margin="92,39,0,27" Grid.ColumnSpan="2"/>
+        <!-- Message label -->
+        <Label Content="Don't have an account?" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="76,10,0,57" Grid.Column="3" Grid.Row="1" Width="141"/>
 
-        <!-- Current time label --><!--
+        <!-- Sign-in button -->
+        <Button Content="Sign In" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2" Click="BtnSignIn_Click" Margin="95,45,0,20" Grid.Column="3"/>
+
+
+        <!-- Current time label -->
+        <!--
         <Label Content="{Binding CurrentTime, StringFormat='Current Time: {0:HH:mm:ss}'}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="133,24,0,0" Grid.Row="2" Height="141" Width="534" Grid.ColumnSpan="6" Grid.RowSpan="2"/>
 
-        --><!-- StackPanel for time manipulation buttons --><!--
+        -->
+        <!-- StackPanel for time manipulation buttons -->
+        <!--
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="3" Height="195" Width="624" Grid.ColumnSpan="6" Margin="88,88,0,0" Grid.RowSpan="3">
-            --><!-- Buttons to advance time -->
-            <!-- Buttons to advance time --><!--
+            -->
+        <!-- Buttons to advance time -->
+        <!-- Buttons to advance time -->
+        <!--
             <Button Content="Advance Hour" Click="BtnAdvanceHour_Click" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Width="150"  Height="37"   />
             <Button Content="Advance Day" Click="BtnAdvanceDay_Click"  HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Width="150"  Height="37"   />
             <Button Content="Advance Year" Click="BtnAdvanceYear_Click" Width="150" Height="37"  />

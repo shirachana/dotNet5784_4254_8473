@@ -13,12 +13,6 @@
     <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <UserName>Shir</UserName>
-    <Id>23028097</Id>
-    <Password />
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
     <UserName>Efrat</UserName>
     <Id>46967391</Id>
     <Password />
@@ -40,6 +34,18 @@
     <UserName>Israel</UserName>
     <Id>43364860</Id>
     <Password />
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <UserName>sss</UserName>
+    <Id>23028097</Id>
+    <Password>222</Password>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <UserName>sss</UserName>
+    <Id>23028097</Id>
+    <Password>111</Password>
     <IsAdmin>false</IsAdmin>
   </User>
 </ArrayOfUser>

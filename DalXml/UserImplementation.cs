@@ -79,4 +79,19 @@ internal class UserImplementation : IUser
             return UserElem.Where(filter);
         }
     }
+    public void Update(User item)
+    {
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        User existingUser = users.FirstOrDefault(x => x.Id == item.Id)!;
+        if (existingUser == null)
+        {
+            throw new DalDoesNotExistException($"User with ID={item.Id} does not exist");
+        }
+        else
+        {
+            users.Remove(existingUser);
+            users.Add(item);
+            XMLTools.SaveListToXMLSerializer(users, s_users_xml);
+        }
+    }
 }

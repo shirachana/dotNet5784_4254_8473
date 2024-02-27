@@ -92,4 +92,9 @@ internal class UserImplementation : IUser
                     where filter(boUser)
                     select boUser);
     }
+    public void Update(BO.User? item)
+    {
+        DO.User doUser=new(item!.UserName, item.Id,item.Password,item.IsAdmin);
+        _dal.User.Update(doUser);
+    }
 }

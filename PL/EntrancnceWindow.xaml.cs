@@ -1,5 +1,6 @@
 ﻿using BO;
 using PL.TaskForList;
+using PL.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,15 +49,16 @@ namespace PL
         //    CurrentTime = DateTime.Now;
         //}
 
-            private User _user;
+            private BO.User _user;
 
-            public User User
+            public BO.User User
             {
                 get { return _user; }
-                set{if (value is User)
+                set{if (value is BO.User)
                         _user = value;
                     else
-                        throw new ArgumentException("Invalid user type");}
+                        throw new ArgumentException("Invalid user type");
+                }
             }
 
         //public BO.User User
@@ -81,7 +83,7 @@ namespace PL
                 string codeUser = passwordBoxUser.Password;
 
                 User = s_bl.User.Read(codeUser)!;
-                if (User.Id != codeUser||User.UserName!= nameUser) 
+                if (User.Password != codeUser || User.UserName!= nameUser) 
                 {
                     MessageBox.Show( "Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
@@ -100,6 +102,12 @@ namespace PL
                 MessageBox.Show($"Error: {ex.Message}", "Please try again", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+        }
+
+        private void BtnSignIn_Click(object sender, RoutedEventArgs e)
+        {
+            new UserWindow().Show();
+            this.Close();
         }
 
         //private void BtnAdvanceYear_Click(object sender, RoutedEventArgs e)

@@ -13,4 +13,5 @@ public interface IUser
     IEnumerable<BO.User> ReadAll(Func<BO.User, bool>? filter = null); //stage 1 only, Reads all entity objects
     void Delete(string id); //Deletes an object by its Id
     void Clear();//clear all the enitity
+    public void Update(BO.User item);
 }

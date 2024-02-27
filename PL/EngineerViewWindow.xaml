@@ -7,6 +7,28 @@
         mc:Ignorable="d"
         Title="EngineerViewWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Button to add a task to an employee -->
+        <Button Content="Add Task to Engineer" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="216"/>
+
+        <!-- Button to update the user -->
+        <Button Content="Update User" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnUppUse_Click"/>
+
+        <!-- Button for current task -->
+        <Button Content="Current Task" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10"/>
+
+        <!-- Button to exit -->
+        <Button Content="Exit" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnExit_Click"/>
     </Grid>
 </Window>
+

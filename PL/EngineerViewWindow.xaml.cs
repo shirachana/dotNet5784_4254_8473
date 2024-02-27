@@ -1,4 +1,6 @@
 ﻿using BO;
+using DO;
+using PL.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,31 @@ namespace PL
     /// </summary>
     public partial class EngineerViewWindow : Window
     {
+        private readonly BO.User user;
+        private UserWindow userWindow;
+
         public EngineerViewWindow(BO.User user)
         {
             InitializeComponent();
+            this.user = user;
+        }
+
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            new EntrancnceWindow().Show();
+            this.Close(); 
+        }
+
+        private void BtnUppUse_Click(object sender, RoutedEventArgs e)
+        {
+            // Check if the userWindow instance is null or closed
+            if (userWindow == null || !userWindow.IsVisible)
+            {
+                userWindow = new UserWindow();
+            }
+
+            userWindow.User = user;
+            userWindow.Show();
         }
     }
 }
