@@ -21,25 +21,25 @@ namespace PL.TaskForList
     /// </summary>
     public partial class TaskListWindow : Window
     {
-        public bool isUser
-        {
-            get { return (bool)GetValue(isUserProperty); }
-            set { SetValue(isUserProperty, value); }
-        }
+        //public bool isUser
+        //{
+        //    get { return (bool)GetValue(isUserProperty); }
+        //    set { SetValue(isUserProperty, value); }
+        //}
 
-        public static readonly DependencyProperty isUserProperty =
-            DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
+        //public static readonly DependencyProperty isUserProperty =
+        //    DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
         public TaskListWindow()
         {
             InitializeComponent();
             TaskList = s_bl?.Task.ReadAll()!;
-            isUser= true;
+            //isUser= true;
         }
         public TaskListWindow(BO.Engineer? engineer=null)
         {
             InitializeComponent();
             TaskList = s_bl?.Task.TasksForEngineer(engineer!)!;
-            isUser = false;
+            //isUser = false;
         }
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public IEnumerable<BO.TaskInList> TaskList
