@@ -12,7 +12,7 @@ namespace BlApi;
 /// </summary>
 public interface ITask
 {
-    public IEnumerable<BO.TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null);//not sure
+    public IEnumerable<BO.TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null);
     public BO.Task? Read(int id);
     public int Create(BO.Task? item);
     public void Update(BO.Task item);
@@ -20,4 +20,5 @@ public interface ITask
     public void UpdateStartDate(int id, DateTime startDate);
     public void Clear();//clear all the enitity
     public EngineerInTask? CalculateEngineerForTask(int engineerId);
+    public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer);//not sure
 }

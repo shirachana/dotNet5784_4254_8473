@@ -23,14 +23,14 @@ namespace PL
     /// </summary>
     public partial class EngineerViewWindow : Window
     {
+        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         private readonly BO.User user;
         private UserWindow userWindow;
-
         public EngineerViewWindow(BO.User user)
         {
             InitializeComponent();
             this.user = user;
-            this.userWindow = new UserWindow(); 
+            this.userWindow = new UserWindow();
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
@@ -52,12 +52,14 @@ namespace PL
         private TaskListWindow _taskListWindow;
         private void BtnCurrent_Click(object sender, RoutedEventArgs e)
         {
-           // int id = int.Parse(user.Id!);
-            new TaskWindow(_taskListWindow, user.Id!).Show();
+        // int id = int.Parse(user.Id!);
+        new TaskWindow(_taskListWindow, user.Id!).Show();
         }
         private void BtnAddTask_Click(object sender, RoutedEventArgs e)
         {
-
+             int id = int.Parse(user.Id!);
+            BO.Engineer eng = s_bl.Engineer.Read(id)!;
+            new TaskListWindow(eng).Show();
         }
     }
 }

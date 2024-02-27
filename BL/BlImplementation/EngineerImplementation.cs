@@ -80,7 +80,7 @@ internal class EngineerImplementation : IEngineer
                 Email = doEngineer.Email,
                 Name = doEngineer.Name,
                 Level = (BO.EngineerExperience?)(doEngineer.Level),
-                Task = GetEngineerTask(doEngineer)
+                Task = GetEngineerTask(doEngineer.Id)
             };
         }
         catch (DO.DalDoesNotExistException)
@@ -107,7 +107,7 @@ internal class EngineerImplementation : IEngineer
                             Cost = doEngineer.Cost,
                             Email = doEngineer.Email,
                             Level = (BO.EngineerExperience?)(doEngineer?.Level),
-                            Task = GetEngineerTask(doEngineer) /*new BO.TaskInEngineer
+                            Task = GetEngineerTask(doEngineer.Id) /*new BO.TaskInEngineer
                             {
                                 Id = task.Id,
                                 Alias = task.Alias,
@@ -123,7 +123,7 @@ internal class EngineerImplementation : IEngineer
                                        Cost = doEngineer.Cost,
                                        Email = doEngineer.Email,
                                        Level = (BO.EngineerExperience?)(doEngineer?.Level),
-                                       Task = GetEngineerTask(doEngineer)/*new BO.TaskInEngineer
+                                       Task = GetEngineerTask(doEngineer.Id)/*new BO.TaskInEngineer
                                        {
                                            Id = tsk.Id,
                                            Alias = tsk.Alias,
@@ -192,7 +192,7 @@ internal class EngineerImplementation : IEngineer
             throw new BlPlanning("the Engineer cant add task becuse the start project and the task date not update yet");
         try
         {
-            DO.Engineer eng = _dal.Engineer.Read(idEng) ?? throw new BlDoesNotExistException($"the Engineer with the id={idEng} does not exist"); ;
+            DO.Engineer eng = _dal.Engineer.Read(idEng) ?? throw new BlDoesNotExistException($"the Engineer with the id={idEng} does not exist");
             DO.Task tsk = _dal.Task.Read(idTsk) ?? throw new BlDoesNotExistException($"the Task with the id={idTsk} does not exist");
             if (eng.Level < tsk.Copmlexity)
                 throw new BlDoesNotExistException("The level of the Task dont match to the Engineer level");
@@ -202,7 +202,7 @@ internal class EngineerImplementation : IEngineer
               from DO.Dependency d in _dal.Dependency.ReadAll()
               where d.DependentTask == idTsk
               select _dal.Task.Read(d.DependsOnTask);
-            tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
+            tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! <DateTime.Today);
             if (tasksDep.Any())
                 throw new BlDoesNotExistException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
             DO.Task uppTask = new DO.Task(tsk.Id, idEng, tsk.Alias, tsk.Description, tsk.CreatedAtDate, tsk.RequiredEffortTime, tsk.IsMilestone, tsk.Copmlexity, tsk.StartDate, tsk.ScheduledDate, tsk.DeadlineDate, tsk.CompleteDate, tsk.Deliverables, tsk.Remarks);
@@ -225,11 +225,11 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="doEng"></param>the engineer
     /// <returns></returns>
-    private BO.TaskInEngineer? GetEngineerTask(DO.Engineer doEng)
+    public BO.TaskInEngineer? GetEngineerTask(int idE)
     {
         try
         {
-            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == doEng.Id && t.StartDate != null && t.CompleteDate == null);
+            DO.Task? tsk = _dal.Task.Read(t => t.Engineerld == idE && t.StartDate != null && t.CompleteDate == null);
 
             return new BO.TaskInEngineer
             {

@@ -107,25 +107,25 @@ namespace PL.TaskForList
         {
             try
             {
-                //InitializeComponent();
+                InitializeComponent();
+                _taskListWindow = taskListWindow;
+                OpenDialogHost = false;
 
-                //OpenDialogHost = false;
-                //_taskListWindow = taskListWindow;
+                // Fetch the engineer's task based on the specified ID
+                int id = int.Parse(engId);
+                BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
 
-                //// Fetch the engineer's task based on the specified ID
-                //int id = int.Parse(engId);
-                //BO.Task engineerTask = s_bl.Task.Read(t => t.Engineerld == doEng.Id);
-
-                //if (engineerTask != null)
-                //{
-                //    // Populate the Tasks collection with the engineer's task
-                //    Tasks = new ObservableCollection<BO.TaskInList> { engineerTask };
-                //}
-                //else
-                //{
-                //    MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                //    Close();
-                //}
+                if (engineerTask != null)
+                {
+                    Task = s_bl.Task.Read(engineerTask.Id) ?? new();
+                    if (Task.Dependencies is null)
+                        Task.Dependencies = new();
+                }
+                else
+                {
+                    MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Close();
+                }
             }
             catch (Exception ex)
             {
@@ -134,6 +134,10 @@ namespace PL.TaskForList
                 // Close the window or handle the error as appropriate
                 Close();
             }
+            Tasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
+
+            if (Task.Engineer == null)
+                Task.Engineer = new();
         }
 
         private void btnAddUpdateTask_Click(object sender, RoutedEventArgs e)

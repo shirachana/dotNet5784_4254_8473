@@ -354,6 +354,40 @@ internal class TaskImplementation : BlApi.ITask
             return null; // If engineer doesn't exist, return null
         }
     }
+    public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer)
+    {
+        DO.Engineer eng = _dal.Engineer.Read(engineer.Id) ?? throw new BlDoesNotExistException($"The Engineer with the id={engineer.Id} does not exist");
+
+        var tasks = _dal.Task.ReadAll()
+                        .OrderBy(doTask => doTask.Id) // Sort tasks by Id
+                        .Where(doTask =>
+                        {
+                            // Check if the task is not performed by another engineer
+                            if (doTask.Engineerld != 0 && doTask.Engineerld != eng.Id)
+                                return false;
+
+                            // Check if there are no previous incomplete tasks
+                            var dependentTasks = (from dependency in _dal.Dependency.ReadAll()
+                                                  where dependency.DependentTask == doTask.Id
+                                                  select _dal.Task.Read(dependency.DependsOnTask))
+                                                  .ToList();
+
+                            if (dependentTasks.Any(task => (task.StartDate + task.RequiredEffortTime) > _bl.Clock))
+                                return false;
+
+                            // Check if the task level is the same or lower than the engineer's level
+                            return doTask.Copmlexity <= eng.Level;
+                        })
+                        .Select(doTask => new BO.TaskInList
+                        {
+                            Id = doTask.Id,
+                            Description = doTask.Description,
+                            Alias = doTask.Alias,
+                            Status = Tools.GetStatus(doTask)
+                        });
+
+        return tasks;
+    }
 
 
 }

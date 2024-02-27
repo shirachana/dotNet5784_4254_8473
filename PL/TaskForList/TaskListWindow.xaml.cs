@@ -26,6 +26,11 @@ namespace PL.TaskForList
             InitializeComponent();
             TaskList = s_bl?.Task.ReadAll()!;
         }
+        public TaskListWindow(BO.Engineer? engineer=null)
+        {
+            InitializeComponent();
+            TaskList = s_bl?.Task.TasksForEngineer(engineer!)!;
+        }
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public IEnumerable<BO.TaskInList> TaskList
         {
