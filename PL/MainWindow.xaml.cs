@@ -51,6 +51,12 @@ namespace PL
             if (result == MessageBoxResult.Yes)
                 s_bl.ResetDB();
         }
+        //public static bool manager = true;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            new EntrancnceWindow().Show();
+            this.Close();
+        }
 
         //private void btnSchedul_Click(object sender, RoutedEventArgs e)
         //{

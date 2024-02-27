@@ -6,6 +6,7 @@ using BO;
 using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Reflection.Emit;
 
 internal class UserImplementation : IUser
@@ -24,7 +25,7 @@ internal class UserImplementation : IUser
             if (Tools.CheckUserHealth(item))//its good
             {
                 DO.User doUser = new DO.User
-                (item.UserName,item!.Id, item.Password, item.IsAdmin);
+                (item.Name,item!.Id, item.UserName, item.Password, item.IsAdmin);
                 _dal.User.Create(doUser);
                 // Proceed with other operations if the engineer is healthy
             }
@@ -56,9 +57,10 @@ internal class UserImplementation : IUser
         {
             return new BO.User()
             {
-                UserName = doUser.UserName,
+                Name = doUser.Name,
                 Id = id,
-                Password=doUser.Password!,
+                UserName = doUser.UserName,
+                Password = doUser.Password!,
                 IsAdmin = doUser.IsAdmin
             };
         }
@@ -75,8 +77,9 @@ internal class UserImplementation : IUser
             return (from DO.User doUser in _dal.User.ReadAll()
                     select new  BO.User()
                     {
-                        UserName = doUser.UserName,
+                        Name = doUser.Name,
                         Id = doUser.Id,
+                        UserName = doUser.UserName,
                         Password = doUser.Password!,
                         IsAdmin = doUser.IsAdmin
                     });
@@ -84,8 +87,9 @@ internal class UserImplementation : IUser
             return (from DO.User doUser in _dal.User.ReadAll()
                     let boUser = new BO.User() 
                     {
-                        UserName = doUser.UserName,
+                        Name = doUser.Name,
                         Id = doUser.Id,
+                        UserName = doUser.UserName,
                         Password = doUser.Password!,
                         IsAdmin = doUser.IsAdmin
                     }
@@ -94,7 +98,21 @@ internal class UserImplementation : IUser
     }
     public void Update(BO.User? item)
     {
-        DO.User doUser=new(item!.UserName, item.Id,item.Password,item.IsAdmin);
+        DO.User doUser=new(item!.Name, item.Id, item.UserName, item.Password,item.IsAdmin);
         _dal.User.Update(doUser);
     }
+    public User ReadByNameAndPassword(string userName, string password)
+    {
+        IEnumerable<User> users = ReadAll();
+
+        User user = users.FirstOrDefault(u => u.UserName == userName && u.Password == password)!;
+
+        if (user == null)
+        {
+            throw new BlDoesNotExistException($"User with Name={userName} and Password={password} does not exist");
+        }
+
+        return user;
+    }
+
 }

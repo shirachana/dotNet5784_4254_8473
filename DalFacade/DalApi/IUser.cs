@@ -1,4 +1,6 @@
 ﻿
+using DO;
+
 namespace DalApi;
 
 public interface IUser
@@ -9,4 +11,6 @@ public interface IUser
     void Delete(string id); //Deletes an object by its Id
     void Clear();//clear all the enitity
     void Update(DO.User item); //Updates entity object
+    public User ReadByNameAndPassword(string name, string password);
+
 }

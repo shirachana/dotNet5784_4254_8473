@@ -23,7 +23,8 @@ internal class EngineerImplementation : IEngineer
         DataSource.Engineers.Add(item);
         string code = item.Id.ToString();
         string password = " ";
-        User user = new(item.Name, code, password, false);
+        string userName = "";
+        User user = new(item.Name, code, userName, password, false);
         DataSource.Users.Add(user);
         return item.Id;
     }

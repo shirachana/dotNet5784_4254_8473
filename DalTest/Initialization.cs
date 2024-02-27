@@ -169,12 +169,14 @@ public static class Initialization
             s_dal?.Engineer.Create(eng);
 
             string id = _id.ToString();
-            string password="";
-            User _newUser = new(_name, id, password, false);
-            s_dal?.User.Create(_newUser);
+            string password = "";
+            string userName = "";
+            User _newUser = new(_name, id, userName, password, false);
+            if(_newUser.UserName != null&& _newUser.Password != null) 
+                 s_dal?.User.Create(_newUser);
         }
-        //User newAdmin1 = new("Adi", "5784", "a2004", true);
-        //User newAdmin2 = new("Shira", "4254", "Shira222", true);
+        //User newAdmin1 = new("Adi", "5784", "Adi123", "a2004", true);
+        //User newAdmin2 = new("Shira", "4254","sh222", "Shira222", true);
         //s_dal?.User.Create(newAdmin1);
         //s_dal?.User.Create(newAdmin2);
 

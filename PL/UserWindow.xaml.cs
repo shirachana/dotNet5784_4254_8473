@@ -45,28 +45,33 @@ namespace PL.User
             int idE = int.Parse(idTextBox.Text);
             try
             {
-
+                //if (userNameTextBox == null)
+                //{
+                //    MessageBox.Show(" not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //}
                 BO.Engineer eng = s_bl.Engineer.Read(idE)!;
                 string id = (idTextBox.Text);
                 // Check if the engineer exists in the list of employees
-                if (eng.Name != nameTextBox.Text)
+                if (eng.Name != nameTextBox.Text||eng.Id!= idE)
                 {
-                    MessageBox.Show("Engineer with the provided ID and Name does not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-
-                // Add the user to the list of users
-                BO.User user = new() { UserName = userNameTextBox.Text, Id = id, Password = pasTextBox.Text, IsAdmin = false };
-                if (user == null)
-                {
-                    s_bl.User.Create(user!);
+                    MessageBox.Show("Engineer with the provided ID and Name does not exist!", "Please try again", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
-                    s_bl.User.Update(user!);
+                    // Add the user to the list of users
+                    BO.User user = new() { Name = nameTextBox.Text, Id = id, UserName = userNameTextBox.Text, Password = pasTextBox.Text, IsAdmin = false };
+                    if (user == null)
+                    {
+                        s_bl.User.Create(user!);
+                    }
+                    else
+                    {
+                        s_bl.User.Update(user!);
+                    }
+                    // Close the current window
+                    new EngineerViewWindow(user!).Show();
+                    this.Close();
                 }
-                // Close the current window
-                new EngineerViewWindow(user!).Show();
-                this.Close();
 
                 // Navigate to the next window or perform any other action
             }

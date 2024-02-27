@@ -82,7 +82,7 @@ public static class Tools
     {
         if (item.Id is null)
             throw new BlArgumentOutOfRangeException("User code must be a positive number");
-        if ((item.UserName) is null)
+        if ((item.Name) is null)
             throw new BlArgumentOutOfRangeException("User name cannot be empty");
 
         // If all checks pass, return true

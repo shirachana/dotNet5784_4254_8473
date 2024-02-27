@@ -41,9 +41,9 @@
         <Label Content="Password" HorizontalAlignment="Left" Width="77" Grid.Column="2" Margin="17,14,0,48" Grid.Row="1"/>
 
         <!-- Username textbox -->
-        <TextBox Text="{Binding userName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,30,0,27"/>
+        <TextBox Text="{Binding User, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,30,0,27"/>
         <!-- Password textbox -->
-        <PasswordBox DataContext="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+        <PasswordBox DataContext="{Binding User.Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
              HorizontalAlignment="Center" 
              Grid.Column="2" 
              Width="110" 

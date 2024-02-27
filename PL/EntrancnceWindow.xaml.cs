@@ -37,6 +37,7 @@ namespace PL
         public EntrancnceWindow()
         {
             InitializeComponent();
+            _user = new BO.User();
             //_timer = new DispatcherTimer();
             //_timer.Interval = TimeSpan.FromSeconds(1);
             //_timer.Tick += Timer_Tick!;
@@ -81,13 +82,13 @@ namespace PL
 
                 string nameUser = textBoxUser.Text;
                 string codeUser = passwordBoxUser.Password;
-
-                User = s_bl.User.Read(codeUser)!;
-                if (User.Password != codeUser || User.UserName!= nameUser) 
+                User = s_bl.User.ReadByNameAndPassword(nameUser, codeUser);
+                if (User.Password != codeUser || User.UserName != nameUser)
                 {
-                    MessageBox.Show( "Please try again", " User name or password is incorrect", MessageBoxButton.OK);
+                    MessageBox.Show("Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
-                else if(User.IsAdmin)
+                /*else*/
+                if (User.IsAdmin)
                 {
                     new MainWindow(User).Show();
                 }
@@ -106,6 +107,8 @@ namespace PL
 
         private void BtnSignIn_Click(object sender, RoutedEventArgs e)
         {
+            //if (MainWindow.manager)
+
             new UserWindow().Show();
             this.Close();
         }

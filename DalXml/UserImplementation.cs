@@ -15,9 +15,9 @@ internal class UserImplementation : IUser
     {
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
         List<User> admin = new();
-        foreach(User user in users)
+        foreach (User user in users)
         {
-            if(user.IsAdmin) 
+            if (user.IsAdmin)
                 admin.Add(user);
         }
         XMLTools.SaveListToXMLSerializer(admin, s_users_xml);
@@ -28,7 +28,7 @@ internal class UserImplementation : IUser
         List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
         foreach (User tempUser in users) 
         {
-            if(tempUser.UserName==item.UserName)
+            if(tempUser.Name==item.Name)
             {
                 throw new DalAlreadyExistsException($"User with ID={item.Id} already exists");
             }
@@ -39,7 +39,7 @@ internal class UserImplementation : IUser
         //User user = new(item.userName, code, false);
         users.Add(item);
         XMLTools.SaveListToXMLSerializer(users, s_users_xml);
-        return item.UserName!;
+        return item.Name!;
     }
 
     public void Delete(string id)
@@ -93,5 +93,11 @@ internal class UserImplementation : IUser
             users.Add(item);
             XMLTools.SaveListToXMLSerializer(users, s_users_xml);
         }
+    }
+    public User ReadByNameAndPassword(string userName, string password)
+    {
+        List<User> users = XMLTools.LoadListFromXMLSerializer<User>(s_users_xml);
+        return users.FirstOrDefault(u => u.UserName == userName && u.Password == password)!;
+
     }
 }

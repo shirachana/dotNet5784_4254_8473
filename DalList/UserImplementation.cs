@@ -68,4 +68,10 @@ internal class UserImplementation : IUser
             DataSource.Users.Add(item);
         }
     }
+    public User ReadByNameAndPassword(string userName, string password)
+    {
+
+        return DataSource.Users.FirstOrDefault(u => u.UserName == userName && u.Password == password)!;
+
+    }
 }

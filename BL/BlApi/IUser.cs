@@ -14,4 +14,5 @@ public interface IUser
     void Delete(string id); //Deletes an object by its Id
     void Clear();//clear all the enitity
     public void Update(BO.User item);
+    public BO.User ReadByNameAndPassword(string name, string password);
 }

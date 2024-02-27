@@ -29,6 +29,7 @@ namespace PL
         {
             InitializeComponent();
             this.user = user;
+            this.userWindow = new UserWindow(); 
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
@@ -39,7 +40,6 @@ namespace PL
 
         private void BtnUppUse_Click(object sender, RoutedEventArgs e)
         {
-            // Check if the userWindow instance is null or closed
             if (userWindow == null || !userWindow.IsVisible)
             {
                 userWindow = new UserWindow();
@@ -47,6 +47,11 @@ namespace PL
 
             userWindow.User = user;
             userWindow.Show();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
