@@ -88,7 +88,7 @@ namespace PL.User
                     MessageBox.Show("Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
                 /*else*/
-                if (User.IsAdmin)
+                if (User!.IsAdmin)
                 {
                     new MainWindow(User).Show();
                 }
