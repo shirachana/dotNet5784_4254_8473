@@ -21,25 +21,27 @@ namespace PL.TaskForList
     /// </summary>
     public partial class TaskListWindow : Window
     {
-        //public bool isUser
-        //{
-        //    get { return (bool)GetValue(isUserProperty); }
-        //    set { SetValue(isUserProperty, value); }
-        //}
+        public bool isUser
+        {
+            get { return (bool)GetValue(isUserProperty); }
+            set { SetValue(isUserProperty, value); }
+        }
 
-        //public static readonly DependencyProperty isUserProperty =
-        //    DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
+        public static readonly DependencyProperty isUserProperty =
+            DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
         public TaskListWindow()
         {
             InitializeComponent();
             TaskList = s_bl?.Task.ReadAll()!;
-            //isUser= true;
+            isUser= true;
         }
-        public TaskListWindow(BO.Engineer? engineer=null)
+        private BO.Engineer? eng;
+        public TaskListWindow(BO.Engineer? engineer = null)
         {
+            eng= engineer ?? new BO.Engineer();
             InitializeComponent();
             TaskList = s_bl?.Task.TasksForEngineer(engineer!)!;
-            //isUser = false;
+            isUser = false;
         }
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public IEnumerable<BO.TaskInList> TaskList
@@ -64,14 +66,15 @@ namespace PL.TaskForList
             if (TaskList != null)
             {
                 // Create a new window with the selected item in update mode
-                TaskWindow window = new TaskWindow(this, TaskList.Id);
-                window.ShowDialog();
+                TaskWindow window = new TaskWindow(this, eng,TaskList.Id);
+                window.Show();
             }
         }
 
         private void ButtonAddUppT_Click(object sender, RoutedEventArgs e)
         {
-            new TaskWindow(this).ShowDialog();
+            new TaskWindow(this).Show();
         }
+
     }
 }

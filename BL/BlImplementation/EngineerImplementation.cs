@@ -188,8 +188,8 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="BO.BlDoesNotExistException"></exception>
     public void UpdateEngineerToTask(int idEng,int idTsk)
     {
-        if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
-            throw new BlPlanning("the Engineer cant add task becuse the start project and the task date not update yet");
+        //if (Tools.CheckStatusProject() != BO.StatusProject.Execution)
+        //    throw new BlPlanning("the Engineer cant add task becuse the start project and the task date not update yet");
         try
         {
             DO.Engineer eng = _dal.Engineer.Read(idEng) ?? throw new BlDoesNotExistException($"the Engineer with the id={idEng} does not exist");

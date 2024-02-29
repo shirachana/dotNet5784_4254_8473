@@ -47,29 +47,41 @@ namespace PL.TaskForList
         public static readonly DependencyProperty DepTaskListProperty =
             DependencyProperty.Register(nameof(TasksList), typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow));
 
-        public ObservableCollection<BO.TaskInList> Tasks
+        public ObservableCollection<BO.TaskInList> DependTasks
         {
             get { return (ObservableCollection<BO.TaskInList>)GetValue(TasksProperty); }
             set { SetValue(TasksProperty, value); }
         }
         // Assuming your data is in an ObservableCollection<MyItem>
         public static readonly DependencyProperty TasksProperty =
-            DependencyProperty.Register(nameof(Tasks), typeof(ObservableCollection<BO.TaskInList>), typeof(TaskWindow));
-
-
-
+            DependencyProperty.Register(nameof(DependTasks), typeof(ObservableCollection<BO.TaskInList>), typeof(TaskWindow));
+        public bool isUserValue
+        {
+            get { return (bool)GetValue(isUserVProperty); }
+            set { SetValue(isUserVProperty, value); }
+        }
+        public static readonly DependencyProperty isUserVProperty =
+            DependencyProperty.Register("isUserValue", typeof(bool), typeof(TaskListWindow));
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
             set { SetValue(TaskProperty, value); }
         }
         public static readonly DependencyProperty TaskProperty =
-            DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow), new PropertyMetadata(null));
-        private TaskListWindow _taskListWindow;
+            DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
+        private BO.Engineer? Engineer;
+        private TaskListWindow? _taskListWindow;
         private string? id;
 
-        public TaskWindow(TaskListWindow taskListWindow, int taskId = 0)
+        public TaskWindow(TaskListWindow taskListWindow, BO.Engineer? engineerT = null, int taskId = 0)
         {
+            if (engineerT == null)
+                isUserValue = true;
+            else
+            {
+                isUserValue = false;
+                Engineer = engineerT!;
+            }
             OpenDialogHost = false;
             _taskListWindow = taskListWindow;
             if (taskId == 0)
@@ -97,13 +109,13 @@ namespace PL.TaskForList
                 }
 
             }
-            Tasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
+            DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
 
             if (Task.Engineer == null)
                 Task.Engineer = new();
             InitializeComponent();
         }
-        public TaskWindow(TaskListWindow taskListWindow, string engId)
+        public TaskWindow(TaskListWindow taskListWindow, string? engId)
         {
             try
             {
@@ -112,7 +124,7 @@ namespace PL.TaskForList
                 OpenDialogHost = false;
 
                 // Fetch the engineer's task based on the specified ID
-                int id = int.Parse(engId);
+                int id = int.Parse(engId!);
                 BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
 
                 if (engineerTask != null)
@@ -134,7 +146,7 @@ namespace PL.TaskForList
                 // Close the window or handle the error as appropriate
                 Close();
             }
-            Tasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
+            DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
 
             if (Task.Engineer == null)
                 Task.Engineer = new();
@@ -149,14 +161,25 @@ namespace PL.TaskForList
                     s_bl.Task.Create(Task);
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                     MessageBox.Show("Task added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow.TaskList = updatedTaskList;
+                    _taskListWindow!.TaskList = updatedTaskList;
                 }
                 else
                 {
+                    if (isUserValue == true)
+                    {
                     s_bl.Task.Update(Task);
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                     MessageBox.Show("Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow.TaskList = updatedTaskList;
+                    _taskListWindow!.TaskList = updatedTaskList;
+                    }
+                    else if(isUserValue == false)
+                    {
+                       s_bl.Engineer.UpdateEngineerToTask(Engineer!.Id, Task.Id);
+                       s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
+                       IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                       MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        _taskListWindow!.TaskList = updatedTaskList;
+                    }
                 }
                 this.Close();
             }
@@ -176,7 +199,7 @@ namespace PL.TaskForList
                     s_bl.Task.Delete(Task.Id);
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                     MessageBox.Show("Task delete successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow.TaskList = updatedTaskList;
+                    _taskListWindow!.TaskList = updatedTaskList;
                 }
                 this.Close();
             }
@@ -192,12 +215,12 @@ namespace PL.TaskForList
             if (checkBox!.IsChecked == true)
             {
                 Task.Dependencies!.Add((checkBox.Tag as TaskInList)!);
-                Tasks.Add((checkBox.Tag as TaskInList)!);
+                DependTasks.Add((checkBox.Tag as TaskInList)!);
             }
             else
             {
                 Task.Dependencies!.Remove((checkBox.Tag as TaskInList)!);
-                Tasks.Remove((checkBox.Tag as TaskInList)!);
+                DependTasks.Remove((checkBox.Tag as TaskInList)!);
             }
         }
 

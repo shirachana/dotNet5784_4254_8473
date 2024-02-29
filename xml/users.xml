@@ -15,13 +15,6 @@
     <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <Name>Adina</Name>
-    <Id>85497724</Id>
-    <UserName />
-    <Password />
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
     <Name>Moti</Name>
     <Id>79952133</Id>
     <UserName />
@@ -47,6 +40,13 @@
     <Id>88568090</Id>
     <UserName>Efrat234</UserName>
     <Password>234</Password>
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <Name>Adina</Name>
+    <Id>85497724</Id>
+    <UserName>Adina1</UserName>
+    <Password>111</Password>
     <IsAdmin>false</IsAdmin>
   </User>
 </ArrayOfUser>

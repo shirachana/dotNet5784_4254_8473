@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace PL
+namespace PL.User
 {
     /// <summary>
     /// Interaction logic for EntrancnceWindow.xaml

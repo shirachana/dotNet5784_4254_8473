@@ -94,18 +94,17 @@ public class IsDependToCheckConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
+
         TaskInList taskInList = (TaskInList)values[0];
         List<TaskInList> dependList = (List<TaskInList>)values[1];
+        if (taskInList is null || dependList is null)
+            return false;
         return dependList.Any(x => x.Id == taskInList.Id);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
-        bool isChecked = (bool)value;
-        object[] result = new object[targetTypes.Length];
-        result[0] = null!;
-        result[1] = isChecked;
-        return result;
+        return null;
     }
 }
 

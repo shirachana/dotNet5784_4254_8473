@@ -35,7 +35,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100"  Margin="224,499,0,0" VerticalAlignment="Top" Click="ButtonAddUppT_Click" />
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100"  Margin="224,499,0,0" VerticalAlignment="Top" Click="ButtonAddUppT_Click" Visibility="{Binding isUser, Converter={StaticResource BooleanToVisibilityConverter}}"/>
         <!--<Button Content="Delete" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100"  Margin="424,499,0,0" VerticalAlignment="Top" Click="ButtonDelete_Click"/>-->
     </Grid>
 </Window>
