@@ -1,4 +1,5 @@
-﻿using PL.Engineer;
+﻿using MaterialDesignThemes.Wpf;
+using PL.Engineer;
 using PL.TaskForList;
 using PL.User;
 using System.Text;
@@ -52,16 +53,23 @@ namespace PL
             if (result == MessageBoxResult.Yes)
                 s_bl.ResetDB();
         }
-        //public static bool manager = true;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             new EntrancnceWindow().Show();
             this.Close();
         }
 
-        //private void btnSchedul_Click(object sender, RoutedEventArgs e)
-        //{
+        private void BtnStartDate_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.SetStartDate(DateTime.Now);
+            MessageBox.Show("Start date set successfully!", "Success", MessageBoxButton.OK);
+        }
 
-        //}
+        private void btnSchedul_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.ScheduleD();
+            MessageBox.Show("The schedule has been successfully updated!", "Success", MessageBoxButton.OK);
+
+        }
     }
 }

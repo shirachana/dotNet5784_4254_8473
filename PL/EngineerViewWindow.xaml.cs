@@ -52,14 +52,17 @@ namespace PL
         private TaskListWindow? _taskListWindow;
         private void BtnCurrent_Click(object sender, RoutedEventArgs e)
         {
-        // int id = int.Parse(user.Id!);
-        new TaskWindow(_taskListWindow!, user.Id!).Show();
+            // int id = int.Parse(user.Id!);
+            new TaskWindow(_taskListWindow!, user.Id!).Show();
+            this.Close();
+            
         }
         private void BtnAddTask_Click(object sender, RoutedEventArgs e)
         {
              int id = int.Parse(user.Id!);
             BO.Engineer eng = s_bl.Engineer.Read(id)!;
             new TaskListWindow(eng).Show();
+            this.Close();
         }
     }
 }

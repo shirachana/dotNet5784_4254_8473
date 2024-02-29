@@ -388,6 +388,20 @@ internal class TaskImplementation : BlApi.ITask
 
         return tasks;
     }
+    public IEnumerable<BO.TaskInList> GetDependencies(DO.Task task) 
+    {
+        var result = (from DO.Dependency dep in _dal.Dependency.ReadAll()
+                      where task.Id == dep.DependentTask && _dal.Task.Read(dep.DependsOnTask) != null
+                      select new BO.TaskInList
+                      {
+                          Id = dep.DependsOnTask,
+                          Alias = _dal.Task.Read(dep.DependsOnTask)!.Alias,
+                          Description = _dal.Task.Read(dep.DependsOnTask)!.Description,
+                          Status = Tools.GetStatus(task)
+                      });
+        return result;
+
+    }
 
 
 }

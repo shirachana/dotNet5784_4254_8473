@@ -59,22 +59,22 @@
 
 
         <!-- Current time label -->
-        <!--
-        <Label Content="{Binding CurrentTime, StringFormat='Current Time: {0:HH:mm:ss}'}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="133,24,0,0" Grid.Row="2" Height="141" Width="534" Grid.ColumnSpan="6" Grid.RowSpan="2"/>
 
-        -->
+        <Label Content="{Binding CurrentTime, StringFormat='Current Time: {0:HH:mm:ss}'}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Height="141" Width="534" Grid.ColumnSpan="4" Margin="-19,0,0,0"/>
+
+
         <!-- StackPanel for time manipulation buttons -->
-        <!--
+
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Grid.Row="3" Height="195" Width="624" Grid.ColumnSpan="6" Margin="88,88,0,0" Grid.RowSpan="3">
-            -->
-        <!-- Buttons to advance time -->
-        <!-- Buttons to advance time -->
-        <!--
+
+            <!-- Buttons to advance time -->
+            <!-- Buttons to advance time -->
+
             <Button Content="Advance Hour" Click="BtnAdvanceHour_Click" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="1" Width="150"  Height="37"   />
             <Button Content="Advance Day" Click="BtnAdvanceDay_Click"  HorizontalAlignment="Center" Grid.Column="1" Grid.Row="2" Width="150"  Height="37"   />
             <Button Content="Advance Year" Click="BtnAdvanceYear_Click" Width="150" Height="37"  />
             <Button Content="Reset" Click="BtnReset_Click" HorizontalAlignment="Center" Grid.Column="1" Grid.Row="41" Width="150"  Height="37" />
-        </StackPanel>-->
+        </StackPanel>
     </Grid>
 </Window>
 

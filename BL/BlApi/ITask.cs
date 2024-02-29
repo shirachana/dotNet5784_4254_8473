@@ -21,4 +21,6 @@ public interface ITask
     public void Clear();//clear all the enitity
     public EngineerInTask? CalculateEngineerForTask(int engineerId);
     public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer);//not sure
+    public IEnumerable<BO.TaskInList> GetDependencies(DO.Task task);
+
 }

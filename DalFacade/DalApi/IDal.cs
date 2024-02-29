@@ -10,4 +10,5 @@ public interface IDal
     DateTime? StartDate { set; get; }
     DateTime? EndDate { set; get; }
 
+ 
 }

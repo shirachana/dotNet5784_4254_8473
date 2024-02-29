@@ -25,7 +25,7 @@ internal class UserImplementation : IUser
             if (Tools.CheckUserHealth(item))//its good
             {
                 DO.User doUser = new DO.User
-                (item.Name,item!.Id, item.UserName, item.Password, item.IsAdmin);
+                (item.Name, item!.Id, item.UserName, item.Password, item.IsAdmin);
                 _dal.User.Create(doUser);
                 // Proceed with other operations if the engineer is healthy
             }
@@ -51,7 +51,7 @@ internal class UserImplementation : IUser
     public BO.User? Read(string id)
     {
         DO.User? doUser = _dal.User.Read(id);
-        if (doUser  == null)
+        if (doUser == null)
             throw new BlDoesNotExistException($"User with ID={id} does Not exist");
         try
         {
@@ -75,7 +75,7 @@ internal class UserImplementation : IUser
         IEnumerable<DO.Task?> tasks = _dal.Task.ReadAll();
         if (filter == null)//if there no filter
             return (from DO.User doUser in _dal.User.ReadAll()
-                    select new  BO.User()
+                    select new BO.User()
                     {
                         Name = doUser.Name,
                         Id = doUser.Id,
@@ -85,7 +85,7 @@ internal class UserImplementation : IUser
                     });
         else
             return (from DO.User doUser in _dal.User.ReadAll()
-                    let boUser = new BO.User() 
+                    let boUser = new BO.User()
                     {
                         Name = doUser.Name,
                         Id = doUser.Id,
@@ -98,21 +98,31 @@ internal class UserImplementation : IUser
     }
     public void Update(BO.User? item)
     {
-        DO.User doUser=new(item!.Name, item!.Id, item.UserName, item.Password,item.IsAdmin);
+        DO.User doUser = new(item!.Name, item!.Id, item.UserName, item.Password, item.IsAdmin);
         _dal.User.Update(doUser);
     }
     public User ReadByNameAndPassword(string userName, string password)
     {
-        IEnumerable<User> users = ReadAll();
-
-        User user = users.FirstOrDefault(u => u.UserName == userName && u.Password == password)!;
-
-        if (user == null)
+        try
         {
-            throw new BlDoesNotExistException($"User with Name={userName} and Password={password} does not exist");
-        }
+            IEnumerable<User> users = ReadAll();
 
-        return user;
+            User user = users.FirstOrDefault(u => u.UserName == userName && u.Password == password)! ?? throw new BlDoesNotExistException($"User does not exist"); ;
+
+            if (user.UserName == null || user.Password == null)
+            {
+                throw new BlDoesNotExistException($"Not all the fields are full ");
+            }
+
+            if (user == null)
+            {
+                throw new BlDoesNotExistException($"User with Name={userName} and Password={password} does not exist");
+            }
+
+            return user;
+        }
+        catch (BlDoesNotExistException )
+        { throw new BlDoesNotExistException($"User does not exist"); }
     }
 
 }

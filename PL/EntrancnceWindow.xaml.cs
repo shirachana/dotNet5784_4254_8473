@@ -24,43 +24,45 @@ namespace PL.User
     public partial class EntrancnceWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        //public static readonly DependencyProperty CurrentTimeProperty =
-        //   DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(MainWindow), new PropertyMetadata(DateTime.Now));
+        public static readonly DependencyProperty CurrentTimeProperty =
+           DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(EntrancnceWindow), new PropertyMetadata(DateTime.Now));
 
-        //public DateTime CurrentTime
-        //{
-        //    get { return (DateTime)GetValue(CurrentTimeProperty); }
-        //    set { SetValue(CurrentTimeProperty, value); }
-        //}
+        public DateTime CurrentTime
+        {
+            get { return (DateTime)GetValue(CurrentTimeProperty); }
+            set { SetValue(CurrentTimeProperty, value); }
+        }
 
-        //private DispatcherTimer _timer;
+        private DispatcherTimer _timer;
         public EntrancnceWindow()
         {
             InitializeComponent();
             _user = new BO.User();
-            //_timer = new DispatcherTimer();
-            //_timer.Interval = TimeSpan.FromSeconds(1);
-            //_timer.Tick += Timer_Tick!;
-            //_timer.Start();
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick!;
+            _timer.Start();
         }
 
-        //private void Timer_Tick(object sender, EventArgs e)
-        //{
-        //    // Update CurrentTime property with current time
-        //    CurrentTime = DateTime.Now;
-        //}
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            // Update CurrentTime property with current time
+            CurrentTime = DateTime.Now;
+        }
 
-            private BO.User _user;
+        private BO.User _user;
 
-            public BO.User User
+        public BO.User User
+        {
+            get { return _user; }
+            set
             {
-                get { return _user; }
-                set{if (value is BO.User)
-                        _user = value;
-                    else
-                        throw new ArgumentException("Invalid user type");
-                }
+                if (value is BO.User)
+                    _user = value;
+                else
+                    throw new ArgumentException("Invalid user type");
             }
+        }
 
         //public BO.User User
         //{
@@ -68,7 +70,7 @@ namespace PL.User
         //    set { SetValue(UserProperty, value); }
         //}
         public static readonly DependencyProperty UserProperty =
-            DependencyProperty.Register(nameof(BO.User), typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
+            DependencyProperty.Register(/*nameof(BO.User)*/"User", typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
 
         private void BtnLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -83,20 +85,26 @@ namespace PL.User
                 string nameUser = textBoxUser.Text;
                 string codeUser = passwordBoxUser.Password;
                 User = s_bl.User.ReadByNameAndPassword(nameUser, codeUser);
+
                 if (User.Password != codeUser || User.UserName != nameUser)
                 {
                     MessageBox.Show("Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
-                /*else*/
-                if (User!.IsAdmin)
+
+
+                if (User.IsAdmin)
                 {
                     new MainWindow(User).Show();
-                }
-                else if (!User.IsAdmin)
-                {
-                    new EngineerViewWindow(User).Show();
-                }
                     this.Close();
+
+                }
+                if (nameUser != "" || codeUser != "")
+                    if (!User.IsAdmin)
+                    {
+                        new EngineerViewWindow(User).Show();
+                        this.Close();
+                    }
+
             }
             catch (Exception ex)
             {
@@ -107,39 +115,39 @@ namespace PL.User
 
         private void BtnSignIn_Click(object sender, RoutedEventArgs e)
         {
-            //if (MainWindow.manager)
 
             new UserWindow().Show();
             this.Close();
         }
 
-        //private void BtnAdvanceYear_Click(object sender, RoutedEventArgs e)
-        //{
-        //    s_bl.AdvanceTimeByYear(1);
-        //    UpdateCurrentTime();
-        //}
+        private void BtnAdvanceYear_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AdvanceTimeByYear(1);
+            UpdateCurrentTime();
+        }
 
-        //private void BtnAdvanceHour_Click(object sender, RoutedEventArgs e)
-        //{
-        //    s_bl.AdvanceTimeByHour(1);
-        //    UpdateCurrentTime();
-        //}
+        private void BtnAdvanceHour_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AdvanceTimeByHour(1);
+            UpdateCurrentTime();
+        }
 
-        //private void BtnAdvanceDay_Click(object sender, RoutedEventArgs e)
-        //{
-        //    s_bl.AdvanceTimeByDay(1);
-        //    UpdateCurrentTime();
-        //}
+        private void BtnAdvanceDay_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.AdvanceTimeByDay(1);
+            UpdateCurrentTime();
+        }
 
-        //private void BtnReset_Click(object sender, RoutedEventArgs e)
-        //{
-        //    s_bl.InitializeTime(DateTime.Now);
-        //    UpdateCurrentTime();
-        //}
-        //// Update the CurrentTime property
-        //private void UpdateCurrentTime()
-        //{
-        //    CurrentTime = s_bl.Clock;
-        //}
+        private void BtnReset_Click(object sender, RoutedEventArgs e)
+        {
+            s_bl.InitializeTime(DateTime.Now);
+            UpdateCurrentTime();
+        }
+        // Update the CurrentTime property
+        private void UpdateCurrentTime()
+        {
+            CurrentTime = s_bl.Clock;
+        }
     }
 }
+

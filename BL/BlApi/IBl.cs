@@ -6,9 +6,13 @@ public interface IBl
     public ITask Task { get; }
     public IUser User { get; }
     public DateTime? StartDate { set; get; }
+    void SetStartDate(DateTime? startDate);
+
     public DateTime? EndDate { set; get; }
     public void InitializeDB();
     public void ResetDB();
+    public DateTime? CreateSchedule(int id, DateTime? date);
+    public void ScheduleD();
 
     #region Time Management
 
