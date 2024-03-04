@@ -19,6 +19,8 @@
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:TasksCollection x:Key="TasksCollectionKey" />
             <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
+            <local:DateToMarginConverter x:Key="DateToMarginConverterKey"/>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

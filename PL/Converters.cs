@@ -107,4 +107,30 @@ public class IsDependToCheckConverter : IMultiValueConverter
         return null!;
     }
 }
+public class DateToMarginConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is DateTime date)
+        {
+            // Here, you can adjust the conversion logic as per your requirement.
+            // For simplicity, let's assume each day in the date range corresponds to 10 pixels.
+            double pixelsPerDay = 10;
+
+            // Calculate the number of days between the current date and a base date.
+            TimeSpan timeSpan = date - new DateTime(2022, 1, 1);
+            double leftMargin = timeSpan.TotalDays * pixelsPerDay;
+
+            return new Thickness(leftMargin, 0, 0, 0); // Assuming no top, right, or bottom margins.
+        }
+
+        return new Thickness(0); // Default margin if the value is not a DateTime.
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Windows.Controls.Primitives;
+
 
 namespace PL.User
 {
@@ -27,9 +30,6 @@ namespace PL.User
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
         public static readonly DependencyProperty CurrentTimeProperty =
            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(EntrancnceWindow), new PropertyMetadata(DateTime.Now));
-
-      
-
 
         public DateTime CurrentTime
         {
@@ -48,7 +48,7 @@ namespace PL.User
             _timer.Tick += Timer_Tick!;
             _timer.Start();
             DataContext = this;
-
+            CodeUser = new SecureString();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -72,22 +72,83 @@ namespace PL.User
 
         public static readonly DependencyProperty UserProperty =
             DependencyProperty.Register("User", typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
+       
+        private String _nameUser;
+        private SecureString _codeUser = new SecureString();
 
+        public String NameUser
+        {
+            get { return _nameUser; }
+            set
+            {
+                if (_nameUser != value)
+                {
+                    _nameUser = value;
+                    OnPropertyChanged(nameof(NameUser));
+                }
+            }
+        }
+
+        public SecureString CodeUser
+        {
+            get { return _codeUser; }
+            set
+            {
+                if (_codeUser != value)
+                {
+                    _codeUser = value;
+                    OnPropertyChanged(nameof(CodeUser));
+                }
+            }
+        }
+        private string _password;
+
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
+                CodeUser = new SecureString();
+                foreach (char c in value)
+                {
+                    CodeUser.AppendChar(c);
+                }
+                CodeUser.MakeReadOnly();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private string ConvertSecureStringToString(SecureString secureString)
+        {
+            IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(secureString);//System.ArgumentNullException: 'Value cannot be null. Arg_ParamName_Name'
+            try
+            {
+                return System.Runtime.InteropServices.Marshal.PtrToStringBSTR(ptr);
+            }
+            finally
+            {
+                System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ptr);
+            }
+        }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+           if(sender is PasswordBox passwordBox)
+                Password=passwordBox.Password;
+        }
         private void BtnLogIn_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                Button button = (Button)sender;
-                Grid grid = (Grid)button.Parent;
+                string code = ConvertSecureStringToString(CodeUser);
+                User = s_bl.User.ReadByNameAndPassword(NameUser, code);
 
-                TextBox textBoxUser = (TextBox)grid.Children[2];
-                PasswordBox passwordBoxUser = (PasswordBox)grid.Children[3];
-
-                string nameUser = textBoxUser.Text;
-                string codeUser = passwordBoxUser.Password;
-                User = s_bl.User.ReadByNameAndPassword(nameUser, codeUser);
-
-                if (User.Password != codeUser || User.UserName != nameUser)
+                if (User.Password != code || User.UserName != NameUser)
                 {
                     MessageBox.Show("Please try again", " User name or password is incorrect", MessageBoxButton.OK);
                 }
@@ -99,7 +160,7 @@ namespace PL.User
                     this.Close();
 
                 }
-                if (nameUser != "" || codeUser != "")
+                if (NameUser != "" || code != "")
                     if (!User.IsAdmin)
                     {
                         new EngineerViewWindow(User).Show();

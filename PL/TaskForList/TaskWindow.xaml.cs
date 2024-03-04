@@ -26,7 +26,6 @@ namespace PL.TaskForList
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        private int idE;
 
         public bool OpenDialogHost
         {
@@ -114,42 +113,7 @@ namespace PL.TaskForList
                 Task.Engineer = new();
             InitializeComponent();
         }
-        //public TaskWindow(TaskListWindow taskListWindow, string? engId)
-        //{
-        //    try
-        //    {
-        //        InitializeComponent();
-        //        _taskListWindow = taskListWindow;
-        //        OpenDialogHost = false;
-
-        //        // Fetch the engineer's task based on the specified ID
-        //        int id = int.Parse(engId!);
-        //        BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
-
-        //        if (engineerTask != null)
-        //        {
-        //            Task = s_bl.Task.Read(engineerTask.Id) ?? new();
-        //            if (Task.Dependencies is null)
-        //                Task.Dependencies = new();
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-        //            Close();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Handle exceptions, e.g., display an error message
-        //        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //        // Close the window or handle the error as appropriate
-        //        Close();
-        //    }
-        //    DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
-
-        //    if (Task.Engineer == null)
-        //        Task.Engineer = new();
-        //}
+        
         public TaskWindow(TaskListWindow taskListWindow, string? engId)
         {
             try
@@ -161,7 +125,7 @@ namespace PL.TaskForList
                 // Fetch the engineer's task based on the specified ID
                 if (int.TryParse(engId, out int id))
                 {
-                    BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id);
+                    BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
 
                     if (engineerTask != null)
                     {
@@ -185,15 +149,13 @@ namespace PL.TaskForList
             }
             catch (Exception ex)
             {
-                // Handle exceptions, e.g., display an error message
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                // Close the window or handle the error as appropriate
                 Close();
             }
 
             if (Task == null || Task.Engineer == null)
             {
-                Task = Task ?? new(); // Ensure Task is not null
+                Task = Task ?? new(); 
                 Task.Engineer = new();
             }
         }
