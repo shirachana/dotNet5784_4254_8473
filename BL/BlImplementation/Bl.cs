@@ -19,48 +19,56 @@ internal class Bl : IBl
 
     public BlApi.ITask Task => new TaskImplementation(this);
     public BlApi.IUser User => new UserImplementation();
-    private DateTime? _startDate;
-
-    //public DateTime? StartDate => _startDate;
-
-    public void SetStartDate(DateTime? startDate)
+    
+    public void SetProjectStartDate(DateTime? startDate)
     {
-        if (startDate is null)
-            startDate = null;
-
-        // Add any additional validation or logic here
-
-        _startDate = startDate;
+        dal.setStart(startDate);
     }
-
-    public DateTime? StartDate
+    public DateTime? GetProjectStartDate()
     {
-        set
-        {
-            if (value is null)
-                value = null;
-
-            //if (dal.Task.ReadAll(x => x.StartDate < value || x.StartDate is null).Any())
-            //    throw new ArgumentException();
-
-            dal.StartDate = value;
-        }
-        get => dal.StartDate;
+        return dal.getStart();
     }
-    public DateTime? EndDate {
-        set
-        {
-            if (value is null)
-                value = null;
-
-            if (dal.Task.ReadAll(x => x.DeadlineDate > value || x.DeadlineDate is not null).Any())
-                throw new BlDoesNotExistException("there is no daedline or the deadline is bigger than value");
-
-            dal.EndDate = value;
-        }
-        get => dal.EndDate;
+    public void SetProjectEndDate(DateTime? endDate)
+    {
+        //dal.setEnd(endDate);
+        dal.EndDate = endDate;
     }
-    private static DateTime s_Clock = DateTime.Now.Date;
+    public DateTime? GetProjectEndDate()
+    {
+        //return dal.getEnd();
+        return dal.EndDate;
+    }
+
+
+    //public DateTime? StartDate
+    //{
+    //    set
+    //    {
+    //        if (value is null)
+    //            value = null;
+
+    //        //if (dal.Task.ReadAll(x => x.StartDate < value || x.StartDate is null).Any())
+    //        //    throw new ArgumentException();
+
+    //        dal. . value;
+    //    }
+    //    get => dal.StartDate;
+    //}
+    //public DateTime? EndDate
+    //{
+    //    set
+    //    {
+    //        if (value is null)
+    //            value = null;
+
+    //        if (dal.Task.ReadAll(x => x.DeadlineDate > value || x.DeadlineDate is not null).Any())
+    //            throw new BlDoesNotExistException("there is no daedline or the deadline is bigger than value");
+
+    //        dal.EndDate = value;
+    //    }
+    //    get => dal.EndDate;
+    //}
+    private static DateTime s_Clock = DateTime.Now;
 
     public DateTime Clock
     {
@@ -97,76 +105,95 @@ internal class Bl : IBl
         dal.User.Clear();
         dal.Task.Clear();
         dal.Dependency.Clear();
+        SetProjectEndDate(null);
+        SetProjectStartDate(null);
     }
-
-    public DateTime? CreateSchedule(int id, DateTime? date)
+    public DateTime? Schedule(int taskId, DateTime? date)
     {
-        DO.Task? task = dal.Task.Read(id);
-        if (task == null) { throw new BlDoesNotExistException($"Task with is={id} doesn't exist"); }
-        var starts = from BO.TaskInList tasks in _taskImplementation.GetDependencies(task)
-                     where _taskImplementation.GetDependencies(task) != null && dal.Task.Read(tasks.Id) != null && dal.Task.Read(tasks.Id)!.StartDate == null
-                     select tasks;
-        if (starts.Count() > 0) { throw new BlCantScheduleTheProject("Can't update start day. Previous tasks don't have start days"); }
-        var ends = from BO.TaskInList tasks in _taskImplementation.GetDependencies(task)
-                   where _taskImplementation.GetDependencies(task) != null && dal.Task.Read(tasks.Id) != null && dal.Task.Read(tasks.Id)!.CompleteDate > date
-                   select tasks;
-        if (ends.Count() > 0) { throw new BlCantScheduleTheProject("Can't update start day. This date is sonner then the previous tasks end dates"); }
-        if (_taskImplementation.GetDependencies(task) == null && date < dal.StartDate) { throw new BlCantScheduleTheProject("Can't update start day. This date is sonner then the project start day"); }
-        DO.Task newTask = task with { StartDate = date };
+        DO.Task? task = dal.Task.Read(taskId);
+        if (task == null)
+        {
+            throw new BlDoesNotExistException($"Task with id={taskId} doesn't exist");
+        }
+
+        ValidateSchedule(task, date);
+
+        DO.Task newTask = task with { ScheduledDate = date };
         dal.Task.Update(newTask);
         return date;
-        
     }
-        public void ScheduleD()
+
+    private void ValidateSchedule(DO.Task task, DateTime? date)
+    {
+        IEnumerable<BO.TaskInList> dependencies = _taskImplementation.GetDependencies(task);
+
+        ValidateStartDates(dependencies);
+        ValidateEndDates(dependencies, date);
+        ValidateProjectStartDate(dependencies, date);
+    }
+
+    private void ValidateStartDates(IEnumerable<BO.TaskInList> dependencies)
+    {
+        if (dependencies != null && dependencies.Any(dep => dal.Task.Read(dep.Id)?.ScheduledDate == null))
         {
-            List<BO.TaskInList> allNoStartDate = new List<BO.TaskInList>();
-            IEnumerable<DO.Task> allTasks = dal.Task.ReadAll();
-        int c = 0;
+            throw new BlCantScheduleTheProject("Can't update start day. Previous tasks don't have start days");
+        }
+    }
+    private void ValidateEndDates(IEnumerable<BO.TaskInList> dependencies, DateTime? date)
+    {
+        if (dependencies != null && dependencies.Any(dep => dal.Task.Read(dep.Id)?.CompleteDate > date))
+        {
+            throw new BlCantScheduleTheProject("Can't update start day. This date is sooner than the previous tasks end dates");
+        }
+    }
 
-            foreach (var task in allTasks)
-            {
-                if ((_taskImplementation.GetDependencies(task)).Count() == 0)
-                {
-                    CreateSchedule(task.Id, dal.StartDate);
-                c++;
-                }
-            }
-            allTasks = dal.Task.ReadAll();
-            while (allTasks.Any(t => t.StartDate == null))
-            {
-                foreach (DO.Task task in allTasks)
-                {
-                    IEnumerable<BO.TaskInList> tasksDependencies = _taskImplementation.GetDependencies(task);
-                    List<BO.TaskInList> noStartDate = new List<BO.TaskInList>();
-                    List<DO.Task> thereIsStartDate = new List<DO.Task>();
+    private void ValidateProjectStartDate(IEnumerable<BO.TaskInList> dependencies, DateTime? date)
+    {
+        if (dependencies == null && date < dal.getStart())
+        {
+            throw new BlCantScheduleTheProject("Can't update start day. This date is sooner than the project start day");
+        }
+    }
 
-                    foreach (BO.TaskInList taskList in tasksDependencies)
-                    {
-                        DO.Task dep = dal.Task.Read(taskList.Id)!;
-                        if (dep.StartDate == null)
-                        {
-                            noStartDate.Add(taskList);
-                            allNoStartDate.Add(taskList);
-                        }
-                        else
-                        {
-                            thereIsStartDate.Add(dep);
-                        }
-                    }
-                    if (noStartDate.Count() == 0 && task.StartDate == null)
-                    {
-                        var scheduledD= thereIsStartDate.Max(dep => dep.StartDate/*WantedStartDate*/ + dep.RequiredEffortTime/*Time*/);
-                        CreateSchedule(task.Id, (DateTime)scheduledD!);
-                        allTasks = dal.Task.ReadAll();
-                    }
+
+    public void AutoScedule()
+    {
+        IEnumerable<DO.Task> allTasks = dal.Task.ReadAll();
+
+        foreach (var task in allTasks.Where(t => _taskImplementation.GetDependencies(t).Count() == 0))
+        {
+            Schedule(task.Id, GetProjectStartDate());
+        }
+
+        allTasks = dal.Task.ReadAll();
+
+        while (allTasks.Any(t => t.ScheduledDate == null))
+        {
+            foreach (DO.Task task in allTasks)
+            {
+                IEnumerable<BO.TaskInList> tasksDependencies = _taskImplementation.GetDependencies(task);
+
+                List<BO.TaskInList> tasksWithoutStartDate = tasksDependencies
+                    .Where(taskList => dal.Task.Read(taskList.Id)?.ScheduledDate == null)
+                    .ToList();
+
+                List<DO.Task> tasksWithStartDate = tasksDependencies
+                    .Select(taskList => dal.Task.Read(taskList.Id)!)
+                    .Where(dep => dep.ScheduledDate != null)
+                    .ToList();
+
+                if (tasksWithoutStartDate.Count == 0 && task.ScheduledDate == null)
+                {
+                    DateTime? calculatedScheduledDate = tasksWithStartDate.Max(dep => dep.ScheduledDate + dep.RequiredEffortTime);
+                    Schedule(task.Id, calculatedScheduledDate);
+
+                    allTasks = dal.Task.ReadAll();
                 }
             }
         }
-
-
-
-
     }
+ 
+}
 
 
 

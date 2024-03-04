@@ -52,17 +52,21 @@ namespace PL
         private TaskListWindow? _taskListWindow;
         private void BtnCurrent_Click(object sender, RoutedEventArgs e)
         {
-            // int id = int.Parse(user.Id!);
-            new TaskWindow(_taskListWindow!, user.Id!).Show();
-            this.Close();
-            
+           BO.Engineer eng= s_bl.Engineer.Read(int.Parse(user.Id!))!;
+            if (eng.Task!=null)
+            {
+                new TaskWindow(_taskListWindow!, user.Id).Show();
+            }
+            else
+            {
+                MessageBox.Show("There is no current task to this engineer.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void BtnAddTask_Click(object sender, RoutedEventArgs e)
         {
              int id = int.Parse(user.Id!);
             BO.Engineer eng = s_bl.Engineer.Read(id)!;
             new TaskListWindow(eng).Show();
-            this.Close();
         }
     }
 }

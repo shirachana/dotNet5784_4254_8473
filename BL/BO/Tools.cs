@@ -48,13 +48,11 @@ public static class Tools
 
         if (value is IEnumerable<object> enumerable)
         {
-            // Handle collections
             StringBuilder sb = new StringBuilder();
             foreach (var item in enumerable)
             {
                 sb.Append($"{GetValueString(item)}, ");
             }
-            // Remove the trailing comma and space
             return $"[{sb.ToString().TrimEnd(',', ' ')}]";
         }
         if (value is List<object> list)
@@ -64,19 +62,22 @@ public static class Tools
             {
                 sb.Append($"{GetValueString(item)}, ");
             }
-            // Remove the trailing comma and space
             return $"[{sb.ToString().TrimEnd(',', ' ')}]";
         }
-        // For other types, use ToString
         return value.ToString()!;
     }
 
     public static BO.Status GetStatus(DO.Task delTask)
     {
+        if (delTask.CompleteDate != null /*&& delTask.CompleteDate < DateTime.Today */)
+        {
+            return Status.Done;
+        }
+
         return delTask.StartDate is null ? Status.Unscheduled :
-           delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
-           delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
-           Status.Done;
+            delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
+            delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
+            Status.Done;
     }
     public static bool CheckUserHealth(User item)
     {
@@ -85,7 +86,6 @@ public static class Tools
         if ((item.Name) is null)
             throw new BlArgumentOutOfRangeException("User name cannot be empty");
 
-        // If all checks pass, return true
         return true;
     }
     public static bool CheckEngineerHealth(Engineer item)
@@ -99,7 +99,6 @@ public static class Tools
         if ((item.Email!).Contains("@gmail.com") == false)
             throw new BlArgumentOutOfRangeException("Engineer email cannot be empty");
 
-        // If all checks pass, return true
         return true;
     }
     public static bool CheckTaskHealth(Task item)
@@ -112,14 +111,13 @@ public static class Tools
         {
             throw new BlArgumentOutOfRangeException("Task alias cannot be empty");
         }
-        // If all checks pass, return true
         return true;
     }
     public static StatusProject CheckStatusProject()
     {
         var tasks = BlApi.Factory.Get().Task;
 
-        if (Factory.Get().StartDate == null)
+        if (Factory.Get().GetProjectStartDate == null)
             return StatusProject.Planning;
         if ((from task in tasks.ReadAll()
              where tasks.Read(task.Id)!.StartDate == null
@@ -155,7 +153,7 @@ public static class Tools
     public static void CreatTheSchedule(DateTime startDateP)// ???????????????????????????????????????????
     {
         if (startDateP >= DateTime.Today)
-            Factory.Get().StartDate =startDateP;
+            Factory.Get().SetProjectStartDate(startDateP);
         else
             throw new BlCantScheduleTheProject("the time pass already");
     }

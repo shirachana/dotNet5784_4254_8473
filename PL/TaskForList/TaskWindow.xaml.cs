@@ -26,7 +26,7 @@ namespace PL.TaskForList
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-
+        private int idE;
 
         public bool OpenDialogHost
         {
@@ -71,7 +71,6 @@ namespace PL.TaskForList
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
         private BO.Engineer? Engineer;
         private TaskListWindow? _taskListWindow;
-        private string? id;
 
         public TaskWindow(TaskListWindow taskListWindow, BO.Engineer? engineerT = null, int taskId = 0)
         {
@@ -115,6 +114,42 @@ namespace PL.TaskForList
                 Task.Engineer = new();
             InitializeComponent();
         }
+        //public TaskWindow(TaskListWindow taskListWindow, string? engId)
+        //{
+        //    try
+        //    {
+        //        InitializeComponent();
+        //        _taskListWindow = taskListWindow;
+        //        OpenDialogHost = false;
+
+        //        // Fetch the engineer's task based on the specified ID
+        //        int id = int.Parse(engId!);
+        //        BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
+
+        //        if (engineerTask != null)
+        //        {
+        //            Task = s_bl.Task.Read(engineerTask.Id) ?? new();
+        //            if (Task.Dependencies is null)
+        //                Task.Dependencies = new();
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        //            Close();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Handle exceptions, e.g., display an error message
+        //        MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        // Close the window or handle the error as appropriate
+        //        Close();
+        //    }
+        //    DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
+
+        //    if (Task.Engineer == null)
+        //        Task.Engineer = new();
+        //}
         public TaskWindow(TaskListWindow taskListWindow, string? engId)
         {
             try
@@ -124,18 +159,27 @@ namespace PL.TaskForList
                 OpenDialogHost = false;
 
                 // Fetch the engineer's task based on the specified ID
-                int id = int.Parse(engId!);
-                BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id)!;
-
-                if (engineerTask != null)
+                if (int.TryParse(engId, out int id))
                 {
-                    Task = s_bl.Task.Read(engineerTask.Id) ?? new();
-                    if (Task.Dependencies is null)
-                        Task.Dependencies = new();
+                    BO.TaskInEngineer engineerTask = s_bl.Engineer.GetEngineerTask(id);
+
+                    if (engineerTask != null)
+                    {
+                        Task = s_bl.Task.Read(engineerTask.Id) ?? new();
+                        if (Task.Dependencies is null)
+                            Task.Dependencies = new();
+
+                        DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
+                    }
+                    else
+                    {
+                        MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Close();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No task found for the engineer.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Invalid engineer ID.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     Close();
                 }
             }
@@ -146,11 +190,16 @@ namespace PL.TaskForList
                 // Close the window or handle the error as appropriate
                 Close();
             }
-            DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
 
-            if (Task.Engineer == null)
+            if (Task == null || Task.Engineer == null)
+            {
+                Task = Task ?? new(); // Ensure Task is not null
                 Task.Engineer = new();
+            }
         }
+
+
+
 
         private void btnAddUpdateTask_Click(object sender, RoutedEventArgs e)
         {
@@ -159,6 +208,7 @@ namespace PL.TaskForList
                 if ((sender as Button)!.Content.ToString() == "Add")
                 {
                     s_bl.Task.Create(Task);
+                    
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                     MessageBox.Show("Task added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     _taskListWindow!.TaskList = updatedTaskList;
@@ -176,9 +226,9 @@ namespace PL.TaskForList
                     {
                        s_bl.Engineer.UpdateEngineerToTask(Engineer!.Id, Task.Id);
                        s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
-                       IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                      // IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                        MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        _taskListWindow!.TaskList = updatedTaskList;
+                      //  _taskListWindow!.TaskList = updatedTaskList;
                     }
                 }
                 this.Close();
@@ -229,5 +279,27 @@ namespace PL.TaskForList
             TasksList = s_bl.Task.ReadAll();
             OpenDialogHost = true;
         }
+        private void CompleteDateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //if (isUserValue == false)
+                // {
+                s_bl.Task.UpdateCompleteDate(Task.Id, DateTime.Now);
+                IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                MessageBox.Show("The Complete Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                //_taskListWindow!.TaskList = updatedTaskList;
+                // }
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
+
+
+
 }

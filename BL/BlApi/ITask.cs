@@ -17,10 +17,11 @@ public interface ITask
     public int Create(BO.Task? item);
     public void Update(BO.Task item);
     public void Delete(int id);
-    public void UpdateStartDate(int id, DateTime startDate);
+    public void UpdateStartDate(int id, DateTime? startDate);
     public void Clear();//clear all the enitity
     public EngineerInTask? CalculateEngineerForTask(int engineerId);
     public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer);//not sure
     public IEnumerable<BO.TaskInList> GetDependencies(DO.Task task);
+    public void UpdateCompleteDate(int id, DateTime completeDate);
 
 }

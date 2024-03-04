@@ -23,8 +23,15 @@ sealed internal class DalList : IDal
 
     public ITask Task =>  new TaskImplementation();
     public IUser User => new UserImplementation();
-    
+    public void setStart(DateTime? start) => DataSource.Config.StartDateProject = start; 
+    public DateTime? getStart() { return DataSource.Config.StartDateProject; }
+
+    public void setEnd(DateTime? end) => DataSource.Config.EndDateProject = end;
+    public DateTime? getEnd() { return DataSource.Config.EndDateProject; }
+
+
+
 }
-	
+
 
 

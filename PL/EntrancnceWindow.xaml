@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding User, RelativeSource={RelativeSource Self}, Mode=TwoWay}"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="EntrancnceWindow" Height="700" Width="800">
+
+    <!--DataContext="{Binding User, RelativeSource={RelativeSource Self}, Mode=TwoWay}"-->
     <Grid >
         <Grid.RowDefinitions>
             <!-- Define your row definitions here -->
@@ -41,7 +43,7 @@
         <Label Content="Password" HorizontalAlignment="Left" Width="77" Grid.Column="2" Margin="17,14,0,48" Grid.Row="1"/>
 
         <!-- Username textbox -->
-        <TextBox Text="{Binding User, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,30,0,27"/>
+        <TextBox Text="{Binding User.UserName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="0" Width="110" Margin="0,30,0,27"/>
         <!-- Password textbox -->
         <PasswordBox DataContext="{Binding User.Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
              HorizontalAlignment="Center" 
@@ -51,16 +53,15 @@
              Grid.Row="1"/>
         <!-- Login button -->
         <Button Content="Log In" HorizontalAlignment="Left" Grid.Column="3" Width="79" Click="BtnLogIn_Click" Margin="92,39,0,27" Grid.ColumnSpan="2"/>
-        <!-- Message label -->
-        <Label Content="Don't have an account?" HorizontalAlignment="Left" Grid.ColumnSpan="2" Margin="76,10,0,57" Grid.Column="3" Grid.Row="1" Width="141"/>
-
+       
         <!-- Sign-in button -->
         <Button Content="Sign In" HorizontalAlignment="Left" Grid.Row="1" Grid.ColumnSpan="2" Click="BtnSignIn_Click" Margin="95,45,0,20" Grid.Column="3"/>
 
 
         <!-- Current time label -->
+        <TextBlock Text="{Binding CurrentTime, StringFormat={}{0:HH:mm:ss dd/MM/yyyy}}"  />
 
-        <Label Content="{Binding CurrentTime, StringFormat='Current Time: {0:HH:mm:ss}'}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Height="141" Width="534" Grid.ColumnSpan="4" Margin="-19,0,0,0"/>
+        <!--<Label Content="{Binding CurrentTime, StringFormat='Current Time: {0:HH:mm:ss}'}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Height="141" Width="534" Grid.ColumnSpan="4" Margin="-19,0,0,0"/>-->
 
 
         <!-- StackPanel for time manipulation buttons -->

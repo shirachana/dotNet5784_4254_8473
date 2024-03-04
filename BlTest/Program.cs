@@ -36,8 +36,8 @@ namespace BlTest
                 {
                     s_bl!.Task.Clear();
                     s_bl!.Engineer.Clear();
-                    s_bl.EndDate = null;
-                    s_bl.StartDate = null;
+                    s_bl.SetProjectEndDate(null);
+                    s_bl.SetProjectStartDate(null);
                     Initialization.Do();
                     validInput = true;
                 }
@@ -185,7 +185,7 @@ namespace BlTest
             string Date = Console.ReadLine()!;
             DateTime.TryParse(Date, out DateTime date);
             try {
-                s_bl.StartDate = date;
+                s_bl.SetProjectStartDate(date);
                 if (date! < DateTime.Today)
                     throw new Exception("the date pass already");
             }
@@ -198,8 +198,8 @@ namespace BlTest
             DateTime.TryParse(Date, out DateTime date);
             try
             {
-                s_bl.EndDate = date;
-                if (date! <s_bl.StartDate )
+                s_bl.SetProjectEndDate(date);
+                if (date! <s_bl.GetProjectStartDate() )
                     throw new Exception("the date its earlier than the start date");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -466,16 +466,6 @@ namespace BlTest
                 {
                     throw new Exception("Invalid date format. Please enter again");
                 }
-                Console.WriteLine(@"Enter the Deadline Date of the task: ");
-                if (DateTime.TryParse(Console.ReadLine()!, out DateTime deadlineDate))
-                {
-                    tsk.DeadlineDate = deadlineDate;
-                }
-                else
-                {
-                    throw new Exception("Invalid date format. Please enter again");
-                }
-
                 Console.WriteLine(@"Enter the Complete Date of the task: ");
                 if (DateTime.TryParse(Console.ReadLine()!, out DateTime completeDate))
                 {

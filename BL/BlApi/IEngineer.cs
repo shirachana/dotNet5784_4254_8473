@@ -17,5 +17,5 @@ public interface IEngineer
   public void Clear();//clear all the enitity
   public void UpdateEngineerToTask(int idE, int idT);
   public BO.TaskInEngineer? GetEngineerTask(int idE);
-
+    public void DeleteEngineer(int idE, int idTk);
 }

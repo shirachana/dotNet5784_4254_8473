@@ -135,14 +135,15 @@ public static class Initialization
             DateTime start = new DateTime(2024, 1, 1);
             int range = (DateTime.Today - start).Days;
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
-            Random random = new();
+            Random random = new(DateTime.Now.Millisecond);
             int randomDays = random.Next(range);
 
-            DateTime _scheduledDate = start.AddDays(randomDays);
-            DateTime _deadLine = new DateTime(2025, 1, 1);
-            TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
-            DateTime _endDate = start.AddDays(randomDays);
-            DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
+            ////DateTime _scheduledDate = start.AddDays(randomDays);
+            //DateTime _deadLine = new DateTime(2025, 1, 1);
+            //TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
+            TimeSpan _requiredET = new(random.Next(100), random.Next(60), random.Next(60));
+            //DateTime _endDate = start.AddDays(randomDays);
+            //DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
 
             Task tsk = new(0, 0, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], null, null, null, null, _deliverables[i], _remarks[i]);
 

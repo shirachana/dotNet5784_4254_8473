@@ -59,17 +59,18 @@ namespace PL
             this.Close();
         }
 
-        private void BtnStartDate_Click(object sender, RoutedEventArgs e)
-        {
-            s_bl.SetStartDate(DateTime.Now);
-            MessageBox.Show("Start date set successfully!", "Success", MessageBoxButton.OK);
-        }
-
         private void btnSchedul_Click(object sender, RoutedEventArgs e)
         {
-            s_bl.ScheduleD();
-            MessageBox.Show("The schedule has been successfully updated!", "Success", MessageBoxButton.OK);
+            if (s_bl.GetProjectStartDate() == null)
+            {
+                StartDay startDayWindow = new StartDay();
+                startDayWindow.ShowDialog();
 
+            }
+
+            s_bl.AutoScedule();
+            MessageBox.Show("The schedule has been successfully updated!", "Success", MessageBoxButton.OK);
+            this.Close();
         }
     }
 }

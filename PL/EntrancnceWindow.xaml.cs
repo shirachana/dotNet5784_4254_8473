@@ -3,6 +3,7 @@ using PL.TaskForList;
 using PL.User;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace PL.User
         public static readonly DependencyProperty CurrentTimeProperty =
            DependencyProperty.Register("CurrentTime", typeof(DateTime), typeof(EntrancnceWindow), new PropertyMetadata(DateTime.Now));
 
+      
+
+
         public DateTime CurrentTime
         {
             get { return (DateTime)GetValue(CurrentTimeProperty); }
@@ -38,16 +42,18 @@ namespace PL.User
         {
             InitializeComponent();
             _user = new BO.User();
+
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick!;
             _timer.Start();
+            DataContext = this;
+
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            // Update CurrentTime property with current time
-            CurrentTime = DateTime.Now;
+                CurrentTime = CurrentTime.AddSeconds(1);
         }
 
         private BO.User _user;
@@ -64,13 +70,8 @@ namespace PL.User
             }
         }
 
-        //public BO.User User
-        //{
-        //    get { return (BO.User)GetValue(UserProperty); }
-        //    set { SetValue(UserProperty, value); }
-        //}
         public static readonly DependencyProperty UserProperty =
-            DependencyProperty.Register(/*nameof(BO.User)*/"User", typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
+            DependencyProperty.Register("User", typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
 
         private void BtnLogIn_Click(object sender, RoutedEventArgs e)
         {
@@ -143,7 +144,6 @@ namespace PL.User
             s_bl.InitializeTime(DateTime.Now);
             UpdateCurrentTime();
         }
-        // Update the CurrentTime property
         private void UpdateCurrentTime()
         {
             CurrentTime = s_bl.Clock;

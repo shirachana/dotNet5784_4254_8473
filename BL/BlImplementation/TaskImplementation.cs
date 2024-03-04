@@ -32,13 +32,12 @@ internal class TaskImplementation : BlApi.ITask
         {
             if (item != null && Tools.IsStatusProject(item!) && Tools.CheckTaskHealth(item!))
             {
-                // Create a new DO.Task object
 
                 DO.Task doTask = new DO.Task
                 {
                     Alias = item!.Alias,
                     Description = item.Description,
-                    CreatedAtDate = item.CreatedAtDate,
+                    CreatedAtDate = _bl.Clock,
                     RequiredEffortTime = item.RequiredEffortTime,
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
@@ -46,7 +45,6 @@ internal class TaskImplementation : BlApi.ITask
                 };
                 int IdT = _dal.Task.Create(doTask);
 
-                // Attempt to add the task to the data layer
                 item!.Dependencies!
               .ForEach(dependency => _dal.Dependency.Create(new DO.Dependency(0, IdT, dependency.Id)));
 
@@ -71,7 +69,6 @@ internal class TaskImplementation : BlApi.ITask
     /// <exception cref="BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
-        // Check if the task exists
         try
         {
 
@@ -85,8 +82,7 @@ internal class TaskImplementation : BlApi.ITask
                 }
                 bool canDelete = _dal.Dependency.ReadAll(x => x.DependsOnTask == task.Id).Any();
 
-                // Attempt to delete the task Check if the task has dependencies
-                if (canDelete == true)
+                if (canDelete == false)
                     _dal.Task.Delete(id);
                 else
                     throw new BlCantBeDeletedException($"Task with ID={id} has dependencies and cannot be deleted");
@@ -128,7 +124,7 @@ internal class TaskImplementation : BlApi.ITask
                 Id = id,
                 Description = doTask.Description,
                 Alias = doTask.Alias,
-                CreatedAtDate = doTask.DeadlineDate,
+                CreatedAtDate = doTask.CreatedAtDate,
                 Status = status,
                 RequiredEffortTime = doTask.RequiredEffortTime,
                 StartDate = doTask.StartDate,
@@ -136,7 +132,6 @@ internal class TaskImplementation : BlApi.ITask
                 ForecastDate = doTask.StartDate > doTask.ScheduledDate ?
                     doTask.StartDate + doTask.RequiredEffortTime :
                     doTask.ScheduledDate + doTask.RequiredEffortTime,
-                DeadlineDate = doTask.DeadlineDate,
                 CompleteDate = doTask?.CompleteDate,
                 Deliverables = doTask?.Deliverables,
                 Remarks = doTask?.Remarks,
@@ -167,7 +162,7 @@ internal class TaskImplementation : BlApi.ITask
     public IEnumerable<TaskInList> ReadAll(Func<BO.TaskInList, bool>? filter = null)
     {
         var tasks = _dal.Task.ReadAll()
-                             .OrderBy(doTask => doTask.Id) // Sort tasks by Id
+                             .OrderBy(doTask => doTask.Id)
                              .Select(doTask => new BO.TaskInList
                              {
                                  Id = doTask.Id,
@@ -211,7 +206,6 @@ internal class TaskImplementation : BlApi.ITask
                     //CompleteDate = item.CompleteDate,// יש לבדוק אם זה שייך למסך של מהנדס
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
-                    //Engineerld = item.Engineer!.Id, // Assuming EngineerId is the ID of the assigned engineer
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity,
 
                 };
@@ -239,19 +233,12 @@ internal class TaskImplementation : BlApi.ITask
                 DO.Task? dtask = _dal.Task.Read(item!.Id);
                 if (Tools.CheckStatusProject() != BO.StatusProject.Execution && item?.Engineer?.Id != null)
                     throw new BlArgumentOutOfRangeException("You cannot add Engineer to a task when the program is in the middle of planning");
-                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);//to check if the id of the engieer is exist already
+                DO.Engineer? eng = _dal.Engineer.Read(item!.Engineer!.Id);
                 if ((int)eng!.Level! < (int)item!.Copmlexity)
                     throw new BlArgumentOutOfRangeException("The level of the Task dont match to the Engineer level");
                 if (item.Engineer.Id != 0 && item.Engineer.Id != eng.Id)
                     throw new BlArgumentOutOfRangeException("there is another Engineer that work on this task");
-                //IEnumerable<DO.Task> tasksDep =
-                //  from DO.Dependency d in _dal.Dependency.ReadAll()
-                //  where d.DependentTask == item.Id
-                //  select _dal.Task.Read(d.DependsOnTask);
-                //tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! < DateTime.Today);
-                //if (tasksDep.Any())
-                //    throw new BlArgumentOutOfRangeException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
-                dtask = dtask! with
+                               dtask = dtask! with
                 {
                     Engineerld = item.Engineer!.Id,
                     Alias = item.Alias,
@@ -282,16 +269,14 @@ internal class TaskImplementation : BlApi.ITask
     /// <param name="id"></param>id of the task to update
     /// <param name="startDate"></param>the date
     /// <exception cref="BlArgumentOutOfRangeException"></exception>
-    public void UpdateStartDate(int id, DateTime startDate)
+    public void UpdateStartDate(int id, DateTime? startDate)
     {
         try
         {
             if (Tools.CheckStatusProject() == StatusProject.Mid)
             {
-                // Check if the task with the given ID exists
                 Task task = Read(id)!;
 
-                // Check if all scheduled start dates of preceding tasks are updated
                 if (task?.Dependencies != null && task.Dependencies.Any())
                 {
                     var precedingTasks = task.Dependencies.Select(dependency => Read(dependency.Id)).ToList();
@@ -300,10 +285,8 @@ internal class TaskImplementation : BlApi.ITask
                         throw new BlArgumentOutOfRangeException($"Cannot update start date. All preceding tasks must have their start dates updated.");
                     }
                 }
-                // Update or add the scheduled start date for the task
-                // Attempt to update the task in the data layer
                 DO.Task dtask = _dal.Task.Read(id)!;
-                if (_dal.StartDate <= startDate)
+                if (_dal.getStart() <= startDate)
                 {
                     _dal.Task.Update(dtask with { StartDate = startDate });
                 }
@@ -333,13 +316,12 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            //Console.WriteLine($"Trying to read engineer with ID: {engineerId}");
             DO.Engineer? eng = _dal.Engineer.Read(engineerId) ?? throw new BlDoesNotExistException($"There is no Engineer in the task");
 
             if (eng == null)
             {
 
-                return null;// If engineer doesn't exist, return null
+                return null;
             }
 
             return new EngineerInTask()
@@ -350,44 +332,29 @@ internal class TaskImplementation : BlApi.ITask
         }
         catch (DO.DalDoesNotExistException)
         {
-            //Console.WriteLine($"Error reading engineer: {ex.Message}");
-            return null; // If engineer doesn't exist, return null
+            return null; 
         }
     }
-    public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer)
-    {
-        DO.Engineer eng = _dal.Engineer.Read(engineer.Id) ?? throw new BlDoesNotExistException($"The Engineer with the id={engineer.Id} does not exist");
+      public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer)
+   {
+   
+       DO.Engineer eng = _dal.Engineer.Read(engineer.Id) ?? throw new BlDoesNotExistException($"The Engineer with the id={engineer.Id} does not exist");
+       var tasks = _dal.Task.ReadAll()
+                       .OrderBy(doTask => doTask.Id) 
+                       .Where(doTask =>
+                       {
+                           return doTask.Copmlexity <= eng.Level && doTask.Engineerld == 0 && CanAdd(doTask) == true&&doTask.CompleteDate==null;
+                       })
+                       .Select(doTask => new BO.TaskInList
+                       {
+                           Id = doTask.Id,
+                           Description = doTask.Description,
+                           Alias = doTask.Alias,
+                           Status = Tools.GetStatus(doTask)
+                       });
 
-        var tasks = _dal.Task.ReadAll()
-                        .OrderBy(doTask => doTask.Id) // Sort tasks by Id
-                        .Where(doTask =>
-                        {
-                            // Check if the task is not performed by another engineer
-                            if (doTask.Engineerld != 0 && doTask.Engineerld != eng.Id)
-                                return false;
-
-                            // Check if there are no previous incomplete tasks
-                            var dependentTasks = (from dependency in _dal.Dependency.ReadAll()
-                                                  where dependency.DependentTask == doTask.Id
-                                                  select _dal.Task.Read(dependency.DependsOnTask))
-                                                  .ToList();
-
-                            if (dependentTasks.Any(task => (task.StartDate + task.RequiredEffortTime) > _bl.Clock))
-                                return false;
-
-                            // Check if the task level is the same or lower than the engineer's level
-                            return doTask.Copmlexity <= eng.Level;
-                        })
-                        .Select(doTask => new BO.TaskInList
-                        {
-                            Id = doTask.Id,
-                            Description = doTask.Description,
-                            Alias = doTask.Alias,
-                            Status = Tools.GetStatus(doTask)
-                        });
-
-        return tasks;
-    }
+       return tasks;
+   }
     public IEnumerable<BO.TaskInList> GetDependencies(DO.Task task) 
     {
         var result = (from DO.Dependency dep in _dal.Dependency.ReadAll()
@@ -402,7 +369,41 @@ internal class TaskImplementation : BlApi.ITask
         return result;
 
     }
+    private bool CanAdd(DO.Task tsk)
+    {
+        var dependentTasks = (from dependency in _dal.Dependency.ReadAll()
+                              where dependency.DependentTask == tsk.Id
+                              select _dal.Task.Read(dependency.DependsOnTask))
+                              .ToList();
+        dependentTasks.Where(task => (task.StartDate + task.RequiredEffortTime) < _bl.Clock);
 
+        if (dependentTasks.Any())
+            return false;
+        return true;
+    }
 
+    public void UpdateCompleteDate(int id, DateTime completeDate)
+    {
+        try
+        {
+            // Check if the task with the given ID exists
+            Task task = Read(id)!;
+            if (/* completeDate > task.ForecastDate &&*/ task.StartDate != null)
+            {
+
+                DO.Task dtask = _dal.Task.Read(id)!;
+                //if (_dal.EndDate >= completeDate)
+                //{
+                _dal.Task.Update(dtask with { CompleteDate = completeDate });
+                // }
+                //else { throw new BlArgumentOutOfRangeException($"This complete Date is after the EndDate of the project."); }
+            }
+            else { throw new BlArgumentOutOfRangeException($"This complete Date is before the forcastDay of the project or there is no Start Date to the task."); }
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BlArgumentOutOfRangeException($"Failed to update  complete date for task with ID={id}. {ex.Message}");
+        }
+    }
 }
 

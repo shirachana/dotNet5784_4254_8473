@@ -239,7 +239,37 @@ internal class EngineerImplementation : IEngineer
         }
         catch (DO.DalDoesNotExistException) { return null; }
     }
+    public void DeleteEngineer(int idE, int idTk)
+    {
+        try
+        {
+            // Find the task associated with the engineer
+            DO.Task task = _dal.Task.Read(idTk)!;
 
+            if (task == null)
+            {
+                throw new BlDoesNotExistException($"Task with ID={idTk} does not exist.");
+            }
+
+            // Check if the task hasn't started yet
+            if (task.Engineerld == idE && task.StartDate > DateTime.Today)
+            {
+                // Disassociate the engineer from the task
+                DO.Task uppTask = new DO.Task(task.Id, 0, task.Alias, task.Description, task.CreatedAtDate, task.RequiredEffortTime, task.IsMilestone, task.Copmlexity, task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate, task.Deliverables, task.Remarks);
+
+                // Update the task in the data access layer
+                _dal.Task.Update(uppTask);
+            }
+            else
+            {
+                throw new BlCantBeDeletedException($"The Engineer with Task ID={idTk} has already started and can't be deleted.");
+            }
+        }
+        catch (DO.DalDoesNotExistException ex)
+        {
+            throw new BlDoesNotExistException($"Failed to delete engineer task with ID={idE}", ex);
+        }
+    }
 
 }
 

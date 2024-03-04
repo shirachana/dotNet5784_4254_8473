@@ -2,17 +2,17 @@
 public interface IBl
 {
     public IEngineer Engineer { get; }
-    //public IMilestone Milestone { get; }
     public ITask Task { get; }
     public IUser User { get; }
-    public DateTime? StartDate { set; get; }
-    void SetStartDate(DateTime? startDate);
+    public void SetProjectStartDate(DateTime? startDate);
+    public DateTime? GetProjectStartDate();
+    public void SetProjectEndDate(DateTime? endDate);
+    public DateTime? GetProjectEndDate();
 
-    public DateTime? EndDate { set; get; }
     public void InitializeDB();
     public void ResetDB();
-    public DateTime? CreateSchedule(int id, DateTime? date);
-    public void ScheduleD();
+    public DateTime? Schedule(int taskId, DateTime? date);
+    public void AutoScedule();
 
     #region Time Management
 

@@ -55,7 +55,6 @@
             <Label Content="RequiredEffortTime:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="117" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="7"/>
             <Label Content="ScheduledDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="8"/>
             <Label Content="StartDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="9"/>
-            <Label Content="DeadlineDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="10"/>
             <Label Content="CompleteDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="11" />
             <Label Content="ForecastDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="12"/>
             <Label Content="Deliverables:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="13"/>
@@ -107,11 +106,7 @@
                    IsHitTestVisible="False"
                    IsEnabled="{Binding StartDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Height="34" Width="112"
-            SelectedDate="{Binding DeadlineDate, Mode=TwoWay}"
-                   Visibility="{Binding DeadlineDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
-                   IsHitTestVisible="False"
-                   IsEnabled="{Binding DeadlineDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
+          
 
             <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Height="34" Width="113"
             SelectedDate="{Binding CompleteDate, Mode=TwoWay}"
@@ -119,18 +114,19 @@
                    IsHitTestVisible="False"
                    IsEnabled="{Binding CompleteDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="12" VerticalAlignment="Center" Height="34" Width="107"
+            <DatePicker 
+             Grid.Column="2" HorizontalAlignment="Center" Grid.Row="12" VerticalAlignment="Center" Height="34" Width="107"
             SelectedDate="{Binding ForecastDate, Mode=TwoWay}"
                    Visibility="{Binding ForecastDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
                    IsHitTestVisible="False"
                    IsEnabled="{Binding ForecastDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
-            <Button Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
+            <Button 
+           Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
           HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="86"  Padding="5" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
             <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2" VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
             <Button Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
-
 
         </Grid>
 
@@ -157,6 +153,8 @@
                     </DataGrid>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
+            <Button Content="Done" HorizontalAlignment="Left" Margin="354,415,0,0" VerticalAlignment="Top"  Click="CompleteDateBtn_Click"/>
+
         </materialDesign:DialogHost>
     </Grid>
 </Window>

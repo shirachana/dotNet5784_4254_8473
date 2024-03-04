@@ -15,38 +15,38 @@
     <IsAdmin>true</IsAdmin>
   </User>
   <User>
+    <Name>Shir</Name>
+    <Id>5702670</Id>
+    <UserName />
+    <Password />
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <Name>Efrat</Name>
+    <Id>84527996</Id>
+    <UserName />
+    <Password />
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
+    <Name>Adina</Name>
+    <Id>49210559</Id>
+    <UserName />
+    <Password />
+    <IsAdmin>false</IsAdmin>
+  </User>
+  <User>
     <Name>Moti</Name>
-    <Id>79952133</Id>
+    <Id>70742271</Id>
     <UserName />
     <Password />
     <IsAdmin>false</IsAdmin>
   </User>
   <User>
     <Name>Israel</Name>
-    <Id>12205597</Id>
+    <Id>69489408</Id>
     <UserName />
     <Password />
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
-    <Name>Shir123</Name>
-    <Id>14450095</Id>
-    <UserName>Shir</UserName>
-    <Password>123</Password>
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
-    <Name>Efrat</Name>
-    <Id>88568090</Id>
-    <UserName>Efrat234</UserName>
-    <Password>234</Password>
-    <IsAdmin>false</IsAdmin>
-  </User>
-  <User>
-    <Name>Adina</Name>
-    <Id>85497724</Id>
-    <UserName>Adina1</UserName>
-    <Password>111</Password>
     <IsAdmin>false</IsAdmin>
   </User>
 </ArrayOfUser>

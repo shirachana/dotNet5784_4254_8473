@@ -33,12 +33,10 @@ public class Task
     public DateTime? CreatedAtDate { get; set; }
     public BO.Status Status { get; set; }
     public List<BO.TaskInList>? Dependencies { get; set; }
-    //public BO.MilestonelnList? Milestone{ get; init; }
     public TimeSpan? RequiredEffortTime { get; set; }
 
     public DateTime? ScheduledDate { get; set; }
     public DateTime? StartDate { get; set; } = null;
-    public DateTime? DeadlineDate { get; set; }
     public DateTime? CompleteDate { get; set; }
     public DateTime? ForecastDate { get; set; }
     public string? Deliverables { get; set; }
