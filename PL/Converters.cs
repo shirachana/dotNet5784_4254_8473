@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 
 namespace PL;
@@ -131,6 +132,49 @@ public class DateToMarginConverter : IValueConverter
     {
         throw new NotImplementedException();
     }
+}
+
+
+    public class TaskColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+        if (value is BO.Task task)
+        {
+            // Check if the task is completed
+            if (task.CompleteDate != null)
+            {
+                return Brushes.Green; // Task completed, so green color
+            }
+            // Check if the task is overdue
+            else if (task.ForecastDate < DateTime.Today)
+            {
+                return Brushes.Red; // Task overdue, so red color
+            }
+            else
+            {
+                // Task is ongoing, apply logic to determine if it's delayed based on start time and dependencies
+                // Example: Check if the task start time is later than expected, and if its dependencies are completed
+                // If delayed, return red, else return blue
+                if (task.StartDate > task.ScheduledDate || !task.Dependencies!.All(dep => dep.Status==BO.Status.Done))
+                {
+                    return Brushes.Red; // Task delayed, so red color
+                }
+                else
+                {
+                    return Brushes.Blue; // Task ongoing, so blue color
+                }
+            }
+        }
+        // Default color if value is not a Task or other criteria not met
+        return Brushes.White;
+    }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    
 }
 
 

@@ -1,4 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
+﻿using BO;
+using MaterialDesignThemes.Wpf;
 using PL.Engineer;
 using PL.TaskForList;
 using PL.User;
@@ -75,7 +76,14 @@ namespace PL
 
         private void btnGant_Click(object sender, RoutedEventArgs e)
         {
-            new GantWindow().Show();
+            if (Tools.CheckStatusProject() == StatusProject.Execution)
+            {
+                new GantWindow().Show();
+            }
+            else
+            {
+                MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

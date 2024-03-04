@@ -20,6 +20,7 @@
             <local:TasksCollection x:Key="TasksCollectionKey" />
             <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
             <local:DateToMarginConverter x:Key="DateToMarginConverterKey"/>
+            <local:TaskColorConverter x:Key="TaskColorConverterkey"/>
 
         </ResourceDictionary>
     </Application.Resources>
