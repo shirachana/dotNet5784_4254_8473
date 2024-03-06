@@ -125,7 +125,7 @@ public class TaskWidthConverterA : IValueConverter
 
                 // Calculate the width of the rectangle based on task duration
                 // You need to implement the logic for calculating task duration
-                TimeSpan? duration = (task.ScheduledDate!.Value - task.ScheduledDate);
+                TimeSpan? duration = (task.ScheduledDate!.Value - s_bl.GetProjectStartDate());
                 if (duration.HasValue)
                 {
                     int durationInHours = (int)duration.Value.TotalHours;
@@ -135,7 +135,7 @@ public class TaskWidthConverterA : IValueConverter
             // Return the calculated width
             else
             {
-                TimeSpan? duration = (task.StartDate!.Value - task.StartDate) ;
+                TimeSpan? duration = (task.StartDate!.Value-s_bl.GetProjectStartDate()) ;
                 if (duration.HasValue)
                 {
                     int durationInHours = (int)duration.Value.TotalHours;
@@ -164,28 +164,28 @@ public class TaskWidthConverterB : IValueConverter
         {
 
             task = s_bl.Task.Read(task.Id)!;
-            if (task.StartDate == null)
-            {
+            //if (task.StartDate == null)
+            //{
 
                 // Calculate the width of the rectangle based on task duration
                 // You need to implement the logic for calculating task duration
-                TimeSpan? duration = ((task.ScheduledDate!.Value -task.ScheduledDate) + task.RequiredEffortTime);
+                TimeSpan? duration = (/*(task.ScheduledDate!.Value -task.ScheduledDate) +*/ task.RequiredEffortTime);
                 if (duration.HasValue)
                 {
                     int durationInHours = (int)duration.Value.TotalHours;
                     return durationInHours;
                 }
-            }
+            //}
             // Return the calculated width
-            else
-            {
-                TimeSpan? duration =((task.StartDate!.Value -task.StartDate) + task.RequiredEffortTime);
-                if (duration.HasValue)
-                {
-                    int durationInHours = (int)duration.Value.TotalHours;
-                    return durationInHours;
-                }
-            }
+            //else
+            //{
+            //    TimeSpan? duration =(/*(task.StartDate!.Value -task.StartDate) +*/ task.RequiredEffortTime);
+            //    if (duration.HasValue)
+            //    {
+            //        int durationInHours = (int)duration.Value.TotalHours;
+            //        return durationInHours;
+            //    }
+            //}
                 
         }
 
@@ -209,18 +209,49 @@ public class TaskWidthConverterC : IValueConverter
             Debug.WriteLine($"TaskWidthConverter: Converting task with ID={task.Id}");
 
             task = s_bl.Task.Read(task.Id) ?? new();
-            //if (task.StartDate == null)
+            //if (task.CompleteDate == null)
             //{
-            //    Debug.WriteLine($"TaskWidthConverter: StartDate is null");
-
-            //    // Calculate the width of the rectangle based on task duration
-            //    // You need to implement the logic for calculating task duration
-            //    //DateTime? t= task.ScheduledDate!.Value + task.RequiredEffortTime;
-            //    //return t;
+            //    if (task.StartDate == null)
+            //    {
+            //        TimeSpan? duration = (task.ForecastDate!.Value - (task.ScheduledDate + task.RequiredEffortTime));
+            //        if (duration.HasValue)
+            //        {
+            //            int durationInHours = (int)duration.Value.TotalHours;
+            //            return durationInHours;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        TimeSpan? duration = (task.ForecastDate!.Value - (task.StartDate + task.RequiredEffortTime));
+            //        if (duration.HasValue)
+            //        {
+            //            int durationInHours = (int)duration.Value.TotalHours;
+            //            return durationInHours;
+            //        }
+            //    }
             //}
-            //// Return the calculated width
-            //else
-            return task.RequiredEffortTime;
+            //else 
+            //{
+                if (task.StartDate == null)
+                {
+                TimeSpan? duration = DateTime.Now- (task.ScheduledDate + task.RequiredEffortTime);
+
+                if (duration.HasValue)
+                    {
+                        int durationInHours = (int)duration.Value.TotalHours;
+                        return durationInHours;
+                    }
+                }
+                else
+                {
+                    TimeSpan? duration = DateTime.Now - (task.StartDate + task.RequiredEffortTime);
+                    if (duration.HasValue)
+                    {
+                        int durationInHours = (int)duration.Value.TotalHours;
+                        return durationInHours;
+                    }
+                }
+            //}
         }
 
         return 0; // Return default width if value is not a Task object

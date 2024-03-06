@@ -63,7 +63,7 @@
 
                                         <!-- White Rectangle 2 -->
                                         <Rectangle Grid.Column="3"
-                               Width="40"
+                               Width="{Binding Converter={StaticResource TaskWidthConverterCKey}}"
                                Height="20"
                                Fill="White" />
                                         <!--"{Binding Converter={StaticResource TaskWidthConverterKey}}"-->
