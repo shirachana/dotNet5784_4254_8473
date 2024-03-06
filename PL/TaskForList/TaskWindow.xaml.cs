@@ -60,7 +60,7 @@ namespace PL.TaskForList
             set { SetValue(isUserVProperty, value); }
         }
         public static readonly DependencyProperty isUserVProperty =
-            DependencyProperty.Register("isUserValue", typeof(bool), typeof(TaskListWindow));
+            DependencyProperty.Register("isUserValue", typeof(bool), typeof(TaskWindow));
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
@@ -111,6 +111,7 @@ namespace PL.TaskForList
 
             if (Task.Engineer == null)
                 Task.Engineer = new();
+            DataContext = this;
             InitializeComponent();
         }
         
@@ -186,9 +187,9 @@ namespace PL.TaskForList
                     }
                     else if(isUserValue == false)
                     {
-                       s_bl.Engineer.UpdateEngineerToTask(Engineer!.Id, Task.Id);
-                       s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
-                      // IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                        s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
+                        s_bl.Engineer.UpdateEngineerToTask(Engineer!.Id, Task.Id);
+                      //IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                        MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                       //  _taskListWindow!.TaskList = updatedTaskList;
                     }
@@ -198,6 +199,7 @@ namespace PL.TaskForList
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Operation Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
             }
         }
 

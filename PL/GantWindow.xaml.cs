@@ -23,23 +23,23 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        public IEnumerable<BO.TaskInList> TaskOfList
+        public IEnumerable<BO.Task> TaskOfList
         {
-            get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
+            get { return (IEnumerable<BO.Task>)GetValue(TaskListProperty); }
             set { SetValue(TaskListProperty, value); }
         }
 
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.TaskInList>), typeof(GantWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.Task>), typeof(GantWindow), new PropertyMetadata(null));
 
         //private BO.Engineer? Engineer;
         // TaskListWindow? _taskListWindow;
 
         public GantWindow()
         {
-            TaskOfList = s_bl?.Task.ReadAll()!;
-            InitializeComponent();
             DataContext = this;
+            TaskOfList = s_bl?.Task.GetDetailsToGantt()!;
+            InitializeComponent();
         }
         // Calculate Length of Border
         //public double CalculateBorderLength(BO.Task task)

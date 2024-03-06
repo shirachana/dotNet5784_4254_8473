@@ -108,24 +108,28 @@ public class IsDependToCheckConverter : IMultiValueConverter
         return null!;
     }
 }
-public class DateToMarginConverter : IValueConverter
+public class TaskWidthConverter : IValueConverter
 {
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is DateTime date)
+    
+        // Assuming value is the Task object
+        if (value is BO.Task task)
         {
-            // Here, you can adjust the conversion logic as per your requirement.
-            // For simplicity, let's assume each day in the date range corresponds to 10 pixels.
-            double pixelsPerDay = 10;
-
-            // Calculate the number of days between the current date and a base date.
-            TimeSpan timeSpan = date - new DateTime(2022, 1, 1);
-            double leftMargin = timeSpan.TotalDays * pixelsPerDay;
-
-            return new Thickness(leftMargin, 0, 0, 0); // Assuming no top, right, or bottom margins.
+            task = s_bl.Task.Read(task.Id) ?? new();
+            if (task.StartDate == null)
+            {
+                // Calculate the width of the rectangle based on task duration
+                // You need to implement the logic for calculating task duration
+                return (task.ScheduledDate!.Value + task.RequiredEffortTime)!;
+            }
+            // Return the calculated width
+            else
+                return (task.StartDate!.Value + task.RequiredEffortTime)!;
         }
 
-        return new Thickness(0); // Default margin if the value is not a DateTime.
+        return 0; // Return default width if value is not a Task object
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -135,14 +139,14 @@ public class DateToMarginConverter : IValueConverter
 }
 
 
-    public class TaskColorConverter : IValueConverter
+public class TaskColorConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
         if (value is BO.Task task)
         {
             // Check if the task is completed
-            if (task.CompleteDate != null)
+            if (task.Status == BO.Status.Done)
             {
                 return Brushes.Green; // Task completed, so green color
             }
@@ -156,7 +160,7 @@ public class DateToMarginConverter : IValueConverter
                 // Task is ongoing, apply logic to determine if it's delayed based on start time and dependencies
                 // Example: Check if the task start time is later than expected, and if its dependencies are completed
                 // If delayed, return red, else return blue
-                if (task.StartDate > task.ScheduledDate || !task.Dependencies!.All(dep => dep.Status==BO.Status.Done))
+                if (task.StartDate > task.ScheduledDate || !task.Dependencies!.All(dep => dep.Status == BO.Status.Done))
                 {
                     return Brushes.Red; // Task delayed, so red color
                 }
@@ -170,11 +174,30 @@ public class DateToMarginConverter : IValueConverter
         return Brushes.White;
     }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
 }
+
+public class BooleanToVisibilityConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is bool boolValue)
+        {
+            return boolValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        return Visibility.Collapsed;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+
 
 

@@ -5,22 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="GantWindow" Height="450" Width="1800">
+        Title="GantWindow" Height="450" Width="1800"
+        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <local:DateToMarginConverter x:Key="DateToMarginConverter"/>
         <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
+        <local:TaskWidthConverter x:Key="TaskWidthConverterKey"/>
         <!-- Define colors for completed and incomplete tasks -->
         <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
         <SolidColorBrush x:Key="DelayedTaskColor" Color="Red"/>
     </Window.Resources>
     <Grid>
-        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ListView for detailed task view -->
+        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch" Grid.Row="0">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
                     <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" Width="100"/>
-                    <GridViewColumn Header="Dependencies" Width="150">
+                    <GridViewColumn Header="Dependencies">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ItemsControl ItemsSource="{Binding Dependencies}">
@@ -33,156 +41,39 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!-- Columns for months of the year -->
-                    <GridViewColumn Header="January">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                                    Width="{Binding January.RequiredEffortTime}"
-                                    Height="30"
-                                    Background="{Binding January, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="February">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding February.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding February, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="March">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding March.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding March, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="April">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding April.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding April, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="May">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding May.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding May, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="June">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding June.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding June, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="July">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding July.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding July, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="August">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding August.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding August, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="September">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding September.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding September, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="October">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding October.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding October, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="November">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding November.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding November, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="December">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1"
-                Width="{Binding December.RequiredEffortTime}"
-                Height="30"
-                Background="{Binding December, Converter={StaticResource TaskColorConverterKey}}">
-                                    <!-- Placeholder for task ID -->
-                                </Border>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <!-- Add similar GridViewColumn definitions for the rest of the months -->
+                    <!-- Additional columns can be added here if needed -->
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+
+        <!-- ListBox for Gantt chart view -->
+        <ListBox ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding StartDate}" Margin="5"/>
+                        <Border BorderBrush="Black" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding StartDate}" Margin="5"/>
+                                <Rectangle Grid.Column="1" 
+                                           Width="{Binding Converter={StaticResource TaskWidthConverterKey}}"
+                                           Height="20"
+                                           Fill="{Binding Converter={StaticResource TaskColorConverterKey}}" />
+                                <TextBlock Grid.Column="2" Text="{Binding RemainingTime}" Margin="5"/>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Legend -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
             <TextBlock Text="Legend: " Margin="5"/>
             <Border Background="Green" Width="20" Height="20" Margin="5"/>
             <TextBlock Text="Completed" Margin="0,5,5,5"/>

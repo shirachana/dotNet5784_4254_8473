@@ -19,8 +19,9 @@
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:TasksCollection x:Key="TasksCollectionKey" />
             <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
-            <local:DateToMarginConverter x:Key="DateToMarginConverterKey"/>
+            <local:TaskWidthConverter x:Key="TaskWidthConverterKey"/>
             <local:TaskColorConverter x:Key="TaskColorConverterkey"/>
+            <BooleanToVisibilityConverter x:Key="ConvertBooleanToVisibility"/>
 
         </ResourceDictionary>
     </Application.Resources>

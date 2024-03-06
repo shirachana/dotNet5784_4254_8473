@@ -286,7 +286,7 @@ internal class TaskImplementation : BlApi.ITask
                     }
                 }
                 DO.Task dtask = _dal.Task.Read(id)!;
-                if (_dal.getStart() <= startDate)
+                if (_dal.getStart() < startDate)
                 {
                     _dal.Task.Update(dtask with { StartDate = startDate });
                 }
@@ -336,14 +336,14 @@ internal class TaskImplementation : BlApi.ITask
         }
     }
       public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer)
-   {
+      {
    
        DO.Engineer eng = _dal.Engineer.Read(engineer.Id) ?? throw new BlDoesNotExistException($"The Engineer with the id={engineer.Id} does not exist");
        var tasks = _dal.Task.ReadAll()
                        .OrderBy(doTask => doTask.Id) 
                        .Where(doTask =>
                        {
-                           return doTask.Copmlexity <= eng.Level && doTask.Engineerld == 0 && CanAdd(doTask) == true&&doTask.CompleteDate==null;
+                           return doTask.Copmlexity <= eng.Level && (doTask.Engineerld == 0|| doTask.Engineerld == eng.Id) && CanAdd(doTask) == true&&doTask.CompleteDate==null;
                        })
                        .Select(doTask => new BO.TaskInList
                        {
@@ -405,5 +405,36 @@ internal class TaskImplementation : BlApi.ITask
             throw new BlArgumentOutOfRangeException($"Failed to update  complete date for task with ID={id}. {ex.Message}");
         }
     }
+    public IEnumerable<BO.Task> GetDetailsToGantt(Func<BO.Task, bool>? filter = null)
+    {
+        var tasks = _dal.Task.ReadAll()
+                             .OrderBy(task => task.StartDate ?? task.ScheduledDate)
+                             .Select(doTask => new BO.Task
+                             {
+                                 Id = doTask.Id,
+                                 Alias = doTask.Alias,
+                                 // Other properties you need
+
+                                 // Fetch and map dependencies
+                                 Dependencies = _dal.Dependency.ReadAll()
+                                    .Where(dependency => dependency.DependentTask == doTask.Id)
+                                    .Select(dependency => new BO.TaskInList
+                                    {
+                                        Id = dependency.DependsOnTask
+                                        // Map other properties as needed
+                                    }).ToList()
+                             });
+
+        // Apply the filter function if it's provided
+        if (filter != null)
+        {
+            tasks = tasks.Where(filter);
+        }
+
+        return tasks;
+    }
+
+
+
 }
 

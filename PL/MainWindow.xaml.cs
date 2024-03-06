@@ -76,14 +76,14 @@ namespace PL
 
         private void btnGant_Click(object sender, RoutedEventArgs e)
         {
-            if (Tools.CheckStatusProject() == StatusProject.Execution)
-            {
-                new GantWindow().Show();
-            }
-            else
-            {
-                MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-            }
+           // if (Tools.CheckStatusProject() == StatusProject.Execution)
+           // {
+             new GantWindow().Show();
+           // }
+           // else
+          //  {
+           //     MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+           // }
         }
     }
 }

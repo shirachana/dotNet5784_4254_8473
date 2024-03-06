@@ -14,36 +14,33 @@ public static class Initialization
     private static readonly Random s_rand = new();
     private static void CreateDependencies()
     {
+        HashSet<int> selectedTasks = new HashSet<int>();
+
         for (int i = 0; i < 40; i++)
         {
             Dependency dep = new Dependency();
-            switch (i)
+
+            int dependentTask, dependsOnTask;
+            do
             {
-                case int c when i < 10:
-                    dep = dep with
-                    {
-                        DependentTask = s_rand.Next(6, 11),
-                        DependsOnTask = s_rand.Next(1, 6)
-                    };
-                    break;
-                case int c when i < 20:
-                    dep = dep with
-                    {
-                        DependentTask = s_rand.Next(11, 16),
-                        DependsOnTask = s_rand.Next(6, 11),
-                    };
-                    break;
-                case int c when i < 40:
-                    dep = dep with
-                    {
-                        DependentTask = s_rand.Next(16, 21),
-                        DependsOnTask = s_rand.Next(11, 16),
-                    };
-                    break;
+                dependentTask = s_rand.Next(6, 21); // Randomly select a dependent task excluding first 5 tasks
+                dependsOnTask = s_rand.Next(1, 21); // Randomly select a task it depends on
             }
+            while (dependentTask == dependsOnTask ||  // Ensure no circular dependency
+                   selectedTasks.Contains(dependentTask));  // Ensure dependent task is not selected before
+
+            selectedTasks.Add(dependentTask); // Add dependent task to selected tasks set
+
+            dep = dep with
+            {
+                DependentTask = dependentTask,
+                DependsOnTask = dependsOnTask
+            };
+
             s_dal!.Dependency.Create(dep);
         }
     }
+
     private static void CreatTask()
     {
         string[] _alias = { "recipe-design",

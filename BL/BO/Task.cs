@@ -34,7 +34,6 @@ public class Task
     public BO.Status Status { get; set; }
     public List<BO.TaskInList>? Dependencies { get; set; }
     public TimeSpan? RequiredEffortTime { get; set; }
-
     public DateTime? ScheduledDate { get; set; }
     public DateTime? StartDate { get; set; } = null;
     public DateTime? CompleteDate { get; set; }
