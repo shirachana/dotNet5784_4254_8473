@@ -109,12 +109,100 @@ public class IsDependToCheckConverter : IMultiValueConverter
         return null!;
     }
 }
-public class TaskWidthConverter : IValueConverter
+public class TaskWidthConverterA : IValueConverter
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-    
+
+        // Assuming value is the Task object
+        if (value is BO.Task task)
+        {
+
+            task = s_bl.Task.Read(task.Id)!;
+            if (task.StartDate == null)
+            {
+
+                // Calculate the width of the rectangle based on task duration
+                // You need to implement the logic for calculating task duration
+                TimeSpan? duration = (task.ScheduledDate!.Value - task.ScheduledDate);
+                if (duration.HasValue)
+                {
+                    int durationInHours = (int)duration.Value.TotalHours;
+                    return durationInHours;
+                }
+            }
+            // Return the calculated width
+            else
+            {
+                TimeSpan? duration = (task.StartDate!.Value - task.StartDate) ;
+                if (duration.HasValue)
+                {
+                    int durationInHours = (int)duration.Value.TotalHours;
+                    return durationInHours;
+                }
+            }
+
+        }
+
+        return 0; // Return default width if value is not a Task object
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class TaskWidthConverterB : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+
+        // Assuming value is the Task object
+        if (value is BO.Task task)
+        {
+
+            task = s_bl.Task.Read(task.Id)!;
+            if (task.StartDate == null)
+            {
+
+                // Calculate the width of the rectangle based on task duration
+                // You need to implement the logic for calculating task duration
+                TimeSpan? duration = ((task.ScheduledDate!.Value -task.ScheduledDate) + task.RequiredEffortTime);
+                if (duration.HasValue)
+                {
+                    int durationInHours = (int)duration.Value.TotalHours;
+                    return durationInHours;
+                }
+            }
+            // Return the calculated width
+            else
+            {
+                TimeSpan? duration =((task.StartDate!.Value -task.StartDate) + task.RequiredEffortTime);
+                if (duration.HasValue)
+                {
+                    int durationInHours = (int)duration.Value.TotalHours;
+                    return durationInHours;
+                }
+            }
+                
+        }
+
+        return 0; // Return default width if value is not a Task object
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+public class TaskWidthConverterC : IValueConverter
+{
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+
         // Assuming value is the Task object
         if (value is BO.Task task)
         {
@@ -132,7 +220,7 @@ public class TaskWidthConverter : IValueConverter
             //}
             //// Return the calculated width
             //else
-                return task.RequiredEffortTime;
+            return task.RequiredEffortTime;
         }
 
         return 0; // Return default width if value is not a Task object

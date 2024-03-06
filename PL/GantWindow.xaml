@@ -9,7 +9,10 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
-        <local:TaskWidthConverter x:Key="TaskWidthConverterKey"/>
+
+        <local:TaskWidthConverterA x:Key="TaskWidthConverterAKey"/>
+        <local:TaskWidthConverterB x:Key="TaskWidthConverterBKey"/>
+        <local:TaskWidthConverterC x:Key="TaskWidthConverterCKey"/>
         <!-- Define colors for completed and incomplete tasks -->
             <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
@@ -48,13 +51,13 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding StartDate}"/>
                                         <Rectangle Grid.Column="1"
-                               Width="40"
+                               Width="{Binding Converter={StaticResource TaskWidthConverterAKey}}"
                                Height="20"
                                Fill="White" />
 
                                         <!-- Dynamic Color Rectangle -->
                                         <Rectangle Grid.Column="2"
-                               Width="40"
+                               Width="{Binding Converter={StaticResource TaskWidthConverterBKey}}"
                                Height="20"
                                Fill="{Binding Converter={StaticResource TaskColorConverterKey}}" />
 
