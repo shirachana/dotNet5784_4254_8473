@@ -11,19 +11,12 @@
         <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
         <local:TaskWidthConverter x:Key="TaskWidthConverterKey"/>
         <!-- Define colors for completed and incomplete tasks -->
-        <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
+            <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
         <SolidColorBrush x:Key="DelayedTaskColor" Color="Red"/>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-
-        <!-- ListView for detailed task view -->
-        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch" Grid.Row="0">
+        <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
@@ -41,39 +34,49 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <!-- Additional columns can be added here if needed -->
+                    <GridViewColumn Header="Gantt Chart">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="White" BorderThickness="1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding StartDate}"/>
+                                        <Rectangle Grid.Column="1"
+                               Width="40"
+                               Height="20"
+                               Fill="White" />
+
+                                        <!-- Dynamic Color Rectangle -->
+                                        <Rectangle Grid.Column="2"
+                               Width="40"
+                               Height="20"
+                               Fill="{Binding Converter={StaticResource TaskColorConverterKey}}" />
+
+                                        <!-- White Rectangle 2 -->
+                                        <Rectangle Grid.Column="3"
+                               Width="40"
+                               Height="20"
+                               Fill="White" />
+                                        <!--"{Binding Converter={StaticResource TaskWidthConverterKey}}"-->
+                                                
+                                        <!--"{Binding Converter={StaticResource TaskColorConverterKey}}" />-->
+                                        <!-- You may add more details as needed -->
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-
-        <!-- ListBox for Gantt chart view -->
-        <ListBox ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch" Grid.Row="1">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding StartDate}" Margin="5"/>
-                        <Border BorderBrush="Black" BorderThickness="1">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="{Binding StartDate}" Margin="5"/>
-                                <Rectangle Grid.Column="1" 
-                                           Width="{Binding Converter={StaticResource TaskWidthConverterKey}}"
-                                           Height="20"
-                                           Fill="{Binding Converter={StaticResource TaskColorConverterKey}}" />
-                                <TextBlock Grid.Column="2" Text="{Binding RemainingTime}" Margin="5"/>
-                            </Grid>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-
         <!-- Legend -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom">
             <TextBlock Text="Legend: " Margin="5"/>
             <Border Background="Green" Width="20" Height="20" Margin="5"/>
             <TextBlock Text="Completed" Margin="0,5,5,5"/>

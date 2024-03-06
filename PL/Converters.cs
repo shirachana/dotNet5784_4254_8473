@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -117,16 +118,21 @@ public class TaskWidthConverter : IValueConverter
         // Assuming value is the Task object
         if (value is BO.Task task)
         {
+            Debug.WriteLine($"TaskWidthConverter: Converting task with ID={task.Id}");
+
             task = s_bl.Task.Read(task.Id) ?? new();
-            if (task.StartDate == null)
-            {
-                // Calculate the width of the rectangle based on task duration
-                // You need to implement the logic for calculating task duration
-                return (task.ScheduledDate!.Value + task.RequiredEffortTime)!;
-            }
-            // Return the calculated width
-            else
-                return (task.StartDate!.Value + task.RequiredEffortTime)!;
+            //if (task.StartDate == null)
+            //{
+            //    Debug.WriteLine($"TaskWidthConverter: StartDate is null");
+
+            //    // Calculate the width of the rectangle based on task duration
+            //    // You need to implement the logic for calculating task duration
+            //    //DateTime? t= task.ScheduledDate!.Value + task.RequiredEffortTime;
+            //    //return t;
+            //}
+            //// Return the calculated width
+            //else
+                return task.RequiredEffortTime;
         }
 
         return 0; // Return default width if value is not a Task object
@@ -141,10 +147,16 @@ public class TaskWidthConverter : IValueConverter
 
 public class TaskColorConverter : IValueConverter
 {
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is BO.Task task)
         {
+            task = s_bl.Task.Read(task.Id) ?? new();
+
+            Debug.WriteLine($"TaskColorConverter: Converting task with ID={task.Id}");
+
             // Check if the task is completed
             if (task.Status == BO.Status.Done)
             {

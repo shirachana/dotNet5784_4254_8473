@@ -38,8 +38,10 @@ namespace PL
         public GantWindow()
         {
             DataContext = this;
-            TaskOfList = s_bl?.Task.GetDetailsToGantt()!;
             InitializeComponent();
+            TaskOfList = s_bl?.Task.GetDetailsToGantt()!;
+
+
         }
         // Calculate Length of Border
         //public double CalculateBorderLength(BO.Task task)
