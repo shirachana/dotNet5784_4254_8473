@@ -6,10 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="EngineerViewWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="0,0,0,-6">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -19,16 +17,16 @@
         </Grid.ColumnDefinitions>
 
         <!-- Button to add a task to an employee -->
-        <Button Content="Add Task to Engineer" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="197" Click="BtnAddTask_Click"/>
+        <Button Content="Add Task to Engineer" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Click="BtnAddTask_Click" Height="60"/>
 
         <!-- Button to update the user -->
-        <Button Content="Update User" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnUppUse_Click"/>
+        <Button Content="Update User" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="60" Click="BtnUppUse_Click"/>
 
         <!-- Button for current task -->
-        <Button Content="Current Task" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Click="BtnCurrent_Click"/>
+        <Button Content="Current Task" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Height="60" Click="BtnCurrent_Click"/>
 
         <!-- Button to exit -->
-        <Button Content="Log Out" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Margin="10" Click="BtnExit_Click"/>
+        <Button Content="Log Out" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200"  Height="60" Click="BtnExit_Click"/>
     </Grid>
 </Window>
 

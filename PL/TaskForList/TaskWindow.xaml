@@ -13,6 +13,18 @@
 
     <Window.Resources>
         <converter:IsDependToCheckConverter x:Key="IsCheckConverter"/>
+        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="#FF673AB7"/>        </LinearGradientBrush>
+        <Style x:Key="userTrigger" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding isUserValue}" Value="True">
+                    <Setter Property="Content" Value="Add Dependencies" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding isUserValue}" Value="False">
+                    <Setter Property="Content" Value="Dependencies" />
+
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid>
@@ -101,7 +113,6 @@
                  Visibility="{Binding Engineer.Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                  IsHitTestVisible="False"
                  IsEnabled="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-            <!--<TextBox Text="{Binding Dependencies, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" Grid.ColumnSpan="2" Margin="110,0,0,0"/>-->
             <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
                      HorizontalAlignment="Center" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
                               IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
@@ -154,11 +165,11 @@
                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2"
                     VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
             <Button Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" 
-                    HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
+                    HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click"  Style="{StaticResource userTrigger}" Background="{StaticResource myLinearGradientBrush}"/>
 
         </Grid>
 
-        <materialDesign:DialogHost DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"  IsOpen="{Binding OpenDialogHost}"  CloseOnClickAway="True" >
+        <materialDesign:DialogHost DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"  IsOpen="{Binding OpenDialogHost}"  CloseOnClickAway="True" Margin="0,-20,0,20" >
             <materialDesign:DialogHost.DialogContent >
                 <Grid  Width="800" Height="400" Background="Black">
                     <DataGrid ItemsSource="{Binding TasksList}" AutoGenerateColumns="True" >

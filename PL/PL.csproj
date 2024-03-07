@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="יד מיניפ.jpg" />
+    <None Remove="Img minip.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="יד מיניפ.jpg" />
+    <Resource Include="Img minip.jpg" />
   </ItemGroup>
 
 </Project>

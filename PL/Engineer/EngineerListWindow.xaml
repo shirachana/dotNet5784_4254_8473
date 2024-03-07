@@ -7,9 +7,16 @@
         mc:Ignorable="d"
         Title="EngineerListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
-    <Window.Resources>        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="LightGray"Offset="0" />            <GradientStop Color="#FFBEE4E6"Offset="0.5" />            <GradientStop Color="White"Offset="1" />        </LinearGradientBrush>        <Style x:Key="myButtonStyle" TargetType="Button">            <Setter Property="FontSize" Value="25" />            <Setter Property="FontFamily" Value="Aharoni" />        </Style>    </Window.Resources>
+    <Window.Resources>
+        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="#FF673AB7"/>        </LinearGradientBrush>
+        <Style x:Key="myButtonStyle" TargetType="Button" >            <Setter Property="FontSize"Value="17" />            <Setter Property="FontFamily"Value="Aharoni" />            <Setter Property="Foreground" Value="White" />
 
-    <Grid Background="#FFBEE4E6">
+        </Style>
+        <Style x:Key="myLabelStyle" TargetType="Label" >            <Setter Property="FontSize"Value="13" />            <Setter Property="FontWeight"Value="Bold"/>
+
+        </Style>    </Window.Resources>
+
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="119*"/>
             <ColumnDefinition Width="41*"/>
@@ -25,10 +32,10 @@
                 <ColumnDefinition Width= "*"/>
             </Grid.ColumnDefinitions>
             <!--ToSelect-->
-            <Label Content="Select:" HorizontalAlignment="Left" Margin="60,13,0,0" VerticalAlignment="Top" Grid.Column="0" RenderTransformOrigin="0.527,0.793"/>
+            <Label Content="Select:" HorizontalAlignment="Left" Margin="60,13,0,0" VerticalAlignment="Top" Grid.Column="0" Style="{StaticResource myLabelStyle}"/>
             <!--None-->
-            <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" Grid.Column="1" 
-                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding experience, Mode=TwoWay}" SelectionChanged="cbExperienceSelector_SelectionChanged" Background="{StaticResource myLinearGradientBrush}"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" Grid.Column="1"  
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding experience, Mode=TwoWay}" SelectionChanged="cbExperienceSelector_SelectionChanged"/>
         </Grid>
         <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding EngineerList}" Grid.ColumnSpan="2" MouseDoubleClick="UpdateBtn_Click" >
             <ListView.View>
@@ -37,7 +44,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="AddBtn_Click" Margin="350,480,0,0" VerticalAlignment="Top" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" />
+        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="AddBtn_Click" Margin="350,480,0,0" VerticalAlignment="Top" Style="{StaticResource myButtonStyle}"  Background="{StaticResource myLinearGradientBrush}"/>
 
     </Grid>
 </Window>

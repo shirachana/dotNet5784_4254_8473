@@ -7,7 +7,10 @@
         mc:Ignorable="d"
         Title="TaskListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
+    <Window.Resources>
+        <Style x:Key="myLabelStyle" TargetType="Label" >        <Setter Property="FontSize"  Value="13" />        <Setter Property="FontWeight"  Value="Bold"/>
 
+    </Style>    </Window.Resources>
 
 
     <Grid>
@@ -26,7 +29,7 @@
                 <ColumnDefinition Width= "*"/>
             </Grid.ColumnDefinitions>
             <ComboBox SelectedValue="{Binding Path=TaskStatus, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" Width="390" Height="32" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Visibility="{Binding isUser, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <Label Content="Select:" HorizontalAlignment="Left" Margin="60,13,0,0" VerticalAlignment="Top" Grid.Column="0" RenderTransformOrigin="0.527,0.793"/>
+            <Label Content="Select:" HorizontalAlignment="Left" Margin="60,13,0,0" VerticalAlignment="Top" Grid.Column="0"  Style="{StaticResource myLabelStyle}"/>
         </Grid>
         <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding TaskList}" Grid.ColumnSpan="2"   MouseDoubleClick="UpdateBtn_Click">
             <ListView.View>
@@ -36,6 +39,5 @@
             </ListView.View>
         </ListView>
         <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100"  Margin="224,499,0,0" VerticalAlignment="Top" Click="ButtonAddUppT_Click" Visibility="{Binding isUser, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <!--<Button Content="Delete" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100"  Margin="424,499,0,0" VerticalAlignment="Top" Click="ButtonDelete_Click"/>-->
     </Grid>
 </Window>

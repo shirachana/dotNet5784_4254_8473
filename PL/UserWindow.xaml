@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="800"
+        Title="UserWindow" Height="450" Width="400"
         DataContext="{Binding User, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
     <Grid>
         <Grid.RowDefinitions>
@@ -25,18 +25,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width= "*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="User Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="1" />
-        <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="2"/>
-        <Label Content="Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"/>
-        <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"/>
+        <Label Content="User Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" Grid.Column="1" Grid.Row="1" />
+        <Label Content="Password" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" Grid.Column="1" Grid.Row="2"/>
+        <Label Content="Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Grid.Column="1" Grid.Row="3"/>
+        <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Grid.Column="1" Grid.Row="4"/>
         <TextBox  Text="{Binding User.UserName, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <TextBox Text="{Binding User.Password, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <TextBox Text="{Binding  Engineer.Name, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
-        <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap"  VerticalAlignment="Top" Height="30" Width="86" Margin="0,14,0,0"/>
-        <Button Grid.Column="2" Content="Next" Click="NextBtn_Click"  HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center" Height="35" Width="150" Margin="40,0,0,0"/>
-        <Button Grid.Column="1" Content="Back" Click="BackBtn_Click" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Center" Height="35" Width="145" Margin="40,0,0,0"/>
-
-
+        <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="4" TextWrapping="Wrap"  VerticalAlignment="Top" Height="30" Width="86"/>
+        <Button Content="Back" Click="BackBtn_Click" HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Height="30" Width="86" Grid.Column="1"/>
+        <Button Content="Next" Click="NextBtn_Click"  HorizontalAlignment="Center" Grid.Row="6" VerticalAlignment="Center" Height="30" Width="86"  Grid.Column="2"/>
 
     </Grid>
 </Window>

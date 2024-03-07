@@ -7,8 +7,12 @@
         mc:Ignorable="d"
         Title="EngineerWindow" Height="380" Width="350"
         DataContext="{Binding Engineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
-    <Window.Resources>        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="LightGray"Offset="0" />            <GradientStop Color="#FFBEE4E6"Offset="0.5" />            <GradientStop Color="White"Offset="1" />        </LinearGradientBrush>        <Style x:Key="myButtonStyle" TargetType="Button">            <Setter Property="FontSize" Value="15" />            <Setter Property="FontFamily" Value="Aharoni" />        </Style>    </Window.Resources>
-    <Grid Background="#FFBEE4E6">
+    <Window.Resources>        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="#FF673AB7"/>        </LinearGradientBrush>        <Style x:Key="myLabelStyle" TargetType="Label" >            <Setter Property="FontSize"  Value="10" />
+
+        </Style>        <Style x:Key="myButtonStyle" TargetType="Button" >            <Setter Property="FontSize"     Value="17" />            <Setter Property="FontFamily"     Value="Aharoni" />            <Setter Property="Foreground" Value="White" />
+
+        </Style>    </Window.Resources>
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -26,11 +30,11 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width= "*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="1" />
-        <Label Content="Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="2"/>
-        <Label Content="Email:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"/>
-        <Label Content="Level:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"/>
-        <Label Content="Cost:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="5"/>
+        <Label Content="Id:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="1"  Style="{StaticResource myLabelStyle}" />
+        <Label Content="Name:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="2"  Style="{StaticResource myLabelStyle}" />
+        <Label Content="Email:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="3"  Style="{StaticResource myLabelStyle}" />
+        <Label Content="Level:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="4"  Style="{StaticResource myLabelStyle}" />
+        <Label Content="Cost:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="5"  Style="{StaticResource myLabelStyle}" />
         <TextBox  Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"
                  Visibility="{Binding Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                  IsHitTestVisible="False"
@@ -39,10 +43,10 @@
         <TextBox Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <TextBox Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="5" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="86"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"  HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86" Grid.Row="4" Grid.Column="2"/>
-        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
-               HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5"   Click="btnAddUpdate_Click" Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}"/>
-        <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
-                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Grid.Row="6" Grid.Column="2" Width="86" Click="DelBtn_Click"  Background="{StaticResource myLinearGradientBrush}" Style="{StaticResource myButtonStyle}" Margin="1,8,0,8" />
+        <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"  Background="{StaticResource myLinearGradientBrush}"
+               HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5"   Click="btnAddUpdate_Click" Style="{StaticResource myButtonStyle}"/>
+        <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"  Background="{StaticResource myLinearGradientBrush}"
+                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Grid.Row="6" Grid.Column="2" Width="86" Click="DelBtn_Click"  Style="{StaticResource myButtonStyle}" Margin="1,8,0,8" />
 
 
 
