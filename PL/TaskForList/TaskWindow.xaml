@@ -166,14 +166,15 @@
                             <DataGridTemplateColumn Header="Add Dependency" Width="*">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox x:Name="CheckBox" HorizontalAlignment="Center" Tag="{Binding}" Click="CheckBox_Click">
-                                            <CheckBox.IsChecked>
+                                        <Grid x:Name="Grid" Tag="{Binding}">
+                                            <Grid.Background>
                                                 <MultiBinding Converter="{StaticResource IsCheckConverter}" >
-                                                    <Binding ElementName="CheckBox" Path="Tag"/>
+                                                    <Binding ElementName="Grid" Path="Tag"/>
                                                     <Binding Path="Task.Dependencies" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
                                                 </MultiBinding>
-                                            </CheckBox.IsChecked>
-                                        </CheckBox>
+                                            </Grid.Background>
+                                            <Label Content="{Binding}" Background="Transparent"/>
+                                        </Grid>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

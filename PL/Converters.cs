@@ -100,8 +100,10 @@ public class IsDependToCheckConverter : IMultiValueConverter
         TaskInList taskInList = (TaskInList)values[0];
         List<TaskInList> dependList = (List<TaskInList>)values[1];
         if (taskInList is null || dependList is null)
-            return false;
-        return dependList.Any(x => x.Id == taskInList.Id);
+            return Brushes.Transparent;
+        if( dependList.Any(x => x.Id == taskInList.Id))
+            return Brushes.Green;
+        return Brushes.Transparent; 
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -272,7 +274,7 @@ public class TaskColorConverter : IValueConverter
     {
         if (value is BO.Task task)
         {
-            task = s_bl.Task.Read(task.Id) ?? new();
+            task = s_bl.Task.Read(task.Id)!;
 
             Debug.WriteLine($"TaskColorConverter: Converting task with ID={task.Id}");
 
@@ -282,7 +284,7 @@ public class TaskColorConverter : IValueConverter
                 return Brushes.Green; // Task completed, so green color
             }
             // Check if the task is overdue
-            else if (task.ForecastDate < DateTime.Today)
+            else if (task.ForecastDate < s_bl.Clock)
             {
                 return Brushes.Red; // Task overdue, so red color
             }

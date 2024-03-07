@@ -53,7 +53,7 @@
                                         <Rectangle Grid.Column="1"
                                Width="{Binding Converter={StaticResource TaskWidthConverterAKey}}"
                                Height="20"
-                               Fill="White" />
+                               Fill="Yellow" />
 
                                         <!-- Dynamic Color Rectangle -->
                                         <Rectangle Grid.Column="2"
@@ -65,7 +65,7 @@
                                         <Rectangle Grid.Column="3"
                                Width="{Binding Converter={StaticResource TaskWidthConverterCKey}}"
                                Height="20"
-                               Fill="White" />
+                               Fill="Yellow" />
                                         <!--"{Binding Converter={StaticResource TaskWidthConverterKey}}"-->
                                                 
                                         <!--"{Binding Converter={StaticResource TaskColorConverterKey}}" />-->
