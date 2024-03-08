@@ -205,7 +205,7 @@ internal class EngineerImplementation : IEngineer
             tasksDep.Where(p => (p.StartDate + p.RequiredEffortTime)! <DateTime.Today);
             if (tasksDep.Any())
                 throw new BlDoesNotExistException("The Engineer cannot be registered to the task because the pending task has not yet finished ");
-            DO.Task uppTask = new DO.Task(tsk.Id, idEng, tsk.Alias, tsk.Description, tsk.CreatedAtDate, tsk.RequiredEffortTime, tsk.IsMilestone, tsk.Copmlexity, tsk.StartDate, tsk.ScheduledDate, tsk.DeadlineDate, tsk.CompleteDate, tsk.Deliverables, tsk.Remarks);
+            DO.Task uppTask = new DO.Task(tsk.Id, idEng, tsk.Alias, tsk.Description, tsk.CreatedAtDate, tsk.RequiredEffortTime, tsk.IsMilestone, tsk.Copmlexity, tsk.StartDate, tsk.ScheduledDate, tsk.ForecastDate, tsk.CompleteDate, tsk.Deliverables, tsk.Remarks);
             _dal.Task.Update(uppTask);
         }
         catch (DO.DalDoesNotExistException ex) { throw new BO.BlDoesNotExistException("cant update the Task in The Engineer", ex); }
@@ -255,7 +255,7 @@ internal class EngineerImplementation : IEngineer
             if (task.Engineerld == idE && task.StartDate > DateTime.Today)
             {
                 // Disassociate the engineer from the task
-                DO.Task uppTask = new DO.Task(task.Id, 0, task.Alias, task.Description, task.CreatedAtDate, task.RequiredEffortTime, task.IsMilestone, task.Copmlexity, task.StartDate, task.ScheduledDate, task.DeadlineDate, task.CompleteDate, task.Deliverables, task.Remarks);
+                DO.Task uppTask = new DO.Task(task.Id, 0, task.Alias, task.Description, task.CreatedAtDate, task.RequiredEffortTime, task.IsMilestone, task.Copmlexity, task.StartDate, task.ScheduledDate, task.ForecastDate, task.CompleteDate, task.Deliverables, task.Remarks);
 
                 // Update the task in the data access layer
                 _dal.Task.Update(uppTask);

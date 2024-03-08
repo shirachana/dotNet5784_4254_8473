@@ -54,8 +54,7 @@
                                         <Rectangle Grid.Column="2"
                                Width="{Binding TasksDays}"
                                Height="20"
-                                                   Fill="HotPink"/>
-                                        <!--Fill="{Binding Converter={StaticResource TaskColorConverterKey}}"/>-->
+                                        Fill="{Binding Status}"/>
 
                                         <!-- White Rectangle 2 -->
                                         <Rectangle Grid.Column="3"

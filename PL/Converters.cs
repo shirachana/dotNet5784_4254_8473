@@ -115,48 +115,39 @@ public class IsDependToCheckConverter : IMultiValueConverter
         return null!;
     }
 }
-//public class TaskColorConverter : IValueConverter
-//{
-//    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+public class TaskColorConverter : IValueConverter
+{
 
-//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        if (value is BO.GanttDetails task)
-//        {
-//            // Check if the task is completed
-//            if (task.Status == BO.Status.Done)
-//            {
-//                return Brushes.Green; // Task completed, so green color
-//            }
-//            // Check if the task is overdue
-//            else if (task.ForecastDate < DateTime.Today)
-//            {
-//                return Brushes.Red; // Task overdue, so red color
-//            }
-//            else
-//            {
-//                // Task is ongoing, apply logic to determine if it's delayed based on start time and dependencies
-//                // Example: Check if the task start time is later than expected, and if its dependencies are completed
-//                // If delayed, return red, else return blue
-//                if (task.StartDate > task.ScheduledDate || !task.Dependencies!.All(dep => dep.Status == BO.Status.Done))
-//                {
-//                    return Brushes.Red; // Task delayed, so red color
-//                }
-//                else
-//                {
-//                    return Brushes.Blue; // Task ongoing, so blue color
-//                }
-//            }
-//        }
-//        // Default color if value is not a Task or other criteria not met
-//        return Brushes.White;
-//    }
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (value is BO.GanttDetails task)
+        {
 
-//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
+            // Convert the task status to a color
+            switch (task.Status)
+            {
+                case BO.Status.Done:
+                    return Brushes.Green; // Task completed, so green color
+                case BO.Status.Scheduled:
+                    return Brushes.Blue; // Task scheduled, so blue color
+                case BO.Status.OnTrack:
+                    return Brushes.Blue; // Task on track, so blue color
+                case BO.Status.Delayed:
+                    return Brushes.Red; // Task delayed, so red color
+                default:
+                    return Brushes.White; // Default color if status is not recognized
+            }
+        }
+
+        // Default color if value is not a Task or other criteria not met
+        return Brushes.White;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 
 public class BooleanToVisibilityConverter : IValueConverter
 {

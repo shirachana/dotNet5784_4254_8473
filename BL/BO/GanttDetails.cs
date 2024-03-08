@@ -10,5 +10,7 @@ public class GanttDetails
     public int DaysFromProjectStart {  get; set; }
     public int TasksDays { get; set; }
     public int DaysUntilProjectEnd { get; set; }
+    public BO.Status Status { get; set; }
+
 
 }

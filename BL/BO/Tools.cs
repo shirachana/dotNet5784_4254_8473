@@ -77,8 +77,11 @@ public static class Tools
         return delTask.StartDate is null ? Status.Unscheduled :
             delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
             delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
+            delTask.StartDate > delTask.ScheduledDate || delTask.CompleteDate > delTask.ForecastDate ? Status.Delayed :
             Status.Done;
     }
+   
+    
     public static bool CheckUserHealth(User item)
     {
         if (item.Id is null)

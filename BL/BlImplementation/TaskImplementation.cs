@@ -424,7 +424,8 @@ internal class TaskImplementation : BlApi.ITask
                                     }).ToList(),
                                  DaysFromProjectStart = doTask.StartDate != null ? (int)(doTask.StartDate.Value - _bl.GetProjectStartDate())?.TotalDays! : (int)(doTask.ScheduledDate!.Value - _bl.GetProjectStartDate())?.TotalDays!,
                                  TasksDays=doTask.RequiredEffortTime!.Value.Days,
-                                 DaysUntilProjectEnd=1
+                                 DaysUntilProjectEnd=1,
+                                 Status=Tools.GetStatus(doTask)
 
                              }).ToList(); // Ensure to materialize the result by calling ToList()
                                           // Apply the filter function if it's provided
