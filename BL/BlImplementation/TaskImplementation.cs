@@ -405,16 +405,15 @@ internal class TaskImplementation : BlApi.ITask
             throw new BlArgumentOutOfRangeException($"Failed to update  complete date for task with ID={id}. {ex.Message}");
         }
     }
-    public IEnumerable<BO.Task> GetDetailsToGantt(Func<BO.Task, bool>? filter = null)
+    public IEnumerable<BO.GanttDetails> GetDetailsToGantt(Func<BO.GanttDetails, bool>? filter = null)
     {
         var tasks = _dal.Task.ReadAll()
                              .OrderBy(task => task.StartDate ?? task.ScheduledDate)
-                             .Select(doTask => new BO.Task
+                             .Select(doTask => new BO.GanttDetails
                              {
-                                 Id = doTask.Id,
-                                 Alias = doTask.Alias,
+                                 TaskId = doTask.Id,
+                                 TaskName = doTask.Alias,
                                  // Other properties you need
-
                                  // Fetch and map dependencies
                                  Dependencies = _dal.Dependency.ReadAll()
                                     .Where(dependency => dependency.DependentTask == doTask.Id)
@@ -422,19 +421,20 @@ internal class TaskImplementation : BlApi.ITask
                                     {
                                         Id = dependency.DependsOnTask
                                         // Map other properties as needed
-                                    }).ToList()
-                             });
+                                    }).ToList(),
+                                 DaysFromProjectStart = doTask.StartDate != null ? (int)(doTask.StartDate.Value - _bl.GetProjectStartDate())?.TotalDays! : (int)(doTask.ScheduledDate!.Value - _bl.GetProjectStartDate())?.TotalDays!,
+                                 TasksDays=doTask.RequiredEffortTime!.Value.Days,
+                                 DaysUntilProjectEnd=1
 
-        // Apply the filter function if it's provided
+                             }).ToList(); // Ensure to materialize the result by calling ToList()
+                                          // Apply the filter function if it's provided
         if (filter != null)
         {
-            tasks = tasks.Where(filter);
+            tasks = tasks.Where(filter).ToList(); // Materialize the filtered result
         }
 
-        return tasks;
+        return tasks!;
     }
-
-
 
 }
 

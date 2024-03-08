@@ -23,14 +23,14 @@ namespace PL
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
-        public IEnumerable<BO.Task> TaskOfList
+        public IEnumerable<BO.GanttDetails> TaskOfList
         {
-            get { return (IEnumerable<BO.Task>)GetValue(TaskListProperty); }
+            get { return (IEnumerable<BO.GanttDetails>)GetValue(TaskListProperty); }
             set { SetValue(TaskListProperty, value); }
         }
 
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.Task>), typeof(GantWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.GanttDetails>), typeof(GantWindow), new PropertyMetadata(null));
 
         //private BO.Engineer? Engineer;
         // TaskListWindow? _taskListWindow;

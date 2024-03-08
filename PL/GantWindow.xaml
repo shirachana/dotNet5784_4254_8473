@@ -9,10 +9,6 @@
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
         <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
-
-        <local:TaskWidthConverterA x:Key="TaskWidthConverterAKey"/>
-        <local:TaskWidthConverterB x:Key="TaskWidthConverterBKey"/>
-        <local:TaskWidthConverterC x:Key="TaskWidthConverterCKey"/>
         <!-- Define colors for completed and incomplete tasks -->
             <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
@@ -22,8 +18,8 @@
         <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="100"/>
-                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Alias}" Width="100"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding TaskId}" Width="100"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding TaskName}" Width="100"/>
                     <GridViewColumn Header="Dependencies">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -51,21 +47,21 @@
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Grid.Column="0" Text="{Binding StartDate}"/>
                                         <Rectangle Grid.Column="1"
-                               Width="{Binding Converter={StaticResource TaskWidthConverterAKey}}"
+                               Width="{Binding DaysFromProjectStart}"
                                Height="20"
-                               Fill="Yellow" />
-
+                               Fill="White"/>
                                         <!-- Dynamic Color Rectangle -->
                                         <Rectangle Grid.Column="2"
-                               Width="{Binding Converter={StaticResource TaskWidthConverterBKey}}"
+                               Width="{Binding TasksDays}"
                                Height="20"
-                               Fill="{Binding Converter={StaticResource TaskColorConverterKey}}" />
+                                                   Fill="HotPink"/>
+                                        <!--Fill="{Binding Converter={StaticResource TaskColorConverterKey}}"/>-->
 
                                         <!-- White Rectangle 2 -->
                                         <Rectangle Grid.Column="3"
-                               Width="{Binding Converter={StaticResource TaskWidthConverterCKey}}"
+                               Width="{Binding DaysUntilProjectEnd}"
                                Height="20"
-                               Fill="Yellow" />
+                               Fill="White" />
                                         <!--"{Binding Converter={StaticResource TaskWidthConverterKey}}"-->
                                                 
                                         <!--"{Binding Converter={StaticResource TaskColorConverterKey}}" />-->

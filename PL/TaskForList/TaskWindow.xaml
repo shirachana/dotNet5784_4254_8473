@@ -8,23 +8,11 @@
         xmlns:converter="clr-namespace:PL"
         mc:Ignorable="d"
         Title="TaskWindow" Height="800" Width="450"
-       DataContext="{Binding Task, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+       DataContext="{Binding  RelativeSource={RelativeSource  Mode=Self}}">
 
 
     <Window.Resources>
         <converter:IsDependToCheckConverter x:Key="IsCheckConverter"/>
-        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="#FF673AB7"/>        </LinearGradientBrush>
-        <Style x:Key="userTrigger" TargetType="Button">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding isUserValue}" Value="True">
-                    <Setter Property="Content" Value="Add Dependencies" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding isUserValue}" Value="False">
-                    <Setter Property="Content" Value="Dependencies" />
-
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
     </Window.Resources>
     <Grid>
         <Grid>
@@ -68,132 +56,139 @@
             <Label Content="RequiredEffortTime:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="117" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="7"/>
             <Label Content="ScheduledDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="8"/>
             <Label Content="StartDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="9"/>
-            <Label Content="CompleteDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="11" />
-            <Label Content="ForecastDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="12"/>
-            <Label Content="Deliverables:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="13"/>
-            <Label Content="Remarks:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="14"/>
-            <Label Content="Engineer:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="15"/>
-            <Label Content="Copmlexity:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="16"/>
-            <Label Grid.Column="1" Content="Dependencies List" HorizontalAlignment="Center"  Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Row="17" VerticalAlignment="Center"/>
-            <ListView  ItemsSource="{Binding DependTasks,RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" HorizontalAlignment="Left" Grid.Row="15" Width="342" 
-          IsEnabled="{Binding TargetNullValue, Mode=OneTime, Converter={StaticResource ConverIdToContentKey }}" 
-           Grid.RowSpan="5" Margin="110,19,0,23" Grid.ColumnSpan="4" >
-                <ListView.RenderTransform>
-                    <TransformGroup>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </ListView.RenderTransform>
-            </ListView>
-            <TextBox Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" 
+            <Label Content="CompleteDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="10" />
+            <Label Content="ForecastDate:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="11"/>
+            <Label Content="Deliverables:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="12"/>
+            <Label Content="Remarks:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="13"/>
+            <Label Content="Engineer:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="14"/>
+            <Label Content="Copmlexity:" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Column="1" Grid.Row="15"/>
+            <Label Grid.Column="1" Content="Dependencies List" HorizontalAlignment="Center"  Height="30" Width="112" RenderTransformOrigin="2.661,0.532" Grid.Row="16" VerticalAlignment="Center"/>
+            <ListView  ItemsSource="{Binding Task.Dependencies}" HorizontalAlignment="Left" Height="80" Grid.Row="15" Width="200"
+           Grid.RowSpan="5" Margin="110,19,0,23" Grid.ColumnSpan="4" />
+
+
+            <TextBox Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Center" 
                      Grid.Column="2" Grid.Row="1" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" 
-                             Visibility="{Binding Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
+                             Visibility="{Binding Task.Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                              IsHitTestVisible="False"
-                             IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-            <TextBox Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" 
+                             IsEnabled="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
+            
+            <TextBox Text="{Binding Task.Description, Mode=TwoWay}" 
          HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" TextWrapping="Wrap"  
          VerticalAlignment="Center" Height="30" Width="112" 
-         IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+         IsEnabled="{Binding isUserValue}" />
 
-            <TextBox Text="{Binding Alias, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+            <TextBox Text="{Binding Task.Alias, Mode=TwoWay}" 
                      HorizontalAlignment="Center" Grid.Column="2" Grid.Row="3" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
-                              IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+                              IsEnabled="{Binding isUserValue}" />
 
-            <TextBox Text="{Binding Deliverables, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+            <TextBox Text="{Binding Task.Deliverables, Mode=TwoWay}" 
+                     HorizontalAlignment="Center" Grid.Column="2" Grid.Row="12" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
+                              IsEnabled="{Binding isUserValue}" />
+
+            <TextBox Text="{Binding Task.Remarks, Mode=TwoWay}" 
                      HorizontalAlignment="Center" Grid.Column="2" Grid.Row="13" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
-                              IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+                              IsEnabled="{Binding isUserValue}"/>
 
-            <TextBox Text="{Binding Remarks, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
-                     HorizontalAlignment="Center" Grid.Column="2" Grid.Row="14" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
-                              IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
-
-            <TextBox Text="{Binding Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
-                     Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" TextWrapping="Wrap"  VerticalAlignment="Center" Width="112" Height="30"
-                 Visibility="{Binding Engineer.Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
+            <TextBox Text="{Binding Task.Engineer.Id, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+                     Grid.Column="2" HorizontalAlignment="Center" Grid.Row="14" TextWrapping="Wrap"  VerticalAlignment="Center" Width="112" Height="30"
+                 Visibility="{Binding Task.Engineer.Id, Converter={StaticResource ConvertIdToVisibilityKey}}" 
                  IsHitTestVisible="False"
-                 IsEnabled="{Binding Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
-            <TextBox Text="{Binding RequiredEffortTime, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" 
+                 IsEnabled="{Binding Task.Engineer.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
+
+
+            <!--<TextBox Text="{Binding Dependencies, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112" Grid.ColumnSpan="2" Margin="110,0,0,0"/>-->
+            <TextBox Text="{Binding Task.RequiredEffortTime, Mode=TwoWay}" 
                      HorizontalAlignment="Center" Grid.Column="2" Grid.Row="7" TextWrapping="Wrap"  VerticalAlignment="Center" Height="30" Width="112"
-                              IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+                              IsEnabled="{Binding isUserValue}" />
 
-            <ComboBox  Grid.Column="2" HorizontalAlignment="Center" Grid.Row="16" VerticalAlignment="Center" 
-                      Width="112" Height="30" ItemsSource="{Binding Source={StaticResource TasksCollectionExKey}}" SelectedValue="{Binding Copmlexity, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
-                               IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+            <ComboBox  Grid.Column="2" HorizontalAlignment="Center" Grid.Row="15" VerticalAlignment="Center" 
+                      Width="112" Height="30" ItemsSource="{Binding Source={StaticResource TasksCollectionExKey}}" SelectedValue="{Binding Task.Copmlexity, Mode=TwoWay}"
+                      IsEnabled="{Binding isUserValue}" />
 
-            <ComboBox Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="112" Height="34" 
-                      ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" SelectedValue="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true,  ValidatesOnExceptions=true}"
-                    Visibility="{Binding Status, Converter={StaticResource ConvertIdToVisibilityKey}}" 
-                    IsHitTestVisible="False"
-                    IsEnabled="{Binding Status, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"/>
+            <Label Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Width="112" Height="34" 
+                      Content="{Binding Task.Status, Mode=TwoWay}"
+                      IsEnabled="false"/>
+
             <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Center" Height="34" Width="112"
-            SelectedDate="{Binding CreatedAtDate, Mode=TwoWay}"
-                                 IsEnabled="{Binding isUserValue, RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}" />
+                        SelectedDate="{Binding Task.CreatedAtDate, Mode=TwoWay}"
+                        IsEnabled="False" />
 
             <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="8" VerticalAlignment="Center" Height="34" Width="112"
-            SelectedDate="{Binding ScheduledDate, Mode=TwoWay}"                    
-                   Visibility="{Binding ScheduledDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
+                   SelectedDate="{Binding Task.ScheduledDate, Mode=TwoWay}"                    
                    IsHitTestVisible="False"
-                   IsEnabled="{Binding ScheduledDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
+                   IsEnabled="{Binding Task.ScheduledDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
             <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Height="34" Width="112"
-            SelectedDate="{Binding StartDate, Mode=TwoWay}"
-                   Visibility="{Binding StartDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
+                   SelectedDate="{Binding Task.StartDate, Mode=TwoWay}"
                    IsHitTestVisible="False"
-                   IsEnabled="{Binding StartDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
+                   IsEnabled="{Binding Task.StartDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
 
 
-            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Height="34" Width="113"
-            SelectedDate="{Binding CompleteDate, Mode=TwoWay}"
-                   Visibility="{Binding CompleteDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
-                   IsHitTestVisible="False"
-                   IsEnabled="{Binding CompleteDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
+            <DatePicker Grid.Column="2" HorizontalAlignment="Center" Grid.Row="10" VerticalAlignment="Center" Height="34" Width="113"
+                   SelectedDate="{Binding Task.CompleteDate, Mode=TwoWay}"
+                   IsEnabled="{Binding Task.CompleteDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
             <DatePicker 
-             Grid.Column="2" HorizontalAlignment="Center" Grid.Row="12" VerticalAlignment="Center" Height="34" Width="107"
-            SelectedDate="{Binding ForecastDate, Mode=TwoWay}"
-                   Visibility="{Binding ForecastDate, Converter={StaticResource ConvertDateStatusToVisibilityKey}}" 
+             Grid.Column="2" HorizontalAlignment="Center" Grid.Row="11" VerticalAlignment="Center" Height="34" Width="107"
+            SelectedDate="{Binding Task.ForecastDate, Mode=TwoWay}"
                    IsHitTestVisible="False"
-                   IsEnabled="{Binding ForecastDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
+                   IsEnabled="{Binding Task.ForecastDate, Mode=OneTime, Converter={StaticResource ConvertDateToContentKey}}"/>
 
             <Button 
            Grid.Row="18" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
           HorizontalAlignment="Center" VerticalAlignment="Top" Height="30" Width="86"  Padding="5" 
-                IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
+                IsEnabled="{Binding Task.Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}" Click="btnAddUpdateTask_Click" Margin="0,37,0,0" Grid.RowSpan="2" />
+
+
             <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"
                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Padding="5" Grid.Row="18" Grid.Column="2"
                     VerticalAlignment="Top" Height="30" Width="86" Click="DelBtn_Click" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.RowSpan="2" />
-            <Button Grid.Column="2" Content="Add Dependencies"  Grid.Row="6"  VerticalAlignment="Top" Height="39" Width="155" 
-                    HorizontalAlignment="Left" Grid.ColumnSpan="2"  Click="AddDepBtn_Click"  Style="{StaticResource userTrigger}" Background="{StaticResource myLinearGradientBrush}"/>
+
+
+            <Button Grid.Column="2" Content="Add Dependencies"  Grid.Row="6" Padding="5" VerticalAlignment="Top" Height="39" Width="155" 
+                    IsEnabled="{Binding isUserValue}"
+                    HorizontalAlignment="Center" Grid.ColumnSpan="2"  Click="AddDepBtn_Click" />
 
         </Grid>
 
-        <materialDesign:DialogHost DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"  IsOpen="{Binding OpenDialogHost}"  CloseOnClickAway="True" Margin="0,-20,0,20" >
+        <materialDesign:DialogHost DataContext="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:TaskWindow}}}"  IsOpen="{Binding OpenDialogHost}"  CloseOnClickAway="True" Margin="0,10,0,-10" >
             <materialDesign:DialogHost.DialogContent >
-                <Grid  Width="800" Height="400" Background="Black">
-                    <DataGrid ItemsSource="{Binding TasksList}" AutoGenerateColumns="True" >
-                        <DataGrid.Columns>
-                            <DataGridTemplateColumn Header="Add Dependency" Width="*">
-                                <DataGridTemplateColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Grid x:Name="Grid" Tag="{Binding}">
-                                            <Grid.Background>
-                                                <MultiBinding Converter="{StaticResource IsCheckConverter}" >
-                                                    <Binding ElementName="Grid" Path="Tag"/>
-                                                    <Binding Path="Task.Dependencies" RelativeSource="{RelativeSource AncestorType={x:Type Window}}" />
-                                                </MultiBinding>
-                                            </Grid.Background>
-                                            <Label Content="{Binding}" Background="Transparent"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                <Grid  Width="800" Height="400">
+                    <ScrollViewer Grid.Column="0"
+                      PreviewMouseWheel="ScrollViewer_PreviewMouseWheel"
+                      HorizontalScrollBarVisibility="Auto">
+                        <ScrollContentPresenter>
+                            <ScrollContentPresenter.ContentTemplate>
+                                <DataTemplate >
+                                    <ListView x:Name="DataGrid" ItemsSource="{Binding TasksList,RelativeSource={RelativeSource AncestorType=Window}}" >
+                                        <ListView.View>
+                                            <GridView>
+                                                <GridViewColumn>
+                                                    <GridViewColumn.CellTemplate>
+                                                        <DataTemplate>
+                                                            <Label Margin="0,0,-1500,0" x:Name="TextBlock" Tag="{Binding}" Content="{Binding }"  MouseDoubleClick="EditDependency" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1500">
+                                                                <Label.Background>
+                                                                    <MultiBinding Converter="{StaticResource IsCheckConverter}" >
+                                                                        <Binding  ElementName="TextBlock" Path="Tag" />
+                                                                        <Binding Path="Task.Dependencies" RelativeSource="{RelativeSource AncestorType={x:Type Window}}"/>
+                                                                    </MultiBinding>
+                                                                </Label.Background>
+                                                            </Label>
+                                                        </DataTemplate>
+                                                    </GridViewColumn.CellTemplate>
+                                                </GridViewColumn>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                </DataTemplate>
+                            </ScrollContentPresenter.ContentTemplate>
+                        </ScrollContentPresenter>
+                    </ScrollViewer>
                 </Grid>
             </materialDesign:DialogHost.DialogContent>
-            <Button Content="Done" HorizontalAlignment="Left" Margin="354,415,0,0" VerticalAlignment="Top"  Click="CompleteDateBtn_Click"/>
+            <Button Content="Done" HorizontalAlignment="Left"  Grid.Row="9" Grid.Column="2" Margin="383,360,0,0" Padding="5" VerticalAlignment="Top"  Click="CompleteDateBtn_Click" Width="57"/>
 
         </materialDesign:DialogHost>
     </Grid>

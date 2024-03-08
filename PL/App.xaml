@@ -19,9 +19,6 @@
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:TasksCollection x:Key="TasksCollectionKey" />
             <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
-            <local:TaskWidthConverterA x:Key="TaskWidthConverterAKey"/>
-            <local:TaskWidthConverterB x:Key="TaskWidthConverterBKey"/>
-            <local:TaskWidthConverterC x:Key="TaskWidthConverterCKey"/>
             <local:TaskColorConverter x:Key="TaskColorConverterkey"/>
             <BooleanToVisibilityConverter x:Key="ConvertBooleanToVisibility"/>
 

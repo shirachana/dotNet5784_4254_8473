@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace PL.TaskForList
 {
@@ -32,14 +34,6 @@ namespace PL.TaskForList
         public static readonly DependencyProperty DepTaskListProperty =
             DependencyProperty.Register(nameof(TasksList), typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow));
 
-        public ObservableCollection<BO.TaskInList> DependTasks
-        {
-            get { return (ObservableCollection<BO.TaskInList>)GetValue(TasksProperty); }
-            set { SetValue(TasksProperty, value); }
-        }
-        // Assuming your data is in an ObservableCollection<MyItem>
-        public static readonly DependencyProperty TasksProperty =
-            DependencyProperty.Register(nameof(DependTasks), typeof(ObservableCollection<BO.TaskInList>), typeof(TaskWindow));
         public bool isUserValue
         {
             get { return (bool)GetValue(isUserVProperty); }
@@ -54,7 +48,7 @@ namespace PL.TaskForList
         }
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
-        private BO.Engineer? Engineer;
+
         private TaskListWindow? _taskListWindow;
 
         public TaskWindow(TaskListWindow taskListWindow, BO.Engineer? engineerT = null, int taskId = 0)
@@ -64,7 +58,6 @@ namespace PL.TaskForList
             else
             {
                 isUserValue = false;
-                Engineer = engineerT!;
             }
             OpenDialogHost = false;
             _taskListWindow = taskListWindow;
@@ -93,14 +86,12 @@ namespace PL.TaskForList
                 }
 
             }
-            DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
-
             if (Task.Engineer == null)
                 Task.Engineer = new();
             DataContext = this;
             InitializeComponent();
         }
-        
+
         public TaskWindow(TaskListWindow taskListWindow, string? engId)
         {
             try
@@ -120,7 +111,6 @@ namespace PL.TaskForList
                         if (Task.Dependencies is null)
                             Task.Dependencies = new();
 
-                        DependTasks = new ObservableCollection<TaskInList>(Task.Dependencies!);
                     }
                     else
                     {
@@ -142,7 +132,7 @@ namespace PL.TaskForList
 
             if (Task == null || Task.Engineer == null)
             {
-                Task = Task ?? new(); 
+                Task = Task ?? new();
                 Task.Engineer = new();
             }
         }
@@ -157,7 +147,7 @@ namespace PL.TaskForList
                 if ((sender as Button)!.Content.ToString() == "Add")
                 {
                     s_bl.Task.Create(Task);
-                    
+
                     IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
                     MessageBox.Show("Task added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     _taskListWindow!.TaskList = updatedTaskList;
@@ -166,18 +156,18 @@ namespace PL.TaskForList
                 {
                     if (isUserValue == true)
                     {
-                    s_bl.Task.Update(Task);
-                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
-                    MessageBox.Show("Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow!.TaskList = updatedTaskList;
+                        s_bl.Task.Update(Task);
+                        IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                        MessageBox.Show("Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        _taskListWindow!.TaskList = updatedTaskList;
                     }
-                    else if(isUserValue == false)
+                    else if (isUserValue == false)
                     {
                         s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
-                        s_bl.Engineer.UpdateEngineerToTask(Engineer!.Id, Task.Id);
-                      //IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
-                       MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                      //  _taskListWindow!.TaskList = updatedTaskList;
+                        s_bl.Engineer.UpdateEngineerToTask(Task.Engineer!.Id!, Task.Id);
+                        //IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                        MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        //  _taskListWindow!.TaskList = updatedTaskList;
                     }
                 }
                 this.Close();
@@ -209,21 +199,6 @@ namespace PL.TaskForList
             }
         }
 
-        private void CheckBox_Click(object sender, RoutedEventArgs e)
-        {
-            CheckBox? checkBox = sender as CheckBox;
-            if (checkBox!.IsChecked == true)
-            {
-                Task.Dependencies!.Add((checkBox.Tag as TaskInList)!);
-                DependTasks.Add((checkBox.Tag as TaskInList)!);
-            }
-            else
-            {
-                Task.Dependencies!.Remove((checkBox.Tag as TaskInList)!);
-                DependTasks.Remove((checkBox.Tag as TaskInList)!);
-            }
-        }
-
         private void AddDepBtn_Click(object sender, RoutedEventArgs e)
         {
             TasksList = s_bl.Task.ReadAll();
@@ -248,8 +223,52 @@ namespace PL.TaskForList
             }
         }
 
+        private void EditDependency(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+
+            try
+            {
+                Label label = ((Label)sender);
+
+                if (label.Content is null)
+                    return;
+
+                if (label.Background == Brushes.Green)
+                {
+                    Task.Dependencies!.RemoveAll(x => x.Id == ((TaskInList)label.Content).Id);
+                    label.Background = Brushes.White;
+                }
+                else
+                {
+                    Task.Dependencies!.Add((TaskInList)label.Content);
+                    label.Background = Brushes.Green;
+                }
+
+                BO.Task tmp = Task;
+                Task = new();
+                Task = tmp;
+            }
+            catch { }
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            e.Handled = true;
+            ScrollViewer scrollViewer = (ScrollViewer)sender;
+            if (e.Delta > 0)
+            {
+                // Scroll up
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset - 20);
+            }
+            else
+            {
+                // Scroll down
+                scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + 20);
+            }
+
+            // Mark the event as handled to prevent the default scrolling behavior
+            e.Handled = true;
+        }
     }
-
-
-
 }

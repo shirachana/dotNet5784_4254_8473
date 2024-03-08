@@ -22,7 +22,7 @@ public interface ITask
     public EngineerInTask? CalculateEngineerForTask(int engineerId);
     public IEnumerable<BO.TaskInList> TasksForEngineer(BO.Engineer engineer);//not sure
     public IEnumerable<BO.TaskInList> GetDependencies(DO.Task task);
-    public IEnumerable<BO.Task> GetDetailsToGantt(Func<BO.Task, bool>? filter = null);
+    public IEnumerable<BO.GanttDetails> GetDetailsToGantt(Func<BO.GanttDetails, bool>? filter = null);
     public void UpdateCompleteDate(int id, DateTime completeDate);
 
 }
