@@ -8,7 +8,7 @@
         Title="GantWindow" Height="450" Width="1800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
+        <!--<local:TaskColorConverter x:Key="TaskColorConverterKey"/>-->
         <!-- Define colors for completed and incomplete tasks -->
             <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>

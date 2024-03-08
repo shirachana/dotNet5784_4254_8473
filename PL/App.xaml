@@ -19,7 +19,7 @@
             <local:EngineersCollection x:Key="EngineersCollectionKey" />
             <local:TasksCollection x:Key="TasksCollectionKey" />
             <local:TasksCollectionEx x:Key="TasksCollectionExKey"/>
-            <local:TaskColorConverter x:Key="TaskColorConverterkey"/>
+            <!--<local:TaskColorConverter x:Key="TaskColorConverterkey"/>-->
             <BooleanToVisibilityConverter x:Key="ConvertBooleanToVisibility"/>
 
         </ResourceDictionary>
