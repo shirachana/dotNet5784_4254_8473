@@ -49,7 +49,7 @@ public class ConvertIdToVisibilityDel : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value == null)
-            return false; // Return false to hide the button if value is null or not an integer
+            return false; 
 
         int id = (int)value;
         return id != 0;

@@ -21,7 +21,6 @@ namespace PL.TaskForList
             set { SetValue(OpenDialogHostProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for OpenDialogHost.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpenDialogHostProperty =
             DependencyProperty.Register(nameof(OpenDialogHost), typeof(bool), typeof(TaskWindow));
 
@@ -30,7 +29,6 @@ namespace PL.TaskForList
             get { return (IEnumerable<BO.TaskInList>)GetValue(DepTaskListProperty); }
             set { SetValue(DepTaskListProperty, value); }
         }
-        // Assuming your data is in an ObservableCollection<MyItem>
         public static readonly DependencyProperty DepTaskListProperty =
             DependencyProperty.Register(nameof(TasksList), typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow));
 
@@ -63,7 +61,6 @@ namespace PL.TaskForList
             _taskListWindow = taskListWindow;
             if (taskId == 0)
             {
-                // Create a new object with default values
                 Task = new BO.Task();
                 Task.Dependencies = new();
             }
@@ -71,7 +68,6 @@ namespace PL.TaskForList
             {
                 try
                 {
-                    // Retrieve the existing engineer object from the BL based on the engineerId
                     Task = s_bl.Task.Read(taskId) ?? new();
                     if (Task.Dependencies is null)
                         Task.Dependencies = new();
@@ -79,9 +75,7 @@ namespace PL.TaskForList
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions, e.g., display an error message
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // Close the window or handle the error as appropriate
                     Close();
                 }
 

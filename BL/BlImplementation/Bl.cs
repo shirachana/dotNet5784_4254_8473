@@ -30,44 +30,15 @@ internal class Bl : IBl
     }
     public void SetProjectEndDate(DateTime? endDate)
     {
-        //dal.setEnd(endDate);
         dal.EndDate = endDate;
     }
     public DateTime? GetProjectEndDate()
     {
-        //return dal.getEnd();
         return dal.EndDate;
     }
 
 
-    //public DateTime? StartDate
-    //{
-    //    set
-    //    {
-    //        if (value is null)
-    //            value = null;
 
-    //        //if (dal.Task.ReadAll(x => x.StartDate < value || x.StartDate is null).Any())
-    //        //    throw new ArgumentException();
-
-    //        dal. . value;
-    //    }
-    //    get => dal.StartDate;
-    //}
-    //public DateTime? EndDate
-    //{
-    //    set
-    //    {
-    //        if (value is null)
-    //            value = null;
-
-    //        if (dal.Task.ReadAll(x => x.DeadlineDate > value || x.DeadlineDate is not null).Any())
-    //            throw new BlDoesNotExistException("there is no daedline or the deadline is bigger than value");
-
-    //        dal.EndDate = value;
-    //    }
-    //    get => dal.EndDate;
-    //}
     private static DateTime s_Clock = DateTime.Now;
 
     public DateTime Clock
