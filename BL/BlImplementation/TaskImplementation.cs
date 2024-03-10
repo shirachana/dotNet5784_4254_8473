@@ -409,17 +409,26 @@ internal class TaskImplementation : BlApi.ITask
     {
         return (from task in ReadAll()
                 let t = _dal.Task.Read(task.Id)
-                let start = (int)(t.ScheduledDate - _bl.GetProjectStartDate()).Value.TotalHours
+                let start = StartTask(t)
                 select new BO.GanttDetails()
                 {
                     ID = task.Id,
                     Name = task.Alias,
-                    TasksDays = (int)t.RequiredEffortTime.Value.TotalHours * 2,
+                    TasksDays = (int)t.RequiredEffortTime!.Value.TotalHours * 2,
                     StartOffset = start * 2,//TODO
                     EndOffset = (int)(start + t.RequiredEffortTime.Value.TotalHours) * 2,
                     Dependencies = StringDependencies(task.Id),
                     Status = task.Status,
                 }).ToList().OrderBy(x => x.StartOffset);
+    }
+
+    private int StartTask(DO.Task task)
+    {
+        if (task.StartDate is null)
+            return (int)(task.ScheduledDate - _bl.GetProjectStartDate())!.Value.TotalHours;
+
+        return task.ScheduledDate > task.StartDate ? (int)(task.ScheduledDate - _bl.GetProjectStartDate())!.Value.TotalHours :
+            (int)(task.StartDate - _bl.GetProjectStartDate())!.Value.TotalHours;
     }
 
     private string StringDependencies(int id)
