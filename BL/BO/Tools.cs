@@ -2,44 +2,37 @@
 using BlImplementation;
 using System.Reflection;
 using System.Text;
+using System.Collections;
 
 namespace BO;
 
 public static class Tools
 {
-    public static string ToStringProperty<T>(this T obj)
+    private static readonly IBl _bl = Factory.Get();
+    private static readonly DalApi.IDal dal = DalApi.Factory.Get;
+
+    public static string ToStringProperty<Item>(this Item t, string str = "")
     {
-        if (obj == null)
-            return "null";
+        IEnumerable<PropertyInfo> propertyInfos = t!.GetType().GetProperties();
 
-        Type type = obj.GetType();
-        PropertyInfo[] properties = type.GetProperties();
-
-        StringBuilder sb = new StringBuilder();
-        sb.AppendLine($"Type: {type.Name}");
-
-        foreach (PropertyInfo property in properties)
+        foreach (PropertyInfo item in propertyInfos)
         {
-            if (property.PropertyType.IsGenericType &&
-                property.PropertyType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+            object value = item.GetValue(t, null)!;
+
+            if (value is not null)
             {
-                IEnumerable<object>? enumerable = property.GetValue(obj) as IEnumerable<object>;
-                if (enumerable != null)
+                if (value is IEnumerable objects and not string)
                 {
-                    sb.AppendLine($"{property.Name}:");
-                    foreach (var item in enumerable)
-                    {
-                        sb.AppendLine($" {GetValueString(item)}");
-                    }
+                    str += "\n" + "items " + ":\n";
+                    foreach (var obj in objects)
+                        return obj.ToStringProperty(str);
                 }
-            }
-            else
-            {
-                sb.AppendLine($"{property.Name}: {GetValueString(property.GetValue(obj)!)}");
+                else
+                    str += "\n" + item.Name + ": " + value;
+
             }
         }
-
-        return sb.ToString();
+        return str;
     }
     private static string GetValueString(object value)
     {
@@ -69,19 +62,26 @@ public static class Tools
 
     public static BO.Status GetStatus(DO.Task delTask)
     {
-        if (delTask.CompleteDate != null /*&& delTask.CompleteDate < DateTime.Today */)
-        {
-            return Status.Done;
-        }
+        if (delTask.StartDate is not null && delTask.ForecastDate < _bl.Clock)
+            return Status.Delayed;
 
-        return delTask.StartDate is null ? Status.Unscheduled :
-            delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
-            delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
-            delTask.StartDate > delTask.ScheduledDate || delTask.CompleteDate > delTask.ForecastDate ? Status.Delayed :
-            Status.Done;
+        return delTask.ScheduledDate is null ? Status.Unscheduled :
+            delTask.StartDate is null ? Status.Scheduled :
+            delTask.CompleteDate is null ? Status.OnTrack : Status.Done;
+
+        //if (delTask.CompleteDate != null /*&& delTask.CompleteDate < DateTime.Today */)
+        //{
+        //    return Status.Done;
+        //}
+
+        //return delTask.StartDate is null ? Status.Unscheduled :
+        //    delTask.StartDate is not null && delTask.StartDate > DateTime.Today ? Status.Scheduled :
+        //    delTask.StartDate < DateTime.Today && delTask.StartDate + delTask.RequiredEffortTime > DateTime.Today ? Status.OnTrack :
+        //    delTask.StartDate > delTask.ScheduledDate || delTask.CompleteDate > delTask.ForecastDate ? Status.Delayed :
+        //    Status.Done;
     }
-   
-    
+
+
     public static bool CheckUserHealth(User item)
     {
         if (item.Id is null)
@@ -153,12 +153,25 @@ public static class Tools
         return true;
     }
 
-    public static void CreatTheSchedule(DateTime startDateP)// ???????????????????????????????????????????
+    public static void CreatTheSchedule(DateTime startDateP)// ????????????????????????????????????????????
     {
         if (startDateP >= DateTime.Today)
             Factory.Get().SetProjectStartDate(startDateP);
         else
             throw new BlCantScheduleTheProject("the time pass already");
+    }
+
+    public static int GetOfset(DO.Task task)
+    {
+        IEnumerable<DO.Dependency> dependencies = dal.Dependency.ReadAll(x => x.DependentTask == task.Id);
+        if (dependencies.Count() == 0)
+            return (task.StartDate != null ? (int)(task.StartDate - _bl.GetProjectStartDate())?.TotalDays! :
+                                            (int)(task.ScheduledDate - _bl.GetProjectStartDate())?.TotalDays!)*100;
+
+        int x=  ((int)((from dep in dependencies
+                let depTask = dal.Task.Read(dep.DependsOnTask)
+                select depTask.ScheduledDate + depTask.RequiredEffortTime).Max() - _bl.GetProjectStartDate())?.TotalDays!)*100;
+        return x;
     }
 }
 

@@ -120,27 +120,20 @@ public class TaskColorConverter : IValueConverter
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is BO.GanttDetails task)
+        if (value is BO.Status status)
         {
 
-            // Convert the task status to a color
-            switch (task.Status)
-            {
-                case BO.Status.Done:
-                    return Brushes.Green; // Task completed, so green color
-                case BO.Status.Scheduled:
-                    return Brushes.Blue; // Task scheduled, so blue color
-                case BO.Status.OnTrack:
-                    return Brushes.Blue; // Task on track, so blue color
-                case BO.Status.Delayed:
-                    return Brushes.Red; // Task delayed, so red color
-                default:
-                    return Brushes.White; // Default color if status is not recognized
-            }
+           if(BO.Status.Done==status)
+                return Brushes.Green;
+           if(BO.Status.Scheduled == status)
+                return Brushes.Blue;
+            if (BO.Status.OnTrack == status)
+                return Brushes.Blue;
+            if (BO.Status.Delayed == status)
+                return Brushes.Red;
+            return Brushes.White;
         }
-
-        // Default color if value is not a Task or other criteria not met
-        return Brushes.White;
+        else return Brushes.White;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

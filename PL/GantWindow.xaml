@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="GantWindow" Height="450" Width="1800"
+        Title="GantWindow" Height="450" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <!--<local:TaskColorConverter x:Key="TaskColorConverterKey"/>-->
+        <local:TaskColorConverter x:Key="TaskColorConverterKey"/>
         <!-- Define colors for completed and incomplete tasks -->
-            <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
+        <SolidColorBrush x:Key="CompletedTaskColor" Color="Green"/>
         <SolidColorBrush x:Key="IncompleteTaskColor" Color="Blue"/>
         <SolidColorBrush x:Key="DelayedTaskColor" Color="Red"/>
     </Window.Resources>
@@ -18,55 +18,26 @@
         <ListView ItemsSource="{Binding TaskOfList}" HorizontalContentAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding TaskId}" Width="100"/>
-                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding TaskName}" Width="100"/>
-                    <GridViewColumn Header="Dependencies">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <ItemsControl ItemsSource="{Binding Dependencies}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Id}"/>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Gantt Chart">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="White" BorderThickness="1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding StartDate}"/>
-                                        <Rectangle Grid.Column="1"
-                               Width="{Binding DaysFromProjectStart}"
-                               Height="20"
-                               Fill="White"/>
-                                        <!-- Dynamic Color Rectangle -->
-                                        <Rectangle Grid.Column="2"
-                               Width="{Binding TasksDays}"
-                               Height="20"
-                                        Fill="{Binding Status}"/>
+                    <GridViewColumn Header="ID" DisplayMemberBinding="{Binding ID}" Width="100"/>
+                    <GridViewColumn Header="Alias" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                    <GridViewColumn Header="Dependencies" DisplayMemberBinding="{Binding Dependencies}"/>
 
-                                        <!-- White Rectangle 2 -->
-                                        <Rectangle Grid.Column="3"
-                               Width="{Binding DaysUntilProjectEnd}"
-                               Height="20"
-                               Fill="White" />
-                                        <!--"{Binding Converter={StaticResource TaskWidthConverterKey}}"-->
-                                                
-                                        <!--"{Binding Converter={StaticResource TaskColorConverterKey}}" />-->
-                                        <!-- You may add more details as needed -->
-                                    </Grid>
-                                </Border>
+                    <GridViewColumn Header="Gantt Chart" Width="850">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate >
+                                <StackPanel Orientation="Horizontal" Width="850">
+                                    <Rectangle
+                                               IsEnabled="False"
+                                               Width="{Binding StartOffset}"
+                                               Height="20"
+                                               Fill="White"/>
+                                    <!-- Dynamic Color Rectangle -->
+                                    <Rectangle
+                                               Width="{Binding TasksDays}"
+                                               Height="20"
+                                               Fill="{Binding Status, Converter={StaticResource TaskColorConverterKey}}"/>
+                                </StackPanel>
+
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
