@@ -32,54 +32,12 @@ namespace PL
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskOfList", typeof(IEnumerable<BO.GanttDetails>), typeof(GantWindow), new PropertyMetadata(null));
 
-        //private BO.Engineer? Engineer;
-        // TaskListWindow? _taskListWindow;
-
+       
         public GantWindow()
         {
             InitializeComponent();
-            TaskOfList = s_bl?.Task.GetDetailsToGantt();
+            TaskOfList = s_bl?.Task.GetDetailsToGantt()!;
         }
-        // Calculate Length of Border
-        //public double CalculateBorderLength(BO.Task task)
-        //{
-        //    // Calculate the start date of the task
-        //    DateTime? startDate = task.StartDate;
-
-        //    // Determine the required effort time of the task
-        //    TimeSpan? requiredEffortTime = task.RequiredEffortTime;
-
-        //    // Consider the start dates and required effort times of any dependent tasks
-        //    foreach (BO.Task dependentTask in task.Dependencies!)
-        //    {
-        //        // Update the start date if the dependent task starts later than the current start date
-        //        if (dependentTask.StartDate > startDate)
-        //        {
-        //            startDate = dependentTask.StartDate;
-        //        }
-
-        //        // Update the required effort time if the dependent task's effort time is longer
-        //        if (dependentTask.RequiredEffortTime > requiredEffortTime)
-        //        {
-        //            requiredEffortTime = dependentTask.RequiredEffortTime;
-        //        }
-        //    }
-
-        //    // Calculate the total length of the border based on start date and required effort time
-        //    // You can use any appropriate formula here based on your requirements
-        //    double totalLength = /* Your calculation logic here */;
-
-        //    return totalLength;
-        //}
-
-        //// Determine Color of Border using TaskColorConverterKey
-        //public SolidColorBrush DetermineBorderColor(Task task)
-        //{
-        //    // Use the TaskColorConverterKey to determine the color of the border
-        //    SolidColorBrush borderColor = TaskColorConverterKey.Convert(task, typeof(SolidColorBrush), null, CultureInfo.CurrentCulture) as SolidColorBrush;
-
-        //    return borderColor;
-        //}
 
     }
 }

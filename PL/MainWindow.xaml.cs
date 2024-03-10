@@ -71,18 +71,17 @@ public partial class MainWindow : Window
 
         s_bl.AutoScedule();
         MessageBox.Show("The schedule has been successfully updated!", "Success", MessageBoxButton.OK);
-        this.Close();
     }
 
     private void btnGant_Click(object sender, RoutedEventArgs e)
     {
-       // if (Tools.CheckStatusProject() == StatusProject.Execution)
-       // {
-         new GantWindow().Show();
-       // }
-       // else
-      //  {
-       //     MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-       // }
+        if (s_bl.GetProjectStartDate()==null)
+        {
+            MessageBox.Show("There is no schedule for the project.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+        else
+        {
+            new GantWindow().Show();
+        }
     }
 }

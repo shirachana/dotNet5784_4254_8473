@@ -47,8 +47,10 @@ namespace PL.User
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick!;
             _timer.Start();
-            DataContext = this;
             CodeUser = new SecureString();
+            _password = string.Empty;
+            _nameUser = string.Empty;
+            PropertyChanged += (sender, e) => { };
         }
 
         private void Timer_Tick(object sender, EventArgs e)

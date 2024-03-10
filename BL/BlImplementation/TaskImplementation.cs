@@ -201,9 +201,6 @@ internal class TaskImplementation : BlApi.ITask
                     CreatedAtDate = item.CreatedAtDate,
                     IsMilestone = false,
                     RequiredEffortTime = item.RequiredEffortTime,
-                    //ScheduledDate = item.ScheduledDate,// יש פונקציה אחרת שעושה את העדכון
-                    //DeadlineDate = item.DeadlineDate > item.ForecastDate ? item.DeadlineDate : throw new Exception(),
-                    //CompleteDate = item.CompleteDate,// יש לבדוק אם זה שייך למסך של מהנדס
                     Deliverables = item.Deliverables,
                     Remarks = item.Remarks,
                     Copmlexity = (DO.EngineerExperience)item.Copmlexity,
@@ -386,17 +383,13 @@ internal class TaskImplementation : BlApi.ITask
     {
         try
         {
-            // Check if the task with the given ID exists
             Task task = Read(id)!;
-            if (/* completeDate > task.ForecastDate &&*/ task.StartDate != null)
+            if ( task.StartDate != null)
             {
 
                 DO.Task dtask = _dal.Task.Read(id)!;
-                //if (_dal.EndDate >= completeDate)
-                //{
+    
                 _dal.Task.Update(dtask with { CompleteDate = completeDate });
-                // }
-                //else { throw new BlArgumentOutOfRangeException($"This complete Date is after the EndDate of the project."); }
             }
             else { throw new BlArgumentOutOfRangeException($"This complete Date is before the forcastDay of the project or there is no Start Date to the task."); }
         }
@@ -409,13 +402,13 @@ internal class TaskImplementation : BlApi.ITask
     {
         return (from task in ReadAll()
                 let t = _dal.Task.Read(task.Id)
-                let start = (int)(t.ScheduledDate - _bl.GetProjectStartDate()).Value.TotalHours
+                let start = (int)(t.ScheduledDate - _bl.GetProjectStartDate())!.Value.TotalHours
                 select new BO.GanttDetails()
                 {
                     ID = task.Id,
                     Name = task.Alias,
-                    TasksDays = (int)t.RequiredEffortTime.Value.TotalHours * 2,
-                    StartOffset = start * 2,//TODO
+                    TasksDays = (int)t.RequiredEffortTime!.Value.TotalHours * 2,
+                    StartOffset = start * 2,
                     EndOffset = (int)(start + t.RequiredEffortTime.Value.TotalHours) * 2,
                     Dependencies = StringDependencies(task.Id),
                     Status = task.Status,

@@ -8,13 +8,6 @@
     <IsAdmin>true</IsAdmin>
   </User>
   <User>
-    <Name>Shira</Name>
-    <Id>4254</Id>
-    <UserName>sh222</UserName>
-    <Password>Shira222</Password>
-    <IsAdmin>true</IsAdmin>
-  </User>
-  <User>
     <Name>Adina</Name>
     <Id>70715073</Id>
     <UserName />
