@@ -46,7 +46,7 @@
         <Button Grid.Row="6" Grid.Column="1" Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"  Background="{StaticResource myLinearGradientBrush}"
                HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Width="86"  Padding="5"   Click="btnAddUpdate_Click" Style="{StaticResource myButtonStyle}"/>
         <Button Content="Delete" Visibility="{Binding Id, Converter={StaticResource ConverIdToVisibilityDelKey}}" IsHitTestVisible="true"  Background="{StaticResource myLinearGradientBrush}"
-                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Grid.Row="6" Grid.Column="2" Width="86" Click="DelBtn_Click"  Style="{StaticResource myButtonStyle}" Margin="1,8,0,8" />
+                 IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToVisibilityDelKey}}"  Grid.Row="6" Grid.Column="2" Width="86" Height="30" Click="DelBtn_Click"  Style="{StaticResource myButtonStyle}" />
 
 
 

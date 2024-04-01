@@ -43,14 +43,11 @@ namespace PL.Engineer
             {
                 try
                 {
-                    // Retrieve the existing engineer object from the BL based on the engineerId
                     Engineer = s_bl.Engineer.Read(engineerId)!;
                 }
                 catch (Exception ex)
                 {
-                    // Handle exceptions, e.g., display an error message
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    // Close the window or handle the error as appropriate
                     Close();
                 }
 

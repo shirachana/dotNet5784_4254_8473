@@ -32,19 +32,19 @@
                 <ColumnDefinition Width= "*"/>
             </Grid.ColumnDefinitions>
             <!--ToSelect-->
-            <Label Content="Select:" HorizontalAlignment="Left" Margin="60,13,0,0" VerticalAlignment="Top" Grid.Column="0" Style="{StaticResource myLabelStyle}"/>
+            <Label Content="Select:" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0" Style="{StaticResource myLabelStyle}"/>
             <!--None-->
             <ComboBox ItemsSource="{Binding Source={StaticResource EngineersCollectionKey}}" Grid.Column="1"  
                       HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectedValue="{Binding experience, Mode=TwoWay}" SelectionChanged="cbExperienceSelector_SelectionChanged"/>
         </Grid>
-        <ListView Margin="5,5,5,5" Grid.Row="1" ItemsSource="{Binding EngineerList}" Grid.ColumnSpan="2" MouseDoubleClick="UpdateBtn_Click" >
+        <ListView  Grid.Column="0" Grid.Row="1" ItemsSource="{Binding EngineerList}" Grid.ColumnSpan="2" MouseDoubleClick="UpdateBtn_Click" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="1" HorizontalAlignment="Left" Height="50" Width="100" Click="AddBtn_Click" Margin="350,480,0,0" VerticalAlignment="Top" Style="{StaticResource myButtonStyle}"  Background="{StaticResource myLinearGradientBrush}"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Left" Height="50" Width="100" Click="AddBtn_Click" Grid.Column="1"  VerticalAlignment="Top" Style="{StaticResource myButtonStyle}"  Background="{StaticResource myLinearGradientBrush}"/>
 
     </Grid>
 </Window>

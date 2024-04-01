@@ -75,7 +75,6 @@ namespace PL.Engineer
             BO.Engineer? EngineerList = (sender as ListView)?.SelectedItem as BO.Engineer;
             if (EngineerList != null)
             {
-                // Create a new window with the selected item in update mode
                 EngineerWindow window = new EngineerWindow(CollectionChange, EngineerList.Id);
                 window.ShowDialog();
             }
