@@ -46,10 +46,6 @@ namespace PL
             int idE = int.Parse(idTextBox.Text);
             try
             {
-                //if (userNameTextBox == null)
-                //{
-                //    MessageBox.Show(" not exist!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                //}
                 BO.Engineer eng = s_bl.Engineer.Read(idE)!;
                 string id = (idTextBox.Text);
                 // Check if the engineer exists in the list of employees

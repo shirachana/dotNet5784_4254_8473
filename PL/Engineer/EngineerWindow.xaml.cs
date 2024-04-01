@@ -21,6 +21,8 @@ namespace PL.Engineer
     public partial class EngineerWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        Action<int, bool?> _collectionChange;
         public BO.Engineer Engineer
         {
             get { return (BO.Engineer)GetValue(EngineerProperty); }
@@ -28,17 +30,15 @@ namespace PL.Engineer
         }
 
         public static readonly DependencyProperty EngineerProperty =
-            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow), new PropertyMetadata(null));
-        private EngineerListWindow _engineerListWindow;
-        public EngineerWindow(EngineerListWindow engineerListWindow, int engineerId = 0)
+            DependencyProperty.Register("Engineer", typeof(BO.Engineer), typeof(EngineerWindow));
+
+        public EngineerWindow(Action<int, bool?> collectionChange, int engineerId = 0)
         {
+            _collectionChange = collectionChange;
             InitializeComponent();
-            _engineerListWindow = engineerListWindow;
+
             if (engineerId == 0)
-            {
-                // Create a new object with default values
                 Engineer = new BO.Engineer();
-            }
             else
             {
                 try
@@ -57,23 +57,22 @@ namespace PL.Engineer
             }
 
         }
+
         private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if ((sender as Button)!.Content.ToString()=="Add")
+                if ((sender as Button)!.Content.ToString() == "Add")
                 {
                     s_bl.Engineer.Create(Engineer);
-                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
                     MessageBox.Show("Engineer added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _engineerListWindow.EngineerList = updatedEngineerList;
+                    _collectionChange(Engineer.Id, true);
                 }
-                else 
+                else
                 {
                     s_bl.Engineer.Update(Engineer);
-                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
                     MessageBox.Show("Engineer updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _engineerListWindow.EngineerList = updatedEngineerList;
+                    _collectionChange(Engineer.Id, false);
                 }
                 this.Close();
             }
@@ -91,9 +90,9 @@ namespace PL.Engineer
                 if (result == MessageBoxResult.Yes && (sender as Button)!.Content.ToString() == "Delete")
                 {
                     s_bl.Engineer.Delete(Engineer.Id);
-                    IEnumerable<BO.Engineer> updatedEngineerList = s_bl?.Engineer.ReadAll()!;
                     MessageBox.Show("Engineer delete successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _engineerListWindow.EngineerList = updatedEngineerList;
+
+                    _collectionChange(Engineer.Id, null);
                 }
                 this.Close();
             }

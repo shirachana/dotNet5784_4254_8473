@@ -71,6 +71,7 @@ public partial class MainWindow : Window
 
         s_bl.AutoScedule();
         MessageBox.Show("The schedule has been successfully updated!", "Success", MessageBoxButton.OK);
+        this.Close();
     }
 
     private void btnGant_Click(object sender, RoutedEventArgs e)

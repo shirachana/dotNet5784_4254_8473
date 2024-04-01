@@ -47,22 +47,20 @@ namespace PL.User
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick!;
             _timer.Start();
+            DataContext = this;
             CodeUser = new SecureString();
-            _password = string.Empty;
-            _nameUser = string.Empty;
-            PropertyChanged += (sender, e) => { };
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-                CurrentTime = CurrentTime.AddSeconds(1);
+            CurrentTime = CurrentTime.AddSeconds(1);
         }
 
-        private BO.User _user;
+        private BO.User? _user;
 
         public BO.User User
         {
-            get { return _user; }
+            get { return _user!; }
             set
             {
                 if (value is BO.User)
@@ -74,13 +72,13 @@ namespace PL.User
 
         public static readonly DependencyProperty UserProperty =
             DependencyProperty.Register("User", typeof(IEnumerable<BO.User>), typeof(EntrancnceWindow));
-       
+
         private String _nameUser;
         private SecureString _codeUser = new SecureString();
 
         public String NameUser
         {
-            get { return _nameUser; }
+            get { return _nameUser!; }
             set
             {
                 if (_nameUser != value)
@@ -98,16 +96,16 @@ namespace PL.User
             {
                 if (_codeUser != value)
                 {
-                    _codeUser = value;
+                    _codeUser = value!;
                     OnPropertyChanged(nameof(CodeUser));
                 }
             }
         }
-        private string _password;
+        private string? _password;
 
         public string Password
         {
-            get => _password;
+            get => _password!;
             set
             {
                 _password = value;
@@ -140,8 +138,8 @@ namespace PL.User
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-           if(sender is PasswordBox passwordBox)
-                Password=passwordBox.Password;
+            if (sender is PasswordBox passwordBox)
+                Password = passwordBox.Password;
         }
         private void BtnLogIn_Click(object sender, RoutedEventArgs e)
         {

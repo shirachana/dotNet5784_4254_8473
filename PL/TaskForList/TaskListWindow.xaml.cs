@@ -1,18 +1,8 @@
-﻿using PL.Engineer;
-using PL.TaskForList;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using BO;
 
 namespace PL.TaskForList
 {
@@ -21,6 +11,12 @@ namespace PL.TaskForList
     /// </summary>
     public partial class TaskListWindow : Window
     {
+        private BO.Engineer? eng;
+
+        private readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
+        public BO.Status TaskStatus { get; set; } = BO.Status.None;
+
         public bool isUser
         {
             get { return (bool)GetValue(isUserProperty); }
@@ -28,52 +24,90 @@ namespace PL.TaskForList
         }
 
         public static readonly DependencyProperty isUserProperty =
-            DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow), new PropertyMetadata(null));
-        public TaskListWindow()
+            DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow));
+
+
+        public ObservableCollection<BO.TaskInList> TaskList
         {
-            InitializeComponent();
-            TaskList = s_bl?.Task.ReadAll()!;
-            isUser= true;
-        }
-        private BO.Engineer? eng;
-        public TaskListWindow(BO.Engineer? engineer = null)
-        {
-            eng= engineer ?? new BO.Engineer();
-            InitializeComponent();
-            TaskList = s_bl?.Task.TasksForEngineer(engineer!)!;
-            isUser = false;
-        }
-        static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public IEnumerable<BO.TaskInList> TaskList
-        {
-            get { return (IEnumerable<BO.TaskInList>)GetValue(TaskListProperty); }
+            get { return (ObservableCollection<BO.TaskInList>)GetValue(TaskListProperty); }
             set { SetValue(TaskListProperty, value); }
         }
 
         public static readonly DependencyProperty TaskListProperty =
-            DependencyProperty.Register("TaskList", typeof(IEnumerable<BO.TaskInList>), typeof(TaskListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow));
 
-        public BO.Status TaskStatus { get; set; } = BO.Status.None;
+        public TaskListWindow(int id = 0)
+        {
+            if (id != 0)
+                eng = s_bl.Engineer.Read(id);
+            InitializeComponent();
+            TaskList = new(s_bl?.Task.ReadAll()!);
+            isUser = true;
+        }
+
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TaskList = (TaskStatus == BO.Status.None) ?
-                s_bl?.Task.ReadAll()! : s_bl?.Task.ReadAll(item => item.Status == TaskStatus)!;
-
+            if (TaskStatus == BO.Status.None)
+                TaskList = new(s_bl?.Task.ReadAll()!);
+            else
+                TaskList = new(s_bl?.Task.ReadAll(item => item.Status == TaskStatus)!);
         }
+
         private void UpdateBtn_Click(object sender, MouseButtonEventArgs e)
         {
             BO.TaskInList? TaskList = (sender as ListView)?.SelectedItem as BO.TaskInList;
             if (TaskList != null)
             {
                 // Create a new window with the selected item in update mode
-                TaskWindow window = new TaskWindow(this, eng,TaskList.Id);
+                TaskWindow window = new TaskWindow(CollectionChange, eng, TaskList.Id);
                 window.Show();
             }
         }
 
+        private void CollectionChange(int id, bool? newObj = null)
+        {
+            try
+            {
+                if (newObj is null)//remove engineer
+                {
+                    BO.TaskInList oldTask = TaskList.First(x => x.Id == id);
+                    TaskList.Remove(oldTask);
+                }
+                if (newObj == false)
+                {
+                    BO.Task task = s_bl.Task.Read(id)!;
+                    BO.TaskInList oldEnj = TaskList.First(x => x.Id == id);
+                    int index = TaskList.IndexOf(oldEnj);
+                    TaskList[index] = new TaskInList()
+                    {
+                        Id = id,
+                        Alias = task.Alias,
+                        Description = task.Description,
+                        Status = task.Status
+                    };
+                }
+                else
+                {
+                    BO.Task task = s_bl.Task.Read(id)!;
+                    TaskList.Add(new TaskInList()
+                    {
+                        Id = id,
+                        Alias = task.Alias,
+                        Description = task.Description,
+                        Status = task.Status
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Please try again", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+
         private void ButtonAddUppT_Click(object sender, RoutedEventArgs e)
         {
-            new TaskWindow(this).Show();
+            new TaskWindow(CollectionChange).Show();
         }
 
     }

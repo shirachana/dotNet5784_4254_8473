@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Engineer
 {
@@ -19,32 +10,63 @@ namespace PL.Engineer
     /// </summary>
     public partial class EngineerListWindow : Window
     {
-        public EngineerListWindow()
-        {
-            InitializeComponent();
-            EngineerList = s_bl?.Engineer.ReadAll()!;
-        }
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-        public IEnumerable<BO.Engineer> EngineerList
+        public ObservableCollection<BO.Engineer> EngineerList
         {
-            get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProperty); }
+            get { return (ObservableCollection<BO.Engineer>)GetValue(EngineerListProperty); }
             set { SetValue(EngineerListProperty, value); }
         }
 
         public static readonly DependencyProperty EngineerListProperty =
-            DependencyProperty.Register("EngineerList", typeof(IEnumerable<BO.Engineer>), typeof(EngineerListWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("EngineerList", typeof(ObservableCollection<BO.Engineer>), typeof(EngineerListWindow));
+
+        public EngineerListWindow()
+        {
+            InitializeComponent();
+            EngineerList = new(s_bl?.Engineer.ReadAll()!);
+        }
+
         public BO.EngineerExperience experience { get; set; } = BO.EngineerExperience.None;
 
         private void cbExperienceSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            EngineerList = (experience == BO.EngineerExperience.None) ?
-                 s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => item.Level == experience)!;
-
+            if (experience == BO.EngineerExperience.None)
+                EngineerList = new(s_bl?.Engineer.ReadAll()!);
+            else
+                EngineerList = new(s_bl?.Engineer.ReadAll(item => item.Level == experience)!);
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            new EngineerWindow(this).ShowDialog();
+            new EngineerWindow(CollectionChange).ShowDialog();
+        }
+
+        private void CollectionChange(int id, bool? newObj = null)
+        {
+            try
+            {
+                if (newObj is null)//remove engineer
+                {
+                    BO.Engineer oldEnj = EngineerList.First(x => x.Id == id);
+                    EngineerList.Remove(oldEnj);
+                }
+                if (newObj == false)
+                {
+                    BO.Engineer eng = s_bl.Engineer.Read(id)!;
+                    BO.Engineer oldEnj = EngineerList.First(x => x.Id == id);
+                    int index = EngineerList.IndexOf(oldEnj);
+                    EngineerList[index] = eng;
+                }
+                else
+                {
+                    BO.Engineer eng = s_bl.Engineer.Read(id)!;
+                    EngineerList.Add(eng);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}", "Please try again", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdateBtn_Click(object sender, MouseButtonEventArgs e)
@@ -54,7 +76,7 @@ namespace PL.Engineer
             if (EngineerList != null)
             {
                 // Create a new window with the selected item in update mode
-                EngineerWindow window = new EngineerWindow(this,EngineerList.Id);
+                EngineerWindow window = new EngineerWindow(CollectionChange, EngineerList.Id);
                 window.ShowDialog();
             }
         }

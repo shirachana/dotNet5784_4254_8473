@@ -54,12 +54,6 @@ namespace PL
             {
              
                 s_bl.SetProjectStartDate(selectedDate.Value);
-                //IEnumerable<DO.Task> allTasks = _dal.Task.ReadAll();
-
-                //foreach (var task in allTasks) 
-                //{
-                //    s_bl.Task.UpdateStartDate()
-                //}
                 MessageBox.Show("Start date set successfully!", "Success", MessageBoxButton.OK);
                 this.Close();
             }

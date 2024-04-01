@@ -13,7 +13,7 @@ namespace PL.TaskForList
     public partial class TaskWindow : Window
     {
         static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-
+        private Action<int, bool?>? _collectionChange { get; set; }
 
         public bool OpenDialogHost
         {
@@ -21,16 +21,18 @@ namespace PL.TaskForList
             set { SetValue(OpenDialogHostProperty, value); }
         }
 
+        // Using a DependencyProperty as the backing store for OpenDialogHost.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty OpenDialogHostProperty =
             DependencyProperty.Register(nameof(OpenDialogHost), typeof(bool), typeof(TaskWindow));
 
-        public IEnumerable<BO.TaskInList> TasksList
+        public ObservableCollection<BO.TaskInList> TasksList
         {
-            get { return (IEnumerable<BO.TaskInList>)GetValue(DepTaskListProperty); }
+            get { return (ObservableCollection<BO.TaskInList>)GetValue(DepTaskListProperty); }
             set { SetValue(DepTaskListProperty, value); }
         }
+        // Assuming your data is in an ObservableCollection<MyItem>
         public static readonly DependencyProperty DepTaskListProperty =
-            DependencyProperty.Register(nameof(TasksList), typeof(IEnumerable<BO.TaskInList>), typeof(TaskWindow));
+            DependencyProperty.Register(nameof(TasksList), typeof(ObservableCollection<BO.TaskInList>), typeof(TaskWindow));
 
         public bool isUserValue
         {
@@ -39,6 +41,7 @@ namespace PL.TaskForList
         }
         public static readonly DependencyProperty isUserVProperty =
             DependencyProperty.Register("isUserValue", typeof(bool), typeof(TaskWindow));
+
         public BO.Task Task
         {
             get { return (BO.Task)GetValue(TaskProperty); }
@@ -47,9 +50,8 @@ namespace PL.TaskForList
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
 
-        private TaskListWindow? _taskListWindow;
 
-        public TaskWindow(TaskListWindow taskListWindow, BO.Engineer? engineerT = null, int taskId = 0)
+        public TaskWindow(Action<int, bool?> collectionChange, BO.Engineer? engineerT = null, int taskId = 0)
         {
             if (engineerT == null)
                 isUserValue = true;
@@ -58,9 +60,12 @@ namespace PL.TaskForList
                 isUserValue = false;
             }
             OpenDialogHost = false;
-            _taskListWindow = taskListWindow;
+
+            _collectionChange = collectionChange;
+
             if (taskId == 0)
             {
+                // Create a new object with default values
                 Task = new BO.Task();
                 Task.Dependencies = new();
             }
@@ -68,6 +73,7 @@ namespace PL.TaskForList
             {
                 try
                 {
+                    // Retrieve the existing engineer object from the BL based on the engineerId
                     Task = s_bl.Task.Read(taskId) ?? new();
                     if (Task.Dependencies is null)
                         Task.Dependencies = new();
@@ -75,7 +81,9 @@ namespace PL.TaskForList
                 }
                 catch (Exception ex)
                 {
+                    // Handle exceptions, e.g., display an error message
                     MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Close the window or handle the error as appropriate
                     Close();
                 }
 
@@ -86,12 +94,12 @@ namespace PL.TaskForList
             InitializeComponent();
         }
 
-        public TaskWindow(TaskListWindow taskListWindow, string? engId)
+        public TaskWindow(string? engId, Action<int, bool?>? collectionChange = null)
         {
             try
             {
                 InitializeComponent();
-                _taskListWindow = taskListWindow;
+                _collectionChange = collectionChange;
                 OpenDialogHost = false;
 
                 // Fetch the engineer's task based on the specified ID
@@ -141,27 +149,28 @@ namespace PL.TaskForList
                 if ((sender as Button)!.Content.ToString() == "Add")
                 {
                     s_bl.Task.Create(Task);
-
-                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                    if (_collectionChange is not null)
+                        _collectionChange(Task.Id, true);
                     MessageBox.Show("Task added successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow!.TaskList = updatedTaskList;
                 }
                 else
                 {
                     if (isUserValue == true)
                     {
                         s_bl.Task.Update(Task);
-                        IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                        if (_collectionChange is not null)
+                            _collectionChange(Task.Id, false);
+
                         MessageBox.Show("Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        _taskListWindow!.TaskList = updatedTaskList;
                     }
                     else if (isUserValue == false)
                     {
                         s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
                         s_bl.Engineer.UpdateEngineerToTask(Task.Engineer!.Id!, Task.Id);
-                        //IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+                        if (_collectionChange is not null)
+                            _collectionChange(Task.Id, false);
+
                         MessageBox.Show("Engineer in Task and the Date of Task updated successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        //  _taskListWindow!.TaskList = updatedTaskList;
                     }
                 }
                 this.Close();
@@ -181,9 +190,10 @@ namespace PL.TaskForList
                 if (result == MessageBoxResult.Yes && (sender as Button)!.Content.ToString() == "Delete")
                 {
                     s_bl.Task.Delete(Task.Id);
-                    IEnumerable<BO.TaskInList> updatedTaskList = s_bl?.Task.ReadAll()!;
+
+                    if (_collectionChange is not null)
+                        _collectionChange(Task.Id, null);
                     MessageBox.Show("Task delete successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    _taskListWindow!.TaskList = updatedTaskList;
                 }
                 this.Close();
             }
@@ -195,7 +205,7 @@ namespace PL.TaskForList
 
         private void AddDepBtn_Click(object sender, RoutedEventArgs e)
         {
-            TasksList = s_bl.Task.ReadAll();
+            TasksList = new(s_bl.Task.ReadAll());
             OpenDialogHost = true;
         }
         private void CompleteDateBtn_Click(object sender, RoutedEventArgs e)
