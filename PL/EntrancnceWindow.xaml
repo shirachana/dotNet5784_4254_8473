@@ -7,9 +7,17 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="EntrancnceWindow" Height="600" Width="800">
-    <Window.Resources>        <Style x:Key="myLabelStyle" TargetType="Label" >            <Setter Property="FontSize"         Value="10" />            <Setter Property="FontWeight"         Value="Bold"/>
+    <Window.Resources>
 
-        </Style>        <Style x:Key="eventTrigger" TargetType="Button">
+        <Style x:Key="myLabelStyle" TargetType="Label" >
+            <Setter Property="FontSize"
+         Value="10" />
+            <Setter Property="FontWeight"
+         Value="Bold"/>
+
+        </Style>
+
+        <Style x:Key="eventTrigger" TargetType="Button">
             <Setter Property="FontSize" Value="20" />
             <Setter Property="FontWeight" Value="Bold" />
             <Style.Triggers>
@@ -18,7 +26,11 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <LinearGradientBrush x:Key="myLinearGradientBrush">            <GradientStop Color="#FF673AB7"/>        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="myLinearGradientBrush">
+            <GradientStop Color="#FF673AB7"/>
+
+        </LinearGradientBrush>
+
 
         <Style x:Key="myTextBStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
@@ -44,7 +56,8 @@
 
 
 
-    </Window.Resources>
+
+    </Window.Resources>
 
     <Grid >
         <Grid.RowDefinitions>

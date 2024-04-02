@@ -1,6 +1,7 @@
 ﻿namespace DalTest;
 using DalApi;
 using DO;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Xml.Linq;
@@ -14,30 +15,59 @@ public static class Initialization
     private static readonly Random s_rand = new();
     private static void CreateDependencies()
     {
-        HashSet<int> selectedTasks = new HashSet<int>();
-
-        for (int i = 0; i < 40; i++)
+        int depend = 0;
+        int dependon = 0;
+        List<Task> tasks = s_dal.Task.ReadAll().ToList();
+        HashSet<Dependency> dependencies = new HashSet<Dependency>();
+        Dependency newDep;
+        for (int i = 0; i < tasks.Count() * 2; i++)
         {
-            Dependency dep = new Dependency();
-
-            int dependentTask, dependsOnTask;
             do
             {
-                dependentTask = s_rand.Next(6, 21); // Randomly select a dependent task excluding first 5 tasks
-                dependsOnTask = s_rand.Next(1, 21); // Randomly select a task it depends on
+                switch (i)
+                {
+                    case int x when x < 5:
+                        break;
+
+                    case int x when x < 10:
+                        dependon = s_rand.Next(0, 5);
+                        depend = s_rand.Next(5, 11);
+                        dependon = tasks[dependon].Id;
+                        depend = tasks[depend].Id;
+                        break;
+
+                    case int x when x < 20:
+                        dependon = s_rand.Next(5, 11);
+                        depend = s_rand.Next(11, 16);
+                        dependon = tasks[dependon].Id;
+                        depend = tasks[depend].Id;
+                        break;
+
+                    case int x when x < 40:
+                        dependon = s_rand.Next(5, 16);
+                        depend = s_rand.Next(16, 20);
+                        dependon = tasks[dependon].Id;
+                        depend = tasks[depend].Id;
+                        break;
+
+                    default:
+                        return;
+
+                }
+
+                newDep = new Dependency(
+                    Id: 0,
+                    DependentTask: depend,
+                    DependsOnTask: dependon);
             }
-            while (dependentTask == dependsOnTask ||  // Ensure no circular dependency
-                   selectedTasks.Contains(dependentTask));  // Ensure dependent task is not selected before
+            while (dependencies.Contains(newDep));
 
-            selectedTasks.Add(dependentTask); // Add dependent task to selected tasks set
-
-            dep = dep with
+            if (i > 4 && depend != dependon)
             {
-                DependentTask = dependentTask,
-                DependsOnTask = dependsOnTask
-            };
+                dependencies.Add(newDep);
 
-            s_dal!.Dependency.Create(dep);
+                s_dal.Dependency.Create(newDep);
+            }
         }
     }
 
@@ -134,13 +164,7 @@ public static class Initialization
             DateTime _createAtD = start.AddDays(s_rand.Next(range));
             Random random = new(DateTime.Now.Millisecond);
             int randomDays = random.Next(range);
-
-            ////DateTime _scheduledDate = start.AddDays(randomDays);
-            //DateTime _deadLine = new DateTime(2025, 1, 1);
-            //TimeSpan _requiredET = TimeSpan.FromDays(s_rand.Next((_deadLine - start).Days));
             TimeSpan _requiredET = new(random.Next(100), random.Next(60), random.Next(60));
-            //DateTime _endDate = start.AddDays(randomDays);
-            //DateTime _startDate = start.AddDays(s_rand.Next((_endDate - _scheduledDate).Days));
 
             Task tsk = new(0, 0, _alias[i], _dedcription[i], _createAtD, _requiredET, false, lev[i], null, null, null, null, _deliverables[i], _remarks[i]);
 
@@ -170,29 +194,27 @@ public static class Initialization
             string password = "";
             string userName = "";
             User _newUser = new(_name, id, userName, password, false);
-            if(_newUser.UserName != null&& _newUser.Password != null) 
-                 s_dal?.User.Create(_newUser);
+            if (_newUser.UserName != null && _newUser.Password != null)
+                s_dal?.User.Create(_newUser);
         }
         //User newAdmin1 = new("Adi", "5784", "Adi123", "a2004", true);
-        //User newAdmin2 = new("Shira", "4254","sh222", "Shira222", true);
         //s_dal?.User.Create(newAdmin1);
-        //s_dal?.User.Create(newAdmin2);
 
     }
 
 
     //public static void Do(IDal dal) //stage 2
     public static void Do() //stage 4
-        {
-            //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
-            //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-            //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-            //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
-            s_dal = DalApi.Factory.Get; //stage 4
-            CreatEngineer();
-            CreatTask();
-            CreateDependencies();
+    {
+        //s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
+        //s_dal = dal ?? throw new NullReferenceException("DAL object can not be null!"); //stage 2
+        s_dal = DalApi.Factory.Get; //stage 4
+        CreatEngineer();
+        CreatTask();
+        CreateDependencies();
 
-        }
-    
+    }
+
 }

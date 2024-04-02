@@ -415,15 +415,6 @@ internal class TaskImplementation : BlApi.ITask
                 }).ToList().OrderBy(x => x.StartOffset);
     }
 
-    private int StartTask(DO.Task task)
-    {
-        if (task.StartDate is null)
-            return (int)(task.ScheduledDate - _bl.GetProjectStartDate())!.Value.TotalHours;
-
-        return task.ScheduledDate > task.StartDate ? (int)(task.ScheduledDate - _bl.GetProjectStartDate())!.Value.TotalHours :
-            (int)(task.StartDate - _bl.GetProjectStartDate())!.Value.TotalHours;
-    }
-
     private string StringDependencies(int id)
     {
         var x = _dal.Dependency.ReadAll(x => x.DependentTask == id)

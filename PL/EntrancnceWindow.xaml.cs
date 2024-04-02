@@ -1,23 +1,8 @@
-﻿using BO;
-using PL.TaskForList;
-using PL.User;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Security;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Windows.Controls.Primitives;
 
 
 namespace PL.User
@@ -35,25 +20,6 @@ namespace PL.User
         {
             get { return (DateTime)GetValue(CurrentTimeProperty); }
             set { SetValue(CurrentTimeProperty, value); }
-        }
-
-        private DispatcherTimer _timer;
-        public EntrancnceWindow()
-        {
-            InitializeComponent();
-            _user = new BO.User();
-
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += Timer_Tick!;
-            _timer.Start();
-            DataContext = this;
-            CodeUser = new SecureString();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            CurrentTime = CurrentTime.AddSeconds(1);
         }
 
         private BO.User? _user;
@@ -120,10 +86,29 @@ namespace PL.User
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private DispatcherTimer _timer;
+        public EntrancnceWindow()
+        {
+            InitializeComponent();
+            _user = new BO.User();
+
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick!;
+            _timer.Start();
+            CodeUser = new SecureString();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            CurrentTime = CurrentTime.AddSeconds(1);
+        }
+
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
         private string ConvertSecureStringToString(SecureString secureString)
         {
             IntPtr ptr = System.Runtime.InteropServices.Marshal.SecureStringToBSTR(secureString);//System.ArgumentNullException: 'Value cannot be null. Arg_ParamName_Name'
@@ -136,11 +121,13 @@ namespace PL.User
                 System.Runtime.InteropServices.Marshal.ZeroFreeBSTR(ptr);
             }
         }
+
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox passwordBox)
                 Password = passwordBox.Password;
         }
+
         private void BtnLogIn_Click(object sender, RoutedEventArgs e)
         {
             try

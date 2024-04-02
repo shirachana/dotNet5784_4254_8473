@@ -1,6 +1,5 @@
-﻿
+﻿namespace DO;
 
-namespace DO;
 [Serializable]
 public class DalDoesNotExistException:Exception
 {
@@ -16,6 +15,7 @@ public class DalDeleteionImpossible : Exception
 {
     public DalDeleteionImpossible(string? message) : base(message) { }
 }
+[Serializable]
 public class DalXMLFileLoadCreateException : Exception
 {
     public DalXMLFileLoadCreateException(string? message) : base(message) { }

@@ -20,12 +20,6 @@ internal static class Config
 
     internal static DateTime? GetDate(string elementName)
     {
-        //XElement root = XMLTools.LoadListFromXMLElement(@"..\xml\" + s_data_config_xml);
-        //string date = root.Element(elementName)!.ToString();
-        //if (date is null || date == "")
-        //    return null;
-        //DateTime.TryParse(date, out DateTime d);
-        //return d;
         XElement root = XMLTools.LoadListFromXMLElement(@"..\xml\" + s_data_config_xml);
         string dateStr = root.Element(elementName)!.Value;
 
