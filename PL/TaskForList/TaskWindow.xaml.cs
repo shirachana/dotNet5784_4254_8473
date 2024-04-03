@@ -50,9 +50,11 @@ namespace PL.TaskForList
         public static readonly DependencyProperty TaskProperty =
             DependencyProperty.Register("Task", typeof(BO.Task), typeof(TaskWindow));
 
+        BO.Engineer eng;
 
         public TaskWindow(Action<int, bool?> collectionChange, BO.Engineer? engineerT = null, int taskId = 0)
         {
+            eng = engineerT ?? new();
             if (engineerT == null)
                 isUserValue = true;
             else
@@ -166,7 +168,7 @@ namespace PL.TaskForList
                     else if (isUserValue == false)
                     {
                         s_bl.Task.UpdateStartDate(Task.Id, DateTime.Now);
-                        s_bl.Engineer.UpdateEngineerToTask(Task.Engineer!.Id!, Task.Id);
+                        s_bl.Engineer.UpdateEngineerToTask(eng.Id, Task.Id);
                         if (_collectionChange is not null)
                             _collectionChange(Task.Id, false);
 
