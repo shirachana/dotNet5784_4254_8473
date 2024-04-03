@@ -17,14 +17,14 @@ namespace PL.TaskForList
 
         public BO.Status TaskStatus { get; set; } = BO.Status.None;
 
-        public bool isUser
+        public bool IsUser
         {
             get { return (bool)GetValue(isUserProperty); }
             set { SetValue(isUserProperty, value); }
         }
 
         public static readonly DependencyProperty isUserProperty =
-            DependencyProperty.Register("isUser", typeof(bool), typeof(TaskListWindow));
+            DependencyProperty.Register("IsUser", typeof(bool), typeof(TaskListWindow));
 
 
         public ObservableCollection<BO.TaskInList> TaskList
@@ -36,13 +36,19 @@ namespace PL.TaskForList
         public static readonly DependencyProperty TaskListProperty =
             DependencyProperty.Register("TaskList", typeof(ObservableCollection<BO.TaskInList>), typeof(TaskListWindow));
 
-        public TaskListWindow(int id = 0)
+        public TaskListWindow(bool isUser, int id = 0)
         {
             if (id != 0)
                 eng = s_bl.Engineer.Read(id);
             InitializeComponent();
-            TaskList = new(s_bl?.Task.ReadAll()!);
-            isUser = true;
+            if (isUser)
+                TaskList = new(s_bl?.Task.ReadAll()!);
+            else
+            {
+                BO.Engineer eng = s_bl.Engineer.Read(id);
+                TaskList =new( s_bl.Task.TasksForEngineer(eng));
+            }
+            IsUser = isUser;
         }
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

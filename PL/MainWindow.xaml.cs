@@ -36,7 +36,7 @@ public partial class MainWindow : Window
     private void btnTask_Click(object sender, RoutedEventArgs e) 
     { 
         
-        new TaskListWindow().Show();
+        new TaskListWindow(true).Show();
     }
 
     private void btnInitDB_Click(object sender, RoutedEventArgs e)

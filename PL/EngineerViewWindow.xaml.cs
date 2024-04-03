@@ -46,7 +46,7 @@ namespace PL
         {
             int id = int.Parse(user.Id!);
             BO.Engineer eng = s_bl.Engineer.Read(id)!;
-            new TaskListWindow(eng.Id).Show();
+            new TaskListWindow(false, eng.Id).Show();
         }
     }
 }

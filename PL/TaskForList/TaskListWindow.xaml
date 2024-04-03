@@ -8,9 +8,15 @@
         Title="TaskListWindow" Height="640" Width="800"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}">
     <Window.Resources>
-        <Style x:Key="myLabelStyle" TargetType="Label" >        <Setter Property="FontSize"  Value="13" />        <Setter Property="FontWeight"  Value="Bold"/>
+        <Style x:Key="myLabelStyle" TargetType="Label" >
+        <Setter Property="FontSize"
+  Value="13" />
+        <Setter Property="FontWeight"
+  Value="Bold"/>
 
-    </Style>    </Window.Resources>
+    </Style>
+    </Window.Resources>
+
 
 
     <Grid>
@@ -28,7 +34,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width= "*"/>
             </Grid.ColumnDefinitions>
-            <ComboBox SelectedValue="{Binding Path=TaskStatus, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" Width="390" Height="32" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  Visibility="{Binding isUser, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+            <ComboBox SelectedValue="{Binding Path=TaskStatus, Mode=TwoWay}" ItemsSource="{Binding Source={StaticResource TasksCollectionKey}}" Width="390" Height="32" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" SelectionChanged="StatusSelector_SelectionChanged"  IsEnabled="{Binding IsUser}"/>
             <Label Content="Select:" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Column="0"  Style="{StaticResource myLabelStyle}"/>
         </Grid>
         <ListView Grid.Row="1" ItemsSource="{Binding TaskList}" Grid.ColumnSpan="2"   MouseDoubleClick="UpdateBtn_Click">
@@ -38,6 +44,6 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="50" Width="100"   VerticalAlignment="Top" Click="ButtonAddUppT_Click" Visibility="{Binding isUser, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Button Content="Add" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" Height="50" Width="100"   VerticalAlignment="Top" Click="ButtonAddUppT_Click" IsEnabled="{Binding IsUser}"/>
     </Grid>
 </Window>
